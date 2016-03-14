@@ -1,0 +1,15 @@
+*.[oa]
+*.cmd
+*.d
+*.log
+*.map
+*_version.h
+_postbuild
+_postclean
+_postinstall
+_install
+_preinstall
+.DS_Store
+/naga/main/naga
+/naga/main/main
+
