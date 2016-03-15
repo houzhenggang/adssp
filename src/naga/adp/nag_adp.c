@@ -138,7 +138,7 @@ berr naga_adp(hytag_t *hytag)
 	unsigned char buffer[2048]; 
     CNT_INC(ADP_IPKTS);
 
-    if(( NULL == hytag) || (NULL == hytag->m))
+    if(( NULL == hytag) /*|| (NULL == hytag->m)*/)
     {
         CNT_INC(ADP_DROP_PARAM);
         BRET(E_PARAM);
