@@ -50,6 +50,7 @@ DIRS-y += urlr
 DIRS-y += hijack
 DIRS-y += debug
 DIRS-y += domain
+DIRS-y += product 
 DIRS-y += main
 
 include $(RTE_SDK)/mk/rte.extsubdir.mk
