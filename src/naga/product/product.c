@@ -181,6 +181,7 @@ berr dsp_product_init(char * productconf)
 	
 }
 
+
 berr naga_ssp_counter(hytag_t *hytag)
 {
 	redisContext* c= redis;
@@ -222,11 +223,10 @@ berr naga_ssp_counter(hytag_t *hytag)
 										(userip>>8)&0xff, (userip)&0xff,
 										hytag->user_agent);	
 
-
-		if(r != NULL)
-		{
+	if(r != NULL)
+	{
 	
-			if(CHECK_REDIS_INTER(r))
+		if(CHECK_REDIS_INTER(r))
 		{
 			;
 		}
@@ -235,19 +235,87 @@ berr naga_ssp_counter(hytag_t *hytag)
 			;
 		}	
 		freeReplyObject(r);
-		}
+	}
 
-		
+
+
 	}
 	
-
-
-
-
 
 	return E_SUCCESS;
 }
 
 
+berr naga_ssp_product(hytag_t *hytag)
+
+{
+	if(redis == NULL)								
+		return E_SUCCESS;
+
+	redisContext* c= redis;
+
+	redisReply* r  = NULL;
+	
+	int i;
+	uint32_t action = 0;
+
+	
+	for(i=0; i < 4; i++)
+	{
+		if(!products[i].en)
+			continue;
+		
+		action = 0;
+
+		if(products[i].black_size)
+		{
+	
+			r = (redisReply*)redisCommand(c, "SISMEMBER %s %s", products[i].redis_black_set_key, hytag->host);
+
+			if(r != NULL)
+			{
+
+				if(r->type == REDIS_REPLY_INTEGER && r->integer > 0)
+				{
+					freeReplyObject(r);
+					continue;
+				}
+
+			}
+			freeReplyObject(r);
+		}
+		if(products[i].white_size)
+		{
+			r = (redisReply*)redisCommand(c, "SISMEMBER %s %s", products[i].redis_white_set_key, hytag->host);		
+			if(r != NULL)
+			{
+				if( r->type == REDIS_REPLY_INTEGER && r->integer > 0)
+				{
+					action =   ACT_PUSH;
+					freeReplyObject(r);
+					break;
+				}
+				
+			}
+		}
+		else
+		{
+			action =   ACT_PUSH;  
+			break;
+		}
+	}
+
+	if(action == 0)/*max use one product*/
+	{
+		HYTAG_ACL_SET(hytag->acl, ACT_DROP);
+	}
+	else 
+	{
+		HYTAG_ACL_SET(hytag->acl, ACT_PUSH);
+	}
+	
+	return E_SUCCESS;
+	
+}
 
 
