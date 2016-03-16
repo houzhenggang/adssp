@@ -196,7 +196,7 @@ berr naga_ssp_counter(hytag_t *hytag)
 
 	if(hytag->host_len)
 	{
-		printf("Set redis\n");
+	
 		r = (redisReply*)redisCommand(c, "HINCRBY ssp_hash_domain_counter %s 1",  hytag->host);
 
 		if(r != NULL)
@@ -211,7 +211,10 @@ berr naga_ssp_counter(hytag_t *hytag)
 				;
 			}	
 		}
-
+		else
+		{
+			printf("Set redis Failed\n");
+		}
 		freeReplyObject(r);
 	}
 	
