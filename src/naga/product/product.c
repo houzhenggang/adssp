@@ -188,7 +188,7 @@ berr naga_ssp_counter(hytag_t *hytag)
 
 	redisReply* r  = NULL;	
 	
-
+	
     if( APP_TYPE_HTTP_GET_OR_POST != hytag->app_type)
     {
         return E_SUCCESS;
@@ -196,6 +196,7 @@ berr naga_ssp_counter(hytag_t *hytag)
 
 	if(hytag->host_len)
 	{
+		printf("Set redis\n");
 		r = (redisReply*)redisCommand(c, "HINCRBY ssp_hash_domain_counter %s 1",  hytag->host);
 
 		if(r != NULL)
@@ -223,21 +224,19 @@ berr naga_ssp_counter(hytag_t *hytag)
 										(userip>>8)&0xff, (userip)&0xff,
 										hytag->user_agent);	
 
-	if(r != NULL)
-	{
-	
-		if(CHECK_REDIS_INTER(r))
+		if(r != NULL)
 		{
-			;
+		
+			if(CHECK_REDIS_INTER(r))
+			{
+				;
+			}
+			else
+			{
+				;
+			}	
+			freeReplyObject(r);
 		}
-		else
-		{
-			;
-		}	
-		freeReplyObject(r);
-	}
-
-
 
 	}
 	
