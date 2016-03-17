@@ -35,6 +35,7 @@ bts_hashtable_init(bts_hashtable_t *tab, uint32_t bucket_number, bts_hash_func h
         {
             tab->buckets[i].cmp = cmp;
             tab->buckets[i].del = del;
+			pthread_mutex_init( &(tab->buckets[i].mutex), NULL);
             INIT_LIST_HEAD(&(tab->buckets[i].bucket_head));
         }
     }
@@ -130,8 +131,7 @@ bts_hashtable_safe_lookup_and_create
 
 
 
-berr
-bts_hashtable_add(bts_hashtable_t *tab, void *data)
+berr bts_hashtable_add(bts_hashtable_t *tab, void *data)
 {
     uint32_t hash, idx;
     bts_list_t *bucket = NULL;
@@ -151,10 +151,12 @@ bts_hashtable_add(bts_hashtable_t *tab, void *data)
 
     idx = hash % tab->total_bucket;
 
+	
     bucket = &tab->buckets[idx];
 
-    bts_listnode_add(bucket, data);
-    
+	pthread_mutex_lock(&(bucket->mutex));
+    bts_listnode_add(bucket, data, tab->find);
+	pthread_mutex_unlock(&(bucket->mutex));    
 
     BRET(E_SUCCESS);
 }

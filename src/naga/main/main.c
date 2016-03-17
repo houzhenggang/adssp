@@ -604,7 +604,7 @@ main(int argc, char **argv)
         itf_raw_socket_init(interface_str);
 		dsp_product_init(NULL);
 		redis_init();
-		
+		user_init();
         cmdline (0, NULL);        
     }
     

@@ -261,7 +261,7 @@ int cmdline (int argc, char **argv)
     /* Zebra related initialize. */
     //access_list_init ();
 
-
+	cmdline_user_init();
     /* Configuration file read*/
     vty_read_config (config_file, config_default);
 

@@ -1,7 +1,7 @@
 #ifndef __BTS_LINKLIST_H__
 #define __BTS_LINKLIST_H__
 
-
+#include <pthread.h>
 #include "bts_list.h"
 //#include "bts_hashtable.h"
 /* bts_listnodes must always contain data to be valid. Adding an empty node
@@ -22,13 +22,16 @@ typedef struct  bts_listnode
 
 typedef int (*bts_list_cmp_func)(void *val1, void *val2); 
 typedef void (*bts_list_del_func)(void *val);
+typedef void (*bts_hash_find_func)(void *ndata, void *odata);
+
+
 
 typedef struct bts_list
 {
   struct bts_listnode *head;
   struct bts_listnode *tail;
   struct list_head   bucket_head;
-  //pthread_mutex_t mutex;
+  pthread_mutex_t mutex;
 
   
   /* invariant: count is the number of bts_listnodes in the bts_list */
@@ -57,7 +60,7 @@ typedef struct bts_list
 extern struct bts_list *bts_list_new(void); /* encouraged: set bts_list.del callback on new bts_lists */
 extern void bts_list_free (struct bts_list *);
 
-extern void bts_listnode_add (struct bts_list *, void *);
+extern void bts_listnode_add (struct bts_list *, void *, bts_hash_find_func findcall);
 extern void bts_listnode_add_sort (struct bts_list *, void *);
 extern void bts_listnode_add_after (struct bts_list *, struct bts_listnode *, void *);
 extern void bts_listnode_move_to_tail (struct bts_list *, struct bts_listnode *);

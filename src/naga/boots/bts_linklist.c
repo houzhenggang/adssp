@@ -294,7 +294,7 @@ bts_list_add_list (struct bts_list *l, struct bts_list *m)
   struct bts_listnode *n;
 
   for (n = bts_listhead (m); n; n = bts_listnextnode (n))
-    bts_listnode_add (l, n->data);
+    bts_listnode_add (l, n->data, NULL);
 }
 
 
@@ -359,7 +359,7 @@ void bts_listnode_delete_by_key (struct bts_list *bts_list, void *key)
 }
 
 void
-bts_listnode_add (struct bts_list *bts_list, void *val)
+bts_listnode_add (struct bts_list *bts_list, void *val,  bts_hash_find_func findcall)
 {
     struct bts_listnode *node = NULL;
     struct list_head *pos = NULL, *next = NULL;
@@ -379,9 +379,16 @@ bts_listnode_add (struct bts_list *bts_list, void *val)
     } 
     if(find)
     {
-        free(node->data);
-        node->data = val;
-        
+
+		if(findcall)
+		{
+			findcall(val, node->data);
+		}	
+ 		else
+ 		{
+         	free(node->data);
+        	node->data = val;		
+ 		}
     }
     else
     {

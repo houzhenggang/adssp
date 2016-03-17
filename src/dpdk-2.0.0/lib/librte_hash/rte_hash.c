@@ -466,6 +466,6 @@ rte_hash_lookup_bulk(const struct rte_hash *h, const void **keys,
 			}
 		}
 	}
-
+	
 	return 0;
 }
