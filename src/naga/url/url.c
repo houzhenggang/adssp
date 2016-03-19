@@ -166,7 +166,7 @@ berr  naga_uri(hytag_t *hytag)
                 compare  = pcre_exec(urlcre->cre,
                                 NULL, hytag->uri, hytag->uri_len, 0, 0, ovector, OVECCOUNT);
 
-				if(compare)
+				if(compare > 0)
 				{
 					
 					HYTAG_ACL_MERGE(hytag->acl, urlcre->acl);
