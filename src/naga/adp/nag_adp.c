@@ -173,7 +173,7 @@ berr naga_adp_new(hytag_t *hytag)
     	{
         	hytag->url_len= snprintf(hytag->url, URL_MAX_LEN, "%s%s",
                                                 hytag->host, hytag->uri);
-			hytag->url_append == ENABLE;
+			hytag->url_append = ENABLE;
     	}
 	}
 
