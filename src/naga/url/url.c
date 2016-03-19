@@ -14,10 +14,6 @@
 
 url_t url_r;
 
-struct pcre_s pcre_ack =
-	{
-		.pattern = "/_t=[0-9]+$/",
-	} ;
 
 
 
