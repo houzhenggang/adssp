@@ -154,6 +154,7 @@ typedef struct
 
     uint16_t app_type;
 
+	int url_append;
     uint16_t url_len;
     uint16_t host_len;
 	uint16_t referer_len;
@@ -171,7 +172,7 @@ typedef struct
     uint16_t uri_len;
     char reg[URL_MAX_LEN];
     uint32_t hijack_rule_id;
-
+	
     struct pbuf pbuf;
     struct rte_mbuf *m;
     uint16_t match;   /* 0 for not match, 1 for vsr match, 2 for other match  */

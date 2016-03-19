@@ -406,6 +406,75 @@ redirect_302_response_generator(void *ptr, hytag_t *hytag, char *url)
 }
 
 
+berr ads_response_packet_gen(void *ptr, hytag_t *hytag)
+{
+    struct tcp_hdr *tcp_hdr = NULL;
+    struct ipv4_hdr *ip_hdr = NULL;
+    struct ether_hdr *eth_hdr = NULL;
+    uint8_t direction = DIRECTION_DIFFERENT;
+    char *http_head = NULL;	
+
+	int rv;
+	
+	if(NULL == ptr || NULL == hytag )
+    {
+        BRET(E_PARAM);
+    }
+
+    tcp_hdr = (struct tcp_hdr *)(((char *)ptr) + hytag->l4_offset);
+    rv = ads_tcp_head_modify(tcp_hdr, hytag, direction);
+		
+    if (rv)
+    {
+        printf("%s,%d, rv(%d)\n", __func__, __LINE__, rv);
+        return rv;
+    }
+
+    /* l5 fill */
+    debug("old l5_len(%d)", hytag->l5_len);
+    http_head = ((char *)ptr) + hytag->l5_offset;
+
+    debug("new l5_len(%d)", hytag->l5_len);
+
+    /* l3 switch */
+    ip_hdr = (struct ipv4_hdr *)(((char *)ptr) + hytag->l3_offset);
+
+    rv = ads_ip_head_modify(ip_hdr, hytag, direction);
+    if (rv)
+    {
+        printf("%s,%d, rv(%d)\n", __func__, __LINE__, rv);
+        return rv;
+    }
+
+    /* tcp checksum update*/
+    tcp_hdr->cksum = 0;
+    tcp_hdr->cksum =  ads_tcpudp_cksum(ip_hdr, (void *)tcp_hdr);
+    debug("tcp chsum(0x%x)", ntohs(tcp_hdr->cksum));
+
+    /* ip checksum update */ 
+    rv = ads_ipv4_cksum_update(ip_hdr);
+    if (rv)
+    {
+        printf("%s,%d, rv(%d)\n", __func__, __LINE__, rv);
+        return rv;
+    }
+
+    /* l2 switch */
+    eth_hdr = (struct ether_hdr *)(((char *)ptr) + hytag->l2_offset);
+    rv = ads_eth_head_modify(eth_hdr, hytag, direction);
+    if (rv)
+    {
+        printf("%s,%d, rv(%d)\n", __func__, __LINE__, rv);
+        return rv;
+    }
+
+    hytag->data_len = hytag->l5_offset - hytag->l2_offset + hytag->l5_len;
+    return E_SUCCESS;
+	
+}
+
+
+
 berr
 ads_response_head_generator(void *ptr, hytag_t *hytag)
 {

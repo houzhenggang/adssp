@@ -98,8 +98,19 @@ berr user_push_add(hytag_t *tag)
 
 berr user_assess_add(hytag_t *tag)
 {
+
+    if( APP_TYPE_HTTP_GET_OR_POST != tag->app_type)
+    {
+        return E_SUCCESS;
+    }
+
+	if(tag->user_agent_len == 0)
+		return E_SUCCESS;
 	
 	useragent_t *data = malloc(sizeof(useragent_t));
+
+	memset(data, 0x0, sizeof(useragent_t));
+	
 	strncpy( (void *)(data->keys.agent), (void *)(tag->user_agent), tag->user_agent_len);
 	data->keys.ip = tag->outer_srcip4;
 	
@@ -113,8 +124,9 @@ void user_iter(void *data, void *param)
 	char buffer[1024];
 	useragent_t * user = (useragent_t *) data;
 	FILE * fp = param;
+
 	
-	snprintf(buffer, 1024, "%d.%d.%d.%d   %256s  %ld %s\n" , (user->keys.ip>>24)&0xff,
+	snprintf(buffer, 1024, "%d.%d.%d.%d::%s::%ld::%s\n" , (user->keys.ip>>24)&0xff,
 		(user->keys.ip>>16)&0xff,(user->keys.ip>>8)&0xff,(user->keys.ip)&0xff,
 		user->keys.agent, user->today_access_cnt,
 		asctime(localtime(&(user->last_push_us))));
@@ -130,7 +142,7 @@ berr user_assess_save_file(char * filename)
 
 	if(fp == NULL)
 	{
-		printf("file Open Failed\n");
+		printf("file %s Open  Failed\n", filename);
 		return E_FAIL;
 	}
 	
@@ -143,8 +155,8 @@ DEFUN(show_user_all,
       show_user_all_cnt_cmd,
       "userlist save FILENAME", "")
 {
-	char *filename =(char * ) argv[1];
-
+	char *filename =(char * ) argv[0];
+	vty_out(vty, "Success save %s %s", filename, VTY_NEWLINE);
     return user_assess_save_file(filename);
 }
 

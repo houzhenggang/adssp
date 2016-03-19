@@ -14,6 +14,13 @@
 
 url_t url_r;
 
+struct pcre_s pcre_ack =
+	{
+		.pattern = "/_t=[0-9]+$/",
+	} ;
+
+
+
 berr url_rule_add(uint32_t id,  char *url,  char * cli_pattern, uint32_t action)
 {
     if(id >= MAX_URL_RULE || url == NULL) 
@@ -33,8 +40,7 @@ berr url_rule_add(uint32_t id,  char *url,  char * cli_pattern, uint32_t action)
         pcre_free(pcre_n->cre);
         
         
-    }
-   
+    }  
     {
         pcre_n->id = id;
         pcre_n->pattern = strdup(url);
@@ -55,6 +61,8 @@ berr url_rule_add(uint32_t id,  char *url,  char * cli_pattern, uint32_t action)
     }
     return E_SUCCESS;
 }
+
+
 
 struct pcre_s * url_rule_get(uint32_t id)
 {
@@ -99,6 +107,7 @@ berr url_rule_del(uint32_t id)
 }
 
 
+
 berr  naga_uri(hytag_t *hytag)
 {
 
@@ -118,7 +127,7 @@ berr  naga_uri(hytag_t *hytag)
     //if(strstr(tailptr,  tail))
     if( APP_TYPE_HTTP_GET_OR_POST != hytag->app_type)
     {
-       // CNT_INC(HIJACK_DROP_GET_OR_POST);
+
         return E_SUCCESS;
     }
 #if 0
@@ -140,11 +149,7 @@ berr  naga_uri(hytag_t *hytag)
     	}
 	}
 #endif
-    if(hytag->uri[0] == '/' && hytag->host_len > 0 && hytag->uri_len > 0)
-    {
-        hytag->url_len= snprintf(hytag->url, URL_MAX_LEN, "%s%s",
-                                                hytag->host, hytag->uri);
-    }
+
 
         //printf("url is : %s\n", hytag->url);
 	
@@ -155,33 +160,24 @@ berr  naga_uri(hytag_t *hytag)
 		return E_SUCCESS;
     }
     else 
-    {
-    	//hytag->acl.actions |=  ACT_DROP;
-        //CNT_INC(ADP_DROP_BACKSLASH_SUFFIX);
-        //return E_SUCCESS;  
+    {    
+    	
         for(i=0; i<url_r.inuse; i ++ )
         {
             urlcre = &(url_r.url_pcre[i]);
             if(urlcre->used && urlcre->cre)
             {
                 compare  = pcre_exec(urlcre->cre,
-                                NULL, hytag->url, hytag->url_len, 0, 0, ovector, OVECCOUNT);
-                
-                
-                if(compare > 0)
-                {
-                    if (compare > 1)
-                    {
-                        memcpy(hytag->reg, (hytag->url + ovector[2]), (ovector[3] - ovector[2])); 
-                    }
-      
-                    ACL_HIT(urlcre->acl); 
-                    HYTAG_ACL_MERGE(hytag->acl, urlcre->acl);
-				  	//printf("action = 0x%x\n", urlcre->acl.actions);
-                   	return E_SUCCESS;
-                }
-                
+                                NULL, hytag->uri, hytag->uri_len, 0, 0, ovector, OVECCOUNT);
 
+				if(compare)
+				{
+					
+					HYTAG_ACL_MERGE(hytag->acl, urlcre->acl);
+					ACL_HIT(urlcre->acl);
+					return E_SUCCESS;
+				}
+                        
             }
         }  
     }
