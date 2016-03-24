@@ -195,11 +195,11 @@ berr naga_ssp_url_backlist(hytag_t *hytag)
 
 	redisReply* r  = NULL;	
 	
-	if(hytag->acl.actions & ACT_DROP == ACT_DROP)
+	if(ACT_DROP == (hytag->acl.actions & ACT_DROP))
 	{
-		return ;
+        return E_SUCCESS;
 	}
-	
+    
     if( APP_TYPE_HTTP_GET_OR_POST != hytag->app_type)
     {
         return E_SUCCESS;
