@@ -161,6 +161,38 @@ berr bts_hashtable_add(bts_hashtable_t *tab, void *data)
     BRET(E_SUCCESS);
 }
 
+int  bts_hashtable_check(bts_hashtable_t *tab, void *data, void *program0)
+{
+    uint32_t hash, idx;
+    bts_list_t *bucket = NULL;
+    bts_listnode_t *node = NULL;
+	int rv;
+	
+    if ((NULL == tab) || (NULL == data))
+    {
+        BRET(E_PARAM);
+    }
+
+    if ((NULL == tab->hash) || (0 == tab->total_bucket) || (NULL == tab->buckets))
+    {
+        BRET(E_INIT);
+    }
+
+    hash = tab->hash(data);
+
+    idx = hash % tab->total_bucket;
+
+    bucket = &tab->buckets[idx];
+	
+	pthread_mutex_lock(&(bucket->mutex));
+    rv = bts_listnode_check(bucket, data, tab->check, program0);
+	pthread_mutex_unlock(&(bucket->mutex));    
+
+   	return rv;
+}
+	
+
+
 
 berr
 bts_hashtable_del(bts_hashtable_t *tab, void *data)

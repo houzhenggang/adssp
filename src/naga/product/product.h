@@ -1,10 +1,13 @@
 #ifndef __PRODUCT_H_
 #define __PRODUCT_H_
 
+#include "hiredis.h"
+
 typedef struct 
 {
 	int id;
 	int en;
+	long  user_push_interval; //us
 	char * productname;
 	char * white_list_file;
 	char * black_list_file;

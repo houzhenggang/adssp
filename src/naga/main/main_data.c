@@ -78,9 +78,20 @@ berr naga_data_process_module(hytag_t * hytag)
     //HYTAG_DUMP(hytag);
 
     DPF_NODE(MOD_PID, hytag, naga_pid);
-    DPF_NODE(MOD_ADP, hytag, naga_uri);
 
+#if 0	
+    if( APP_TYPE_HTTP_GET_OR_POST == hytag->app_type)
+    {
+		printf("====================start============\n");
+		printf("host=%s\n", hytag->host);
+		printf("uri=%s\n", hytag->uri);
+		printf("useragent=%s\n\n", hytag->user_agent);
+    }
+#endif
+	naga_ssp_url_backlist(hytag);
 
+	DPF_NODE(MOD_ADP, hytag, naga_uri);
+	
     DPF_NODE(MOD_NET, hytag, netseg_dp_process);
     //DPF_NODE(MOD_DNET, hytag, dnet_dp_process);
 	//naga_ssp_counter(hytag);

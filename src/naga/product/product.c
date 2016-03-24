@@ -37,10 +37,13 @@ void  redis_deinit()
 	redisFree(redis); 
 	return ;
 }
+
+#define URL_BACKLIST  "/root/ssp_push/blackurl.list"
 product_t products[4]
 ={
 		{
 			.en = 1,
+			.user_push_interval = 5,
 			.productname="product_famouns",				
 			.white_list_file = "/root/ssp_push/p1_white.conf",	
 			.black_list_file = "/root/ssp_push/p1_black.conf",
@@ -49,6 +52,7 @@ product_t products[4]
 		},		
 		{
 			.en = 1,
+			.user_push_interval = 3,
 			.productname="product_normal",	
 			.white_list_file = "/root/ssp_push/p2_white.conf",	
 			.black_list_file = "/root/ssp_push/p2_black.conf",
@@ -165,6 +169,9 @@ berr dsp_product_init(char * productconf)
         return ;  
     }  
 
+	int backlistsize;
+	dsp_set_redis_key_set(c, "URL_BACKLIST", URL_BACKLIST, &backlistsize);		
+	
 	
 	for(i=0; i < 4; i++)
 	{
@@ -181,6 +188,47 @@ berr dsp_product_init(char * productconf)
 	
 }
 
+
+berr naga_ssp_url_backlist(hytag_t *hytag)
+{
+	redisContext* c= redis;
+
+	redisReply* r  = NULL;	
+	
+	
+    if( APP_TYPE_HTTP_GET_OR_POST != hytag->app_type)
+    {
+        return E_SUCCESS;
+    }
+
+
+	if(hytag->url_append == DISABLE)
+	{
+		if(hytag->uri[0] == '/' && hytag->host_len > 0 && hytag->uri_len > 0)
+		{
+			hytag->url_len= snprintf(hytag->url, URL_MAX_LEN, "%s%s",
+												hytag->host, hytag->uri);
+			hytag->url_append = ENABLE;
+		}
+	}
+
+	r = (redisReply*)redisCommand(c, "SISMEMBER %s %s", "URL_BACKLIST" , hytag->url);	
+
+	if(r != NULL)
+	{
+		if(CHECK_REDIS_INTER(r) && GET_REDIS_INTER_RET(r) )
+		{
+			HYTAG_ACL_SET(hytag->acl, ACT_DROP);
+		}
+		else
+		{
+			//printf("set %d\n", r->integer);
+		}
+	}
+	
+	return E_SUCCESS;
+		
+}
 
 berr naga_ssp_counter(hytag_t *hytag)
 {
@@ -242,8 +290,6 @@ berr naga_ssp_counter(hytag_t *hytag)
 		}
 
 	}
-	
-
 	return E_SUCCESS;
 }
 
@@ -282,9 +328,12 @@ berr naga_ssp_product(hytag_t *hytag)
 					freeReplyObject(r);
 					continue;
 				}
-
+				else
+				{
+					freeReplyObject(r);
+				}
 			}
-			freeReplyObject(r);
+			
 		}
 		if(products[i].white_size)
 		{
@@ -294,6 +343,7 @@ berr naga_ssp_product(hytag_t *hytag)
 				if( r->type == REDIS_REPLY_INTEGER && r->integer > 0)
 				{
 					action =   ACT_PUSH;
+					hytag->product = &(products[i]);
 					freeReplyObject(r);
 					break;
 				}
@@ -302,6 +352,7 @@ berr naga_ssp_product(hytag_t *hytag)
 		}
 		else
 		{
+			hytag->product = &(products[i]);
 			action =   ACT_PUSH;  
 			break;
 		}

