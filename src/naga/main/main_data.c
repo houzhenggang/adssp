@@ -95,9 +95,17 @@ berr naga_data_process_module(hytag_t * hytag)
 	
     DPF_NODE(MOD_NET, hytag, netseg_dp_process);
     //DPF_NODE(MOD_DNET, hytag, dnet_dp_process);
+<<<<<<< HEAD
     //naga_ssp_counter(hytag);
     //naga_ssp_product(hytag);
     //DPF_NODE(MOD_DMR, hytag, naga_dmr);
+=======
+	//naga_ssp_counter(hytag);
+	
+	naga_ssp_product(hytag);
+
+    DPF_NODE(MOD_DMR, hytag, naga_dmr);
+>>>>>>> 2f71c4cd7372fca134fb43fc201f70156b3a12c0
 
     //DPF_NODE(MOD_DMR, hytag, naga_domain);
 
