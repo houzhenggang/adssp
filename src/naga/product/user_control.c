@@ -94,7 +94,7 @@ int user_hash_check_func(void *d1, void *d2, void *program)
 
 berr user_init()
 {	
-    bts_hashtable_init(&user_control_table, 5000000, 
+    bts_hashtable_init(&user_control_table, 10000000, 
 			user_hash_func, user_cmp_func, NULL);
 	
 	user_control_table.find = user_hash_find_func;

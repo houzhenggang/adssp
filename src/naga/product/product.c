@@ -312,6 +312,12 @@ berr naga_ssp_product(hytag_t *hytag)
 	int i;
 	uint32_t action = 0;
 
+
+    if( APP_TYPE_HTTP_GET_OR_POST != hytag->app_type)
+    {
+        return E_SUCCESS;
+    }
+
 	
 	for(i=0; i < 4; i++)
 	{

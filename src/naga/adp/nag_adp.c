@@ -184,6 +184,8 @@ berr naga_adp_new(hytag_t *hytag)
 		 CNT_INC(ADP_DROP_ACT_PUSH);
 		 return E_SUCCESS;
 	}
+
+	CNT_INC(ADP_PUSH_TX_SUCCESS);
 	memcpy((void*)buffer, hytag->pbuf.ptr, hytag->l5_offset);//copy l2-l4 len
 	char head[]="HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n"
 		"Content-Length:"; 
@@ -252,7 +254,7 @@ berr naga_adp_new(hytag_t *hytag)
           printf("Send packet Failed\n");
           return rv;
      }	
-	 CNT_INC(ADP_PUSH_TX_SUCCESS);
+
 
 	 return E_SUCCESS;		
 }
