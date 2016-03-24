@@ -147,15 +147,14 @@ berr  naga_uri(hytag_t *hytag)
 #endif
 
 
-        //printf("url is : %s\n", hytag->url);
+    //printf("url is : %s\n", hytag->url);
 	
     if(hytag->uri_len == 1 && !strcmp(hytag->uri, "/"))
     {    
-    	//hytag->acl.actions |=  ACT_LOG;
         CNT_INC(URL_HOMEPAGE);
-		return E_SUCCESS;
     }
-    else 
+
+	
     {    
     	
         for(i=0; i<url_r.inuse; i ++ )

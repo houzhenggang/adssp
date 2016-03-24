@@ -3,6 +3,7 @@
 
 #include "boots.h"
 #include <pcap.h>
+
 typedef uint32_t ipaddr_t;
 
 
@@ -186,6 +187,7 @@ typedef struct
     uint16_t data_len;       /* total packet length, used for template */
     uint8_t  pushed_second_assert;
 	uint8_t  snet_hit_id;
+	void * product;
 }hytag_t;
 
 #define HYTAG_ACL_MERGE(_tagacl, _ruleacl) \

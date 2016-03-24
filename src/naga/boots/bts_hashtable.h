@@ -15,6 +15,7 @@ typedef struct {
     uint32_t total_cell;
     bts_list_t *buckets;
 	bts_hash_find_func find;
+	bts_hash_check_func check;
 } bts_hashtable_t;
 
 

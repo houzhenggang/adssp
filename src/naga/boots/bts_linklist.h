@@ -23,6 +23,7 @@ typedef struct  bts_listnode
 typedef int (*bts_list_cmp_func)(void *val1, void *val2); 
 typedef void (*bts_list_del_func)(void *val);
 typedef void (*bts_hash_find_func)(void *ndata, void *odata);
+typedef int (*bts_hash_check_func)(void *ndata, void *odata, void *);
 
 
 

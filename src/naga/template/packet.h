@@ -32,7 +32,7 @@ berr ads_mac_get(int dst_or_src, int *custom, uint8_t * mac);
 berr ads_mac_set(int dst_or_src, int custom, uint8_t* mac );
 
 
-berr ads_response_packet_gen(void *ptr, hytag_t *hytag);
+berr ads_response_packet_gen(void *ptr, hytag_t *hytag, int );
 
 
 #endif

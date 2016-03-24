@@ -358,6 +358,43 @@ void bts_listnode_delete_by_key (struct bts_list *bts_list, void *key)
     return;
 }
 
+
+int bts_listnode_check(struct bts_list *bts_list, void *val,  
+										bts_hash_check_func checkcall, void *program0)
+{
+
+	struct bts_listnode *node = NULL;
+	struct list_head *pos = NULL, *next = NULL;
+	assert(bts_list);
+	assert(bts_list->cmp);
+	int find = 0;
+
+	list_for_each_safe(pos, next, &(bts_list->bucket_head))
+	{
+		 node  = list_entry(pos, bts_listnode_t, node);
+		 if(!bts_list->cmp(node->data, val))
+		 {
+			find = 1;
+			break;
+		 }
+		
+	} 
+	if(find)
+	{
+		if(checkcall)
+			return checkcall(val, node->data, program0);
+		else
+			return 0;
+	}
+	else
+	{
+		return 0;
+	}
+	return 0;
+	
+}
+
+
 void
 bts_listnode_add (struct bts_list *bts_list, void *val,  bts_hash_find_func findcall)
 {

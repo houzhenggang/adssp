@@ -406,7 +406,7 @@ redirect_302_response_generator(void *ptr, hytag_t *hytag, char *url)
 }
 
 
-berr ads_response_packet_gen(void *ptr, hytag_t *hytag)
+berr ads_response_packet_gen(void *ptr, hytag_t *hytag, int nl5len)
 {
     struct tcp_hdr *tcp_hdr = NULL;
     struct ipv4_hdr *ip_hdr = NULL;
@@ -433,7 +433,7 @@ berr ads_response_packet_gen(void *ptr, hytag_t *hytag)
     /* l5 fill */
     debug("old l5_len(%d)", hytag->l5_len);
     http_head = ((char *)ptr) + hytag->l5_offset;
-
+	hytag->l5_len = nl5len;
     debug("new l5_len(%d)", hytag->l5_len);
 
     /* l3 switch */
@@ -468,7 +468,6 @@ berr ads_response_packet_gen(void *ptr, hytag_t *hytag)
         return rv;
     }
 
-    hytag->data_len = hytag->l5_offset - hytag->l2_offset + hytag->l5_len;
     return E_SUCCESS;
 	
 }

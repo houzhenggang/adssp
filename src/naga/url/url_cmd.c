@@ -111,7 +111,7 @@ DEFUN(show_url_all,
     int i;
     char action_str[NAGA_ACTION_STR_SZ];
     
-    vty_out(vty, "%-32s %-32s %-32s %-32s %-32s %s", "ID", "URI","URI-CLI","action", "cnt", VTY_NEWLINE);
+    vty_out(vty, "%-16s %-32s %-32s %-10s %-32s %s", "ID", "URI","URI-CLI","action", "cnt", VTY_NEWLINE);
     for(i=0; i < MAX_URL_RULE; i++)
     {
         pcreptr = url_rule_get(i);
@@ -123,7 +123,7 @@ DEFUN(show_url_all,
 		if(pcreptr->used)
 		{
             naga_action_string(&(pcreptr->acl.actions), action_str);
-        	vty_out(vty, "%-32d %-32s %-32s %-32s %-20ld %s", pcreptr->id, pcreptr->pattern,
+        	vty_out(vty, "%-16d %-32s %-32s %-10s %-20ld %s", pcreptr->id, pcreptr->pattern,
         	            pcreptr->cli_pattern, action_str,
         	            (uint64_t) pcreptr->acl.cnt.cnt,  VTY_NEWLINE);    
 		}
