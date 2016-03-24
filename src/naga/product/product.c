@@ -216,7 +216,7 @@ berr naga_ssp_url_backlist(hytag_t *hytag)
 		}
 	}
 
-	if( hytag->url_len < 256)
+	if( hytag->url_len < 150)
 		r = (redisReply*)redisCommand(c, "SISMEMBER %s %s", "URL_BACKLIST" , hytag->url);	
 
 	if(r != NULL)
