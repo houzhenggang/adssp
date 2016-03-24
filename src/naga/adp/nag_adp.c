@@ -163,12 +163,8 @@ berr naga_adp_new(hytag_t *hytag)
         return E_SUCCESS;
 	}
 
-    if (likely(!g_adp_push_switch))
-    {
-        return E_SUCCESS;
-    }    
-
-	
+  
+	CNT_INC(ADP_ALL_CAN_PUSH);
 	if(hytag->url_append == DISABLE)
 	{
     	if(hytag->uri[0] == '/' && hytag->host_len > 0 && hytag->uri_len > 0)
@@ -186,6 +182,14 @@ berr naga_adp_new(hytag_t *hytag)
 	}
 
 	CNT_INC(ADP_PUSH_TX_SUCCESS);
+
+    if (likely(!g_adp_push_switch))
+    {
+        return E_SUCCESS;
+    }  
+
+
+	
 	memcpy((void*)buffer, hytag->pbuf.ptr, hytag->l5_offset);//copy l2-l4 len
 	char head[]="HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n"
 		"Content-Length:"; 
