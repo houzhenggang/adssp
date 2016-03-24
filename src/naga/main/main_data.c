@@ -88,9 +88,10 @@ berr naga_data_process_module(hytag_t * hytag)
 		printf("useragent=%s\n\n", hytag->user_agent);
     }
 #endif
-	naga_ssp_url_backlist(hytag);
 
 	DPF_NODE(MOD_ADP, hytag, naga_uri);
+
+	naga_ssp_url_backlist(hytag);
 	
     DPF_NODE(MOD_NET, hytag, netseg_dp_process);
     //DPF_NODE(MOD_DNET, hytag, dnet_dp_process);
