@@ -175,6 +175,7 @@ berr user_assess_add(hytag_t *tag)
 	data->keys.ip = tag->outer_srcip4;
 	
 	data->today_access_cnt = 1;		
+	
 	bts_hashtable_add(&user_control_table, data);
 	return E_SUCCESS;								
 }
