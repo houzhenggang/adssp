@@ -138,7 +138,7 @@ int  user_push_check(hytag_t *tag)
 	}
 	else
 	{
-		return 0;
+		intelval = 5;
 	}
 
 	rawtime = time(NULL);	
