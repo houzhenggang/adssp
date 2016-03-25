@@ -85,6 +85,7 @@ dmr_get(char *key)
     return (dmr_t *)bts_hashtable_lookup(&dmr_table, (void*) (&data));
 }
 
+
 berr
 dmr_add(dmr_t *entry)
 {

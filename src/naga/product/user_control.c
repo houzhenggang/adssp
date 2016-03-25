@@ -172,8 +172,7 @@ berr user_assess_add(hytag_t *tag)
 	memset(data, 0x0, sizeof(useragent_t));
 	
 	strncpy( (void *)(data->keys.agent), (void *)(tag->user_agent), tag->user_agent_len);
-	data->keys.ip = tag->outer_srcip4;
-	
+	data->keys.ip = tag->outer_srcip4;	
 	data->today_access_cnt = 1;		
 	
 	bts_hashtable_add(&user_control_table, data);

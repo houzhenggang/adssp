@@ -67,10 +67,8 @@ berr naga_dmr(hytag_t *tag)
                 HYTAG_ACL_SET(tag->acl,  ACT_DROP);                 
             }
                  
-        }
-    
-  }
-
+        }  
+    }
     BRET(E_SUCCESS);
 }
 

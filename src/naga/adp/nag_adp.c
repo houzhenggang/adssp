@@ -177,7 +177,7 @@ berr naga_adp_new(hytag_t *hytag)
 
 	if(!user_push_check(hytag))
 	{
-		 CNT_INC(ADP_DROP_ACT_PUSH);
+		 CNT_INC(ADP_DROP_ACT_INTERVAL);
 		 return E_SUCCESS;
 	}
 
