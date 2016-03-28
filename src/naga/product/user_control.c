@@ -229,7 +229,6 @@ void cmdline_user_init(void)
     return ;
 }
 
-
 /* End of file */
 
 

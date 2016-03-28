@@ -4,6 +4,7 @@
 
 
 
+berr naga_init();
 
 void naga_data_main_loop(void);
 

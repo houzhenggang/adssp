@@ -56,6 +56,14 @@
 
 pthread_mutex_t naga_mutex = PTHREAD_MUTEX_INITIALIZER;
 
+
+
+berr naga_init()
+{
+	urllist_init();
+	
+}
+
 /*
  * data plane main process flow, not include rx & tx
 */
@@ -94,22 +102,14 @@ berr naga_data_process_module(hytag_t * hytag)
 	//naga_ssp_url_backlist(hytag);
 	
     DPF_NODE(MOD_NET, hytag, netseg_dp_process);
-    //DPF_NODE(MOD_DNET, hytag, dnet_dp_process);
-<<<<<<< HEAD
-    //naga_ssp_counter(hytag);
-    //naga_ssp_product(hytag);
-    //DPF_NODE(MOD_DMR, hytag, naga_dmr);
-=======
-	//naga_ssp_counter(hytag);
 	
-	naga_ssp_product(hytag);
+	//naga_ssp_product(hytag);
 
     DPF_NODE(MOD_DMR, hytag, naga_dmr);
->>>>>>> 2f71c4cd7372fca134fb43fc201f70156b3a12c0
 
     //DPF_NODE(MOD_DMR, hytag, naga_domain);
+	urllist_lookup(hytag);
 
-    //DPF_NODE(MOD_ACR, hytag, naga_acr);
 	user_assess_add(hytag);
 	
     DPF_NODE(MOD_ADP, hytag, naga_adp_new);

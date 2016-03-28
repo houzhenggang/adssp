@@ -43,7 +43,8 @@ EXPORT_MAP := lib_dmr_version.map
 
 LIBABIVER := 1
 
-SRCS-y :=  product.c user_control.c
+SRCS-y :=  product.c user_control.c url_blist.c
+
 
 #
 # Export include files

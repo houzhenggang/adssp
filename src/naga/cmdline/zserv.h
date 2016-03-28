@@ -26,7 +26,7 @@
 #include "workqueue.h"
 
 /* Default port information. */
-#define ZEBRA_VTY_PORT                2601
+#define ZEBRA_VTY_PORT                2602
 
 /* Default configuration filename. */
 #define DEFAULT_CONFIG_FILE "zebra.conf"

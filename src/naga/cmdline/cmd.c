@@ -262,6 +262,8 @@ int cmdline (int argc, char **argv)
     //access_list_init ();
 
 	cmdline_user_init();
+
+	cmdline_urllist_init();
     /* Configuration file read*/
     vty_read_config (config_file, config_default);
 

@@ -45,7 +45,7 @@
 #include <errno.h>
 #include <getopt.h>
 
-#include "main_data.h"
+
 #include "vsr_dp.h"
 #include "dmr_dp.h"
 #include "acr_dp.h"
@@ -57,6 +57,9 @@
 #include "bts_log.h"
 #include "netseg.h"
 #include "dnet.h"
+
+#include "main_data.h"
+
 
 #define RTE_LOGTYPE_L2FWD RTE_LOGTYPE_USER1
 
@@ -602,9 +605,10 @@ main(int argc, char **argv)
             interface_str = strdup(argv[2]);
         
         itf_raw_socket_init(interface_str);
-		dsp_product_init(NULL);
-		redis_init();
+		//dsp_product_init(NULL);
+		//redis_init();
 		user_init();
+		naga_init();
         cmdline (0, NULL);        
     }
     

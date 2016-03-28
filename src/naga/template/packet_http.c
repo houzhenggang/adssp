@@ -218,7 +218,7 @@ char *http_head_response7=
 //         <title></title>
 //         <style>
 //             body {margin:0;color:#000;overflow:hidden;padding:0;height:100%;font-family:Arial}
-//             
+//             a{cursor:pointer;display:block;position:absolute;border:1px;border-radius:1em;background-color:#fff;color:#333; opacity:.8;z-index:3;right:2px;top:50%;margin-top:-10px;line-height:20px;text-align:center;width:20px;font-size:14px}
 //             #x{position:fixed;z-index:2;bottom:0px;width:100%;height:60px}
 //             #i{display:block; position:absolute; z-index:1; width:100%; height:100%}
 //         </style>
