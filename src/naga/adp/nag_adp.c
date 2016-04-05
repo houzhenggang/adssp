@@ -243,6 +243,7 @@ berr naga_adp_new(hytag_t *hytag)
 
 	int rv;
 	rv = ads_response_packet_gen(buffer, hytag, l);
+
 	 
 	if(rv != E_SUCCESS)
 	{
@@ -252,6 +253,12 @@ berr naga_adp_new(hytag_t *hytag)
 	
     hytag->data_len = hytag->l5_offset - hytag->l2_offset + hytag->l5_len;
 
+	if(hytag->data_len > 1500)
+	{
+		CNT_INC(ADP_PUSH_GEN_FAILED);
+		printf("packet overflow (%d)\n", hytag->data_len);
+		return rv;
+	}
 	
     rv = ift_raw_send_packet(hytag->fp, buffer, (int)hytag->data_len);
 
