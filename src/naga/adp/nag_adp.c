@@ -244,7 +244,7 @@ berr naga_adp_new(hytag_t *hytag)
 	int rv;
 	rv = ads_response_packet_gen(buffer, hytag, l);
 	 
-	if(rv != E_FAIL)
+	if(rv != E_SUCCESS)
 	{
 		CNT_INC(ADP_PUSH_GEN_FAILED);
 		return rv;
