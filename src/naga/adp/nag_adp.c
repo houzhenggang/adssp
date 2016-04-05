@@ -167,6 +167,11 @@ berr naga_adp_new(hytag_t *hytag)
 	CNT_INC(ADP_ALL_CAN_PUSH);
 	if(hytag->url_append == DISABLE)
 	{
+		if(hytag->uri_len > 1024)
+		{
+			CNT_INC(ADP_DROP_URI_OVERFLOW);
+			return E_SUCCESS;
+		}
     	if(hytag->uri[0] == '/' && hytag->host_len > 0 && hytag->uri_len > 0)
     	{
         	hytag->url_len= snprintf(hytag->url, URL_MAX_LEN, "%s%s",
