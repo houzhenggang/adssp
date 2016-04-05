@@ -140,6 +140,7 @@ ads_tcp_head_modify(struct tcp_hdr *tcphdr, hytag_t *hytag, uint8_t direction)
    	else if(tcphd_len < 20)
 	{
 		printf("tcphdr len = %d\n", tcphd_len);	
+		return E_FAIL;
 		
 	}
     	else

@@ -244,11 +244,15 @@ berr naga_adp_new(hytag_t *hytag)
 	int rv;
 	rv = ads_response_packet_gen(buffer, hytag, l);
 	 
-
-
+	if(rv != E_FAIL)
+	{
+		CNT_INC(ADP_PUSH_GEN_FAILED);
+		return rv;
+	}
+	
     hytag->data_len = hytag->l5_offset - hytag->l2_offset + hytag->l5_len;
 
-
+	
     rv = ift_raw_send_packet(hytag->fp, buffer, (int)hytag->data_len);
 
 	 //printf("datalen = %d\n", hytag->data_len);
@@ -258,7 +262,6 @@ berr naga_adp_new(hytag_t *hytag)
           printf("Send packet Failed\n");
           return rv;
      }	
-
 
 	 return E_SUCCESS;		
 }
