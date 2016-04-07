@@ -190,7 +190,7 @@ berr naga_adp_new(hytag_t *hytag)
 		 return E_SUCCESS;
 	}
 
-	CNT_INC(ADP_PUSH_TX_SUCCESS);
+
 
     if (likely(!g_adp_push_switch))
     {
@@ -278,7 +278,7 @@ berr naga_adp_new(hytag_t *hytag)
           printf("Send packet Failed\n");
           return rv;
      }	
-
+	 CNT_INC(ADP_PUSH_TX_SUCCESS);
 	 return E_SUCCESS;		
 }
 
