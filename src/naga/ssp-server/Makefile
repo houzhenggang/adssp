@@ -29,29 +29,34 @@
 #   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 #   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+ifeq ($(RTE_SDK),)
+$(error "Please define RTE_SDK environment variable")
+endif
+
+# Default target, can be overriden by command line or environment
+RTE_TARGET ?= x86_64-native-linuxapp-gcc
+
 include $(RTE_SDK)/mk/rte.vars.mk
 
-DIRS-y += include
-DIRS-y += boots
-DIRS-y += libzebra
-DIRS-y += cmdline
-DIRS-y += vsr
-DIRS-y += pid
-DIRS-y += itf
-DIRS-y += dmr
-DIRS-y += acr
-DIRS-y += netseg
-DIRS-y += dnet
-DIRS-y += template
-DIRS-y += adp
-DIRS-y += pub
-DIRS-y += url
-DIRS-y += urlr
-DIRS-y += hijack
-DIRS-y += debug
-DIRS-y += domain
-DIRS-y += product 
-DIRS-y += ssp-server 
-DIRS-y += main
+# binary name
+APP = sspserver 
 
-include $(RTE_SDK)/mk/rte.extsubdir.mk
+# all source are stored in SRCS-y
+SRCS-y := ad_init_mysql.c zmq_server.c 
+
+CFLAGS += -O3 $(USER_FLAGS)
+#CFLAGS += $(WERROR_FLAGS)
+
+
+
+#LDFLAGS += -L ../libzebra -L /mnt/hgfs/code/rose/src/dpdk-2.0.0/app/naga/cmdline -L ../vsr
+CFLAGS  += -I ../cmdline  -I ../libzebra  -I ../boots -I ../include -I ../vsr -I ../pid -I ../debug -I./include
+CFLAGS  += -I ../itf -I ../dmr -I ../acr -I ../adp -I ../netseg -I ../dnet -I ../urlr -I ../hijack -I ../domain
+#LDFLAGS += -L ../libzebra -L /mnt/hgfs/code/rose/src/dpdk-2.0.0/app/naga/cmdline -L ../vsr
+LDLIBS  +=  ../cmdline/libcmdline.a  ../libzebra/libzebra.a ../url/liburl.a -L/usr/lib64/mysql  -lmysqlclient -lzmq
+LDLIBS  +=   ../vsr/libvsr.a  ../pid/libpid.a ../itf/libitf.a   ../dmr/libdmr.a ../acr/libacr.a ../boots/libboots.a ../pub/libpub.a ../urlr/liburlr.a  ../product/libproduct.a
+LDLIBS  +=   ../adp/libadp.a ../template/libtemp.a ../debug/libdebug.a  -lpthread ../itf/libitf.a ../netseg/libnetseg.a ../dnet/libdnetseg.a ../url/liburl.a ../pcre-m/libpcre.a ../hijack/libhijack.a ../domain/libdomain.a ../hiredis/libhiredis.a
+LDLIBS  +=   -lcrypt -lreadline -lrt -lpcap -lpthread -lz
+
+
+include $(RTE_SDK)/mk/rte.app.mk
