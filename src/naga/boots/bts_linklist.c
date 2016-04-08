@@ -399,7 +399,7 @@ void
 bts_listnode_add (struct bts_list *bts_list, void *val,  bts_hash_find_func findcall)
 {
     struct bts_listnode *node = NULL;
-    struct list_head *pos = NULL, *next = NULL;
+    struct dlist_head *pos = NULL, *next = NULL;
     assert(bts_list);
     assert(bts_list->cmp);
     int find = 0;
