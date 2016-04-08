@@ -78,7 +78,7 @@ bts_hashtable_t* init_domain_from_file(char *filename)
 
 	FILE *fp = NULL;
 	char host_line[MAX_HOST_LEN] = {0};
-	int rv = 0;
+	berr rv = 0;
 	char *p = NULL;
 	int size = 0;
 	
@@ -129,10 +129,10 @@ berr ssp_domain_push_add(char *host, bts_hashtable_t* hashtable)
 int ssp_domain_push_lookup(char *host, bts_hashtable_t* hashtable)
 {	
 
-	ssp_domain_t data;
+	ssp_domain_t data={};
 	
-	strncpy(data->keys.host, host, MAX_HOST_LEN);
-	data->host_len = strlen(host);
+	strncpy(data.keys.host, host, MAX_HOST_LEN);
+	data.host_len = strlen(host);
 	
 	return bts_hashtable_check(hashtable, data, NULL);
 }
