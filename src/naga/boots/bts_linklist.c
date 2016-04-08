@@ -75,7 +75,7 @@ bts_listnode_add_sort (struct bts_list *bts_list, void *val)
   struct bts_listnode *n;
   struct bts_listnode *new;
   
-  assert (val != NULL);
+  //assert (val != NULL);
   
   new = bts_listnode_new ();
   new->data = val;
@@ -116,7 +116,7 @@ bts_listnode_add_after (struct bts_list *bts_list, struct bts_listnode *pp, void
 {
   struct bts_listnode *nn;
   
-  assert (val != NULL);
+ // assert (val != NULL);
   
   nn = bts_listnode_new ();
   nn->data = val;
@@ -162,7 +162,7 @@ bts_listnode_delete (struct bts_list *bts_list, void *val)
 {
   struct bts_listnode *node;
 
-  assert(bts_list);
+ // assert(bts_list);
   for (node = bts_list->head; node; node = node->next)
     {
       if (node->data == val)
@@ -192,7 +192,7 @@ bts_listnode_head (struct bts_list *bts_list)
 {
   struct bts_listnode *node;
 
-  assert(bts_list);
+ // assert(bts_list);
   node = bts_list->head;
 
   if (node)
@@ -204,7 +204,7 @@ bts_listnode_head (struct bts_list *bts_list)
 void
 bts_list_delete (struct bts_list *bts_list)
 {
-  assert(bts_list);
+ // assert(bts_list);
   bts_list_delete_all_node (bts_list);
   bts_list_free (bts_list);
 }
@@ -215,7 +215,7 @@ bts_listnode_lookup (struct bts_list *bts_list, void *data)
 {
   struct bts_listnode *node;
 
-  assert(bts_list);
+ // assert(bts_list);
   for (node = bts_listhead(bts_list); node; node = bts_listnextnode (node))
     if (data == bts_listgetdata (node))
       return node;
@@ -249,7 +249,7 @@ bts_list_add_node_prev (struct bts_list *bts_list, struct bts_listnode *current,
 {
   struct bts_listnode *node;
   
-  assert (val != NULL);
+  //assert (val != NULL);
   
   node = bts_listnode_new ();
   node->next = current;
@@ -272,7 +272,7 @@ bts_list_add_node_next (struct bts_list *bts_list, struct bts_listnode *current,
 {
   struct bts_listnode *node;
   
-  assert (val != NULL);
+ // assert (val != NULL);
   
   node = bts_listnode_new ();
   node->prev = current;
@@ -312,8 +312,8 @@ bts_listnode_lookup_by_key (bts_list_t *bts_list, void *key)
 
   struct dlist_head *pos = NULL, *next =NULL;
 
-  assert(bts_list);
-  assert(bts_list->cmp);
+ // assert(bts_list);
+ // assert(bts_list->cmp);
 
   list_for_each_safe(pos, next,  &(bts_list->bucket_head))
   {
@@ -340,8 +340,8 @@ void bts_listnode_delete_by_key (struct bts_list *bts_list, void *key)
 {
     struct bts_listnode *node = NULL;
     struct dlist_head *pos = NULL, *next = NULL;
-    assert(bts_list);
-    assert(bts_list->cmp);
+   // assert(bts_list);
+   // assert(bts_list->cmp);
     
     list_for_each_safe(pos, next, &(bts_list->bucket_head))
     {
@@ -367,8 +367,8 @@ int bts_listnode_check(struct bts_list *bts_list, void *val,
 
 	struct bts_listnode *node = NULL;
 	struct dlist_head *pos = NULL, *next = NULL;
-	assert(bts_list);
-	assert(bts_list->cmp);
+	//assert(bts_list);
+	//assert(bts_list->cmp);
 	int find = 0;
 
 	list_for_each_safe(pos, next, &(bts_list->bucket_head))
@@ -402,8 +402,8 @@ bts_listnode_add (struct bts_list *bts_list, void *val,  bts_hash_find_func find
 {
     struct bts_listnode *node = NULL;
     struct dlist_head *pos = NULL, *next = NULL;
-    assert(bts_list);
-    assert(bts_list->cmp);
+    //assert(bts_list);
+    //assert(bts_list->cmp);
     int find = 0;
     
     list_for_each_safe(pos, next, &(bts_list->bucket_head))
@@ -450,7 +450,7 @@ bts_list_delete_all_node (struct bts_list *bts_list)
 {
     struct bts_listnode *node = NULL;
     struct dlist_head *pos = NULL, *next = NULL;
-    assert(bts_list);
+    //assert(bts_list);
 
     
     list_for_each_safe(pos, next, &(bts_list->bucket_head))
@@ -469,7 +469,7 @@ bts_list_all_element_lo(struct bts_list *bts_list, bts_iter_func func, void *par
 {
 	struct bts_listnode *node = NULL;
 	struct dlist_head *pos = NULL, *next = NULL;
-	assert(bts_list);
+	//assert(bts_list);
 
 	list_for_each_safe(pos, next, &(bts_list->bucket_head))
     {
@@ -494,7 +494,7 @@ bts_list_delete_all_node (struct bts_list *bts_list)
   struct bts_listnode *node;
   struct bts_listnode *next;
 
-  assert(bts_list);
+  //assert(bts_list);
   for (node = bts_list->head; node; node = next)
     {
       next = node->next;
@@ -512,7 +512,7 @@ bts_listnode_add (struct bts_list *bts_list, void *val)
 {
 	struct bts_listnode *node;
 
-	assert (val != NULL);
+	//assert (val != NULL);
 
 	node = bts_listnode_new ();
 
@@ -535,8 +535,8 @@ bts_listnode_delete_by_key (struct bts_list *bts_list, void *key)
 {
     struct bts_listnode *node;
 
-    assert(bts_list);
-    assert(bts_list->cmp);
+    //assert(bts_list);
+    //assert(bts_list->cmp);
     for (node = bts_list->head; node; node = node->next)
     {
         if (bts_list->cmp(key, node->data))
@@ -565,8 +565,8 @@ bts_listnode_lookup_by_key (bts_list_t *bts_list, void *key)
   bts_listnode_t *node = NULL;
   void *dkey = NULL;
 
-  assert(bts_list);
-  assert(bts_list->cmp);
+  //assert(bts_list);
+  //assert(bts_list->cmp);
   
   for (node = bts_listhead(bts_list); node; node = bts_listnextnode (node)){
       if (!bts_list->cmp(key, node->data))
