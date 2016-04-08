@@ -315,7 +315,7 @@ static inline void dlist_splice_tail(struct dlist_head *list,
  * The list at @list is reinitialised
  */
 static inline void dlist_splice_init(struct dlist_head *list,
-                                    structd list_head *head)
+                                    struct dlist_head *head)
 {
     if (!dlist_empty(list))
     {
