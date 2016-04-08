@@ -27,8 +27,8 @@ typedef struct
 	char cnzz_code[1024]; //just for note;
 	char push_url[512]; //just for not	
 	
-	char domain_white_file[128];		
-	char domain_black_file[128];			
+	char *domain_white_file;		
+	char *domain_black_file;			
 
 	bts_hashtable_t * domain_white_hashtb;
 	bts_hashtable_t * domain_black_hashtb;	
