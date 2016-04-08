@@ -16,6 +16,17 @@ typedef enum
 	ENUM_ZMQ_COOKEIS,	
 }enum_msg_t;
 
+
+typedef struct
+{
+	int adtype;
+	char useragent[512];
+	char refer[1024];
+	char cookies[512];
+};
+
+
+
 int zmq_server_init (void)
 {
     srandom ((unsigned) time (NULL));
@@ -25,8 +36,11 @@ int zmq_server_init (void)
     zmq_bind (server, "tcp://*:5555");
 	char buffer[2048];
 	int size;
-	
+	char sendbuffer[2048];
     int cycles = 0;
+	int l = 0;
+
+	
     while (1) {
 		
 		size=zmq_recv (server, buffer, 2000, 0);
@@ -36,11 +50,20 @@ int zmq_server_init (void)
 			printf("zmq_recv Failed\n");
 			break;;
 		}
-		buffer[size] = 0;
+		
+		buffer[size] = 0;		
 		printf("recv len(%d) %s\n", size, buffer);
-        s_send (server, "OK");
+		
+		l+= snprintf(sendbuffer, 2048,
+			"echo  \'document.getElementById(\"suspendcode15iframe\").src=\"http://219.234.83.60/locate_2/ddk_yanmai.pc.html\";\';"
+			"setcookie(\"%s\", \"%s\", time()+3600);",
+			"__hy_cook1", "ppppp"
+			);
+			
+		zmq_send(server, sendbuffer, l , 0);
     }
     zmq_close (server);
     zmq_ctx_destroy (context);
     return 0;
 }
+
