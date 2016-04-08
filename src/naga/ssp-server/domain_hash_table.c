@@ -65,6 +65,16 @@ int ssp_domain_hash_check_func(void *d1, void *d2, void *program)
 }
 
 
+berr ssp_domain_push_add(char *host, bts_hashtable_t* hashtable)
+{	
+
+	ssp_domain_t *data = (ssp_domain_t *)malloc(sizeof(ssp_domain_t));
+
+	strncpy(data->keys.host, host, MAX_HOST_LEN);
+	data->host_len = strlen(host);
+	bts_hashtable_add(hashtable, data);
+	return E_SUCCESS;
+}
 
 
 
@@ -114,16 +124,6 @@ bts_hashtable_t* init_domain_from_file(char *filename)
 }
 
 
-berr ssp_domain_push_add(char *host, bts_hashtable_t* hashtable)
-{	
-
-	ssp_domain_t *data = (ssp_domain_t *)malloc(sizeof(ssp_domain_t));
-
-	strncpy(data->keys.host, host, MAX_HOST_LEN);
-	data->host_len = strlen(host);
-	bts_hashtable_add(hashtable, data);
-	return E_SUCCESS;
-}
 
 
 int ssp_domain_push_lookup(char *host, bts_hashtable_t* hashtable)

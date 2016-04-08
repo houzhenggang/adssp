@@ -13,8 +13,8 @@ typedef enum
 {
 	ENUM_ZMQ_HOST = 0,
 	ENUM_ZMQ_USER_AGENT,
-	ENUM_ZMQ_COOKEIS	
-};
+	ENUM_ZMQ_COOKEIS,	
+}enum_msg_t;
 
 int zmq_server_init (void)
 {
