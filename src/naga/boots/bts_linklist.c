@@ -29,6 +29,7 @@
 
 #if USE_BTS_LIST
 #include "bts_list.h"
+#define assert() 
 #endif
 
 /* Allocate new bts_list. */
