@@ -15,7 +15,7 @@ typedef struct  bts_listnode
   struct bts_listnode *prev;    
   /* private member, use getdata() to retrieve, do not access directly */
   void *data;
-  struct list_head  node;
+  struct dlist_head  node;
 } bts_listnode_t;
 
 
@@ -31,7 +31,7 @@ typedef struct bts_list
 {
   struct bts_listnode *head;
   struct bts_listnode *tail;
-  struct list_head   bucket_head;
+  struct dlist_head   bucket_head;
   pthread_mutex_t mutex;
 
   
