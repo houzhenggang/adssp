@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <mysql/mysql.h>
-#include "list.h"
 #include "bts_hashtable.h"
 #include "ad.h"
 
@@ -86,6 +85,7 @@ int main(int argc, char *argv[])
 	
   int index=0;
   ad_struct_t * struct_ptr = NULL;
+  
   for(i=0; i<g_max_prio; i++)
   {
 
@@ -101,7 +101,6 @@ int main(int argc, char *argv[])
 		{
 			continue;
 		}
-
 		ad_lists[i].prio = i;
     	while (row = mysql_fetch_row(result)) {
 			struct_ptr = &(ad_inuse[i][index++]);
