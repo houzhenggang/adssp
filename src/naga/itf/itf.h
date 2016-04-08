@@ -73,7 +73,7 @@ typedef struct
 	pthread_t recv_thread;
 	pcap_t * fp;
 	char   *ifname;
-	struct list_head node;
+	struct dlist_head node;
 }libpcap_handler_t;
 
 

@@ -330,8 +330,8 @@ void itf_cmd_config_write(struct vty *vty)
         }
     }
 
-extern struct list_head	handle_head;
-	struct list_head *pos = NULL, *next = NULL;
+extern struct dlist_head	handle_head;
+	struct dlist_head *pos = NULL, *next = NULL;
 	libpcap_handler_t *handle = NULL;
 	list_for_each_safe(pos, next,&handle_head)
 	{
