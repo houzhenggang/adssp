@@ -61,6 +61,7 @@ int zmq_server_init (void)
 			);
 			
 		zmq_send(server, sendbuffer, l , 0);
+		printf("%s\n", sendbuffer);
     }
     zmq_close (server);
     zmq_ctx_destroy (context);
