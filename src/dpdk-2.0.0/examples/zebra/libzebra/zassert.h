@@ -39,6 +39,8 @@ extern void _zlog_assert_failed (const char *assertion, const char *file,
 						 __ASSERT_FUNCTION), 0)))
 
 #undef assert
-#define assert(EX) zassert(EX)
+//#define assert(EX) zassert(EX)
+#define assert(EX) 
+
 
 #endif /* _QUAGGA_ASSERT_H */
