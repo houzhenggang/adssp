@@ -39,7 +39,6 @@ int zmq_server_init (void)
 		buffer[size] = 0;
 		printf("recv len(%d) %s\n", size, buffer);
         s_send (server, "OK");
-        free (request);
     }
     zmq_close (server);
     zmq_ctx_destroy (context);
