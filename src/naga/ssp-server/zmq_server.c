@@ -31,7 +31,7 @@ int zmq_server_init (void)
 		
 		size=zmq_recv (server, buffer, 2000, 0);
 
-		if(size = -1)
+		if(size == -1)
 		{
 			printf("zmq_recv Failed\n");
 			continue;
