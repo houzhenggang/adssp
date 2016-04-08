@@ -308,7 +308,7 @@ bts_listnode_lookup_by_key (bts_list_t *bts_list, void *key)
   int rv = 0;
   bts_listnode_t *node = NULL;
 
-  struct list_head *pos = NULL, *next =NULL;
+  struct dlist_head *pos = NULL, *next =NULL;
 
   assert(bts_list);
   assert(bts_list->cmp);
@@ -337,7 +337,7 @@ bts_listnode_lookup_by_key (bts_list_t *bts_list, void *key)
 void bts_listnode_delete_by_key (struct bts_list *bts_list, void *key)
 {
     struct bts_listnode *node = NULL;
-    struct list_head *pos = NULL, *next = NULL;
+    struct dlist_head *pos = NULL, *next = NULL;
     assert(bts_list);
     assert(bts_list->cmp);
     
@@ -346,7 +346,7 @@ void bts_listnode_delete_by_key (struct bts_list *bts_list, void *key)
          node  = list_entry(pos, bts_listnode_t, node);
          if(!bts_list->cmp(node->data, key))
          {
-             __list_del(pos->prev, pos->next);
+             __dlist_del(pos->prev, pos->next);
              free(node->data);
              free(node);
              node = NULL;
@@ -364,7 +364,7 @@ int bts_listnode_check(struct bts_list *bts_list, void *val,
 {
 
 	struct bts_listnode *node = NULL;
-	struct list_head *pos = NULL, *next = NULL;
+	struct dlist_head *pos = NULL, *next = NULL;
 	assert(bts_list);
 	assert(bts_list->cmp);
 	int find = 0;
@@ -435,7 +435,7 @@ bts_listnode_add (struct bts_list *bts_list, void *val,  bts_hash_find_func find
 			return;
 		}
         node->data = val;
-        list_add_tail(&(node->node), &(bts_list->bucket_head));
+        dlist_add_tail(&(node->node), &(bts_list->bucket_head));
         bts_list->count++;
         
     }
@@ -447,7 +447,7 @@ void
 bts_list_delete_all_node (struct bts_list *bts_list)
 {
     struct bts_listnode *node = NULL;
-    struct list_head *pos = NULL, *next = NULL;
+    struct dlist_head *pos = NULL, *next = NULL;
     assert(bts_list);
 
     
@@ -466,7 +466,7 @@ void
 bts_list_all_element_lo(struct bts_list *bts_list, bts_iter_func func, void *param)
 {
 	struct bts_listnode *node = NULL;
-	struct list_head *pos = NULL, *next = NULL;
+	struct dlist_head *pos = NULL, *next = NULL;
 	assert(bts_list);
 
 	list_for_each_safe(pos, next, &(bts_list->bucket_head))
