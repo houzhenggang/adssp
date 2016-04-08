@@ -384,7 +384,7 @@ int bts_listnode_check(struct bts_list *bts_list, void *val,
 		if(checkcall)
 			return checkcall(val, node->data, program0);
 		else
-			return 0;
+			return 1;
 	}
 	else
 	{

@@ -40,6 +40,9 @@ void print_inuse_ad()
 			printf("push_status: 		%d\n", pos->ad->push_status);
 			printf("apply_status:		%d\n", pos->ad->apply_status);
 			printf("cpm_price: 			%d\n", pos->ad->cpm_price);
+			printf("push_url:			%s\n", pos->ad->push_url);
+			printf("domain_white_file:			%s\n", pos->ad->domain_white_file);
+			printf("domain_black_file:			%s\n", pos->ad->domain_black_file);			
 			printf("-----------------------------------\n");							
 		}
 	
@@ -57,7 +60,9 @@ void ad_list_init()
 	}
 }
 
-int main()
+
+
+int main(int argc, char *argv[])
 {
    MYSQL  mysql ,*sock;
    char query[1024];
@@ -109,6 +114,21 @@ int main()
 			struct_ptr->push_user_interval = atoi(row[7]);			
 			struct_ptr->push_status  =  atoi(row[9]);
 			struct_ptr->apply_status  =  atoi(row[10]);
+
+			strncpy(struct_ptr->push_url,  row[15], sizeof(struct_ptr->push_url));
+
+			if(row[16] != NULL)
+			{
+				struct_ptr->domain_white_file = strdup(row[16]);
+				struct_ptr->domain_white_hashtb = 
+							init_domain_from_file(struct_ptr->domain_white_file);
+			}
+			if(row[17] != NULL)
+			{
+				struct_ptr->domain_black_file = strdup(row[17]);
+				struct_ptr->domain_black_hashtb = 
+							init_domain_from_file(struct_ptr->domain_black_file);				
+			}
 			
 			ad_list_node_t * lnode = (ad_list_node_t *)malloc(sizeof(ad_list_node_t));
 			
@@ -117,6 +137,7 @@ int main()
 				printf("Failed to malloc for lnode \n");
 				continue;
 			}
+			
 			INIT_LIST_HEAD(&(lnode->node));
 			lnode->ad = struct_ptr;
 			dlist_add_tail( &(lnode->node), &(ad_lists[i].head));
@@ -129,9 +150,12 @@ int main()
 	}
   }
 
-
-
   print_inuse_ad();
+
+
+
+	zmq_server_init();
+  
 }
 
 

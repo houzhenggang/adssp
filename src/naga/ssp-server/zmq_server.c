@@ -8,6 +8,14 @@
 #include "zhelpers.h"
 #include <unistd.h>
 
+
+typedef enum
+{
+	ENUM_ZMQ_HOST = 0,
+	ENUM_ZMQ_USER_AGENT,
+	ENUM_ZMQ_COOKEIS	
+};
+
 int zmq_server_init (void)
 {
     srandom ((unsigned) time (NULL));
@@ -19,8 +27,7 @@ int zmq_server_init (void)
     int cycles = 0;
     while (1) {
         char *request = s_recv (server);
-
-        printf ("I: normal request (%s)\n", request);
+		
         s_send (server, "OK");
         free (request);
     }

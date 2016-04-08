@@ -30,9 +30,13 @@ typedef struct
 	char domain_white_file[128];		
 	char domain_black_file[128];			
 
+	bts_hashtable_t * domain_white_hashtb;
+	bts_hashtable_t * domain_black_hashtb;	
+	
 	uint64_t starttime;
 	uint64_t endtime;
-	uint32_t hourmask;	
+	uint32_t hourmask;
+	
 }ad_struct_t;
 
 
