@@ -55,7 +55,7 @@ typedef struct bts_list
 #define bts_listtail(X) ((X) ? ((X)->tail) : NULL)
 #define bts_listcount(X) ((X)->count)
 #define bts_list_isempty(X) ((X)->head == NULL && (X)->tail == NULL)
-#define bts_listgetdata(X) (assert((X)->data != NULL), (X)->data)
+#define bts_listgetdata(X) ((X)->data)
 
 /* Prototypes. */
 extern struct bts_list *bts_list_new(void); /* encouraged: set bts_list.del callback on new bts_lists */
