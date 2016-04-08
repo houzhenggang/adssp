@@ -51,7 +51,7 @@ DIRS-y += hijack
 DIRS-y += debug
 DIRS-y += domain
 DIRS-y += product 
-DIRS-y += ssp-server 
 DIRS-y += main
+DIRS-y += ssp-server 
 
 include $(RTE_SDK)/mk/rte.extsubdir.mk
