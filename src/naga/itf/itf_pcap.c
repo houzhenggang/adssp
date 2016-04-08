@@ -325,7 +325,7 @@ berr libpcap_rx_loop_setup(char * ifname)
 			printf("Success Create Thread-%ld for interface-%s\n",recv_thread, ifname);
 		}
 		handle->recv_thread = recv_thread;
-		list_add_tail(&handle->node, &handle_head);
+		dlist_add_tail(&handle->node, &handle_head);
         return E_SUCCESS;
         
 }
