@@ -6,7 +6,7 @@
 #include <string.h>
 #include <mysql/mysql.h>
 #include "list.h"
-
+#include "bts_hashtable.h"
 #include "ad.h"
 
 
