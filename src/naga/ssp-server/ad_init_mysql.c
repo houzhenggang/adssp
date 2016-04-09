@@ -13,7 +13,7 @@
 #define MAX_PRIO  10
 int g_max_prio= 10;
 
-ad_struct_t     ad_inuse[MAX_PRIO][200];
+ad_struct_t     ad_inuse[4000];
 ad_list_info_t  ad_lists[3][MAX_PRIO];
 
 
@@ -95,14 +95,14 @@ int main(int argc, char *argv[])
   ad_struct_t * struct_ptr = NULL;
 
 
+  index = 0;
 
   for(k=1; k<3; k++)
   {
-
   	for(i=0; i<g_max_prio; i++)
   	{
 
-  	 	index = 0;
+  	 	
      	snprintf(query, 1024, "select * from ad where prio=%d and adtype=%d\n", i, k);
 	 
 		pthread_mutex_init(&(ad_lists[k][i].mutex), NULL);
@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
 				
 	    		while (row = mysql_fetch_row(result)) {
 					
-				struct_ptr = &(ad_inuse[i][index++]);
+				struct_ptr = &(ad_inuse[index++]);
 				struct_ptr->id = atoi(row[0]);  //id 
 				struct_ptr->adtype = atoi(row[1]); //adtype	
 				struct_ptr->prio =  i;
