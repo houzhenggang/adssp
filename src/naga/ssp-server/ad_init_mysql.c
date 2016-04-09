@@ -119,7 +119,9 @@ int main(int argc, char *argv[])
 			if(row[16] != NULL)
 			{
 				struct_ptr->domain_white_file = strdup(row[16]);
-				struct_ptr->domain_white_hashtb = (bts_hashtable_t *)init_domain_from_file(struct_ptr->domain_white_file);
+				
+				bts_hashtable_t * hashtable = 
+					init_domain_from_file(struct_ptr->domain_white_file);
 			}
 			if(row[17] != NULL)
 			{
