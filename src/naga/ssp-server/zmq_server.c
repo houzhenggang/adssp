@@ -83,6 +83,10 @@ int zmq_server_init (void)
 				case 4:
 					strncpy(info.cookies,(section), 1024);
 					break;
+				default:
+					printf("Failed to Success\n");
+
+					break;
 			}
 		}
 		#if 1
