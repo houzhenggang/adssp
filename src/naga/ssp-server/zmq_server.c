@@ -99,9 +99,19 @@ int zmq_server_init (void)
 		}
 		else
 		{
-			l = snprintf(sendbuffer, 2048,
-			"echo  \'document.getElementById(\"suspendcode15iframe\").src=\"%s\";\';"		
-			,adlist->push_url);
+			switch(info.adtype)
+			{
+				case 1:
+				l = snprintf(sendbuffer, 2048,
+				"echo  \'document.write(suspendcode15);\';echo  \'document.getElementById(\"suspendcode15iframe\").src=\"%s\";\';"		
+					,adlist->push_url);
+					break;
+				case 2:
+				"echo  \'document.write(suspendcode16);\';echo  \'document.getElementById(\"suspendcode15iframe\").src=\"%s\";\';"		
+					,adlist->push_url);
+					break;					
+					
+			}	
 		}
 		size= zmq_send(server, sendbuffer, l , 0);
 		printf("send len(%d) %s\n", size, sendbuffer);
