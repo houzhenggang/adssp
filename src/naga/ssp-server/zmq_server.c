@@ -64,6 +64,7 @@ int zmq_server_init (void)
 		buffer[size] = 0;		
 		printf("recv len(%d) %s\n", size, buffer);
 		section_offset = 0;
+		section = NULL;
 		while  (NULL != ( section = strsep(&buf_ptr, "@")))
 		{
 			switch(section_offset++)
