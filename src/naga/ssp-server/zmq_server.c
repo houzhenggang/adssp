@@ -85,7 +85,7 @@ int zmq_server_init (void)
 					break;
 			}
 		}
-		#if 0
+		#if 1
 		printf("adtype = %d\n", info.adtype);
 		printf("useragent = %s\n", info.useragent);
 		printf("refer = %s\n", 		info.refer);

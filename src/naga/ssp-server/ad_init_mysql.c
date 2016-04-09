@@ -192,8 +192,8 @@ ad_struct_t * apply_valid_ad(int adtype)
 
 		pthread_mutex_lock( &ad_lists[adtype][i].mutex);
 		cnode = ad_lists[adtype][i].head.next;
-		dlist_move_tail(cnode, &(ad_lists[adtype][i].head));
 		pos = list_entry(cnode, ad_list_node_t , node);
+		dlist_move_tail(cnode, &(ad_lists[adtype][i].head));
 		pthread_mutex_unlock(&ad_lists[adtype][i].mutex);		
 		
 		if(pos != NULL)
