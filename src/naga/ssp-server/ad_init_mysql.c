@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
   	 index = 0;
      snprintf(query, 1024, "select * from ad where prio=%d\n", i);
 	 
-	pthread_mutex_init(&(ad_lists[i].mutex));
+	pthread_mutex_init(&(ad_lists[i].mutex), NULL);
      if(mysql_query(&mysql, query) == 0)
 	{
 		
