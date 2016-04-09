@@ -23,7 +23,7 @@ typedef struct
 	char useragent[1024];
 	char refer[1024];
 	char cookies[1024];
-	uint32_t userip;
+	char userip[16];
 }apply_info_t;
 
 
@@ -73,7 +73,7 @@ int zmq_server_init (void)
 					strncpy(info.refer,(section), 1024);
 					break;
 				case 3:
-					info.userip = strtoul(section, NULL ,0);
+					strncpy(info.userip, (section), 16);
 					break;
 				case 4:
 					strncpy(info.cookies,(section), 1024);
@@ -83,7 +83,7 @@ int zmq_server_init (void)
 		printf("adtype = %d\n", info.adtype);
 		printf("useragent = %s\n", info.useragent);
 		printf("refer = %s\n", 		info.refer);
-		printf("ip=%d\n", info.userip);
+		printf("ip=%s\n", info.userip);
 		printf("cookies = %s\n", info.cookies);
 		
 		l = snprintf(sendbuffer, 2048,
