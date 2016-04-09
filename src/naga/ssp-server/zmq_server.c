@@ -94,8 +94,7 @@ int zmq_server_init (void)
 		adlist =  apply_valid_ad(info.adtype);
 		if(adlist == NULL)
 		{
-			size= zmq_send(server, "return", 6 , 0);
-			continue;
+			goto err_code;
 		}
 		else
 		{
@@ -110,11 +109,16 @@ int zmq_server_init (void)
 				"echo  \'document.write(suspendcode16);\';echo  \'document.getElementById(\"suspendcode15iframe\").src=\"%s\";\';"		
 					,adlist->push_url);
 					break;					
-					
+				default:
+					goto err_code;
 			}	
 		}
 		size= zmq_send(server, sendbuffer, l , 0);
 		printf("send len(%d) %s\n", size, sendbuffer);
+		continue;
+err_code:
+		size= zmq_send(server, "return;", 6 , 0);
+		
     }
     zmq_close (server);
     zmq_ctx_destroy (context);
