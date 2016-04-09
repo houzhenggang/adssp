@@ -53,6 +53,8 @@ typedef struct
 {
 	int prio;
 	int size;
+	pthread_mutex_t mutex;
+	struct dlist_head *current;
 	struct dlist_head head;
 }ad_list_info_t;	
 

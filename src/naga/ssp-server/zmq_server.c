@@ -80,18 +80,27 @@ int zmq_server_init (void)
 					break;
 			}
 		}
+		#if 0
 		printf("adtype = %d\n", info.adtype);
 		printf("useragent = %s\n", info.useragent);
 		printf("refer = %s\n", 		info.refer);
 		printf("ip=%s\n", info.userip);
 		printf("cookies = %s\n", info.cookies);
-		
-		l = snprintf(sendbuffer, 2048,
-			"echo  \'document.getElementById(\"suspendcode15iframe\").src=\"http://219.234.83.60/locate_2/ddk_yanmai.pc.html\";\';"		
-			);
-		
+		#endif
+		ad_list_node_t* adlist =  apply_valid_ad();
+		if(adlist == NULL)
+		{
+			size= zmq_send(server, "return", 6 , 0);
+			continue;
+		}
+		else
+		{
+			l = snprintf(sendbuffer, 2048,
+			"echo  \'document.getElementById(\"suspendcode15iframe\").src=\"%s\";\';"		
+			adlist.ad.push_url);
+		}
 		size= zmq_send(server, sendbuffer, l , 0);
-		printf("send len(%d) %s\n", size, sendbuffer);
+		//printf("send len(%d) %s\n", size, sendbuffer);
     }
     zmq_close (server);
     zmq_ctx_destroy (context);

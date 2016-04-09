@@ -149,10 +149,7 @@ int main(int argc, char *argv[])
 	}
   }
 
-  print_inuse_ad();
-
-
-
+   //print_inuse_ad();
 	zmq_server_init();
   
 }
@@ -160,5 +157,30 @@ int main(int argc, char *argv[])
 
 
 
+
+ad_list_node_t* apply_valid_ad()
+{
+	int i;
+	ad_list_node_t * pos = NULL, *next = NULL, *ret;
+
+	for(i=0; i<MAX_PRIO; i++)
+	{
+		if(ad_lists[i].size == 0)
+			continue;
+
+		pthread_mutex_lock( &ad_lists[i].mutex);
+		list_for_each_entry_safe(pos, next, &(ad_lists[i].current), node)
+		{
+			//if(che)
+			*ret = pos;
+			ad_lists[i].current = &(pos->node);
+			break;
+		}
+		pthread_mutex_unlock(&ad_lists[i].mutex);		
+		if(ret != NULL)
+			return ret;
+	}	
+	return NULL;	
+}
 
 
