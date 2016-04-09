@@ -170,14 +170,15 @@ ad_list_node_t* apply_valid_ad()
 			continue;
 
 		pthread_mutex_lock( &ad_lists[i].mutex);
+
+		if(ad_lists[i].current == &(ad_lists[i].head))
+		{
+			ad_lists[i].current = ad_lists[i].current->next;
+		}
+		
 		list_for_each_entry_safe(pos, next, ad_lists[i].current, node)
 		{
-			//if(che)
-			if(ad_lists[i].current == &(ad_lists[i].head))
-			{
-				ad_lists[i].current = ad_lists[i].current->next;
-				continue;
-			}	
+	
 			ret = pos;
 			ad_lists[i].current = &(pos->node);
 			break;
