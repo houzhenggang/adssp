@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
   	 index = 0;
      snprintf(query, 1024, "select * from ad where prio=%d\n", i);
 	 
-
+	pthread_mutex_init(&(ad_lists[i].mutex));
      if(mysql_query(&mysql, query) == 0)
 	{
 		
@@ -172,7 +172,7 @@ ad_list_node_t* apply_valid_ad()
 		list_for_each_entry_safe(pos, next, &(ad_lists[i].current), node)
 		{
 			//if(che)
-			*ret = pos;
+			ret = pos;
 			ad_lists[i].current = &(pos->node);
 			break;
 		}
