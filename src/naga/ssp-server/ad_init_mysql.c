@@ -30,7 +30,7 @@ void print_inuse_ad()
 		{
 			if(ad_lists[k][i].size == 0)
 				continue;
-			printf("================prio%d===============\n", i);
+			printf("================dev %d prio%d===============\n", k, i);
 			list_for_each_entry_safe(pos, next, &(ad_lists[k][i].head), node)
 			{
 
