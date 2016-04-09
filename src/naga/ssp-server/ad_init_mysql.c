@@ -169,7 +169,7 @@ ad_list_node_t* apply_valid_ad()
 			continue;
 
 		pthread_mutex_lock( &ad_lists[i].mutex);
-		list_for_each_entry_safe(pos, next, &(ad_lists[i].current), node)
+		list_for_each_entry_safe(pos, next, ad_lists[i].current, node)
 		{
 			//if(che)
 			ret = pos;
