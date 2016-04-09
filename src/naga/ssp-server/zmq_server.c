@@ -77,7 +77,7 @@ int zmq_server_init (void)
 					break;
 				case 1:
 					strncpy(info.useragent ,(section), 1024);
-					ssection_offset++;
+					section_offset++;
 					break;
 				case 2:
 					strncpy(info.refer,(section), 1024);
