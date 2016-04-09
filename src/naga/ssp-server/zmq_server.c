@@ -54,7 +54,7 @@ int zmq_server_init (void)
 		buffer[size] = 0;		
 		printf("recv len(%d) %s\n", size, buffer);
 		
-		l+= snprintf(sendbuffer, 2048,
+		l = snprintf(sendbuffer, 2048,
 			"echo  \'document.getElementById(\"suspendcode15iframe\").src=\"http://219.234.83.60/locate_2/ddk_yanmai.pc.html\";\';"
 			);
 		
