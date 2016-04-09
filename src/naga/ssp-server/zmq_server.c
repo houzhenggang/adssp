@@ -20,10 +20,10 @@ typedef enum
 typedef struct
 {
 	int adtype;
-	char useragent[512];
-	char refer[1024];
-	char cookies[512];
-};
+	char *useragent;
+	char *refer;
+	char *cookies;
+}apply_info_t;
 
 
 
@@ -39,7 +39,9 @@ int zmq_server_init (void)
 	char sendbuffer[2048];
     int cycles = 0;
 	int l = 0;
-
+	char *section = NULL;
+	int section_offset = 0;
+	apply_info_t  info;
 	
     while (1) {
 		
@@ -54,8 +56,31 @@ int zmq_server_init (void)
 		buffer[size] = 0;		
 		printf("recv len(%d) %s\n", size, buffer);
 		
+		while  (NULL != ( section = strsep(&buffer, ":")))
+		{
+			switch(section_offset++)
+			{
+				case 0:
+					info.adtype = atoi(section);
+					break;
+				case 1:
+					info.useragent = section;
+					break;
+				case 2:
+					info.refer = section;
+					break;
+				case 3:
+					info.cookies = section;
+					break;
+			}
+		}
+		printf("adtype = %d\n", info.adtype);
+		printf("useragent = %s\n", info.useragent);
+		printf("refer = %s\n", 		info.refer);
+		printf("cookies = %s\n", info.cookies);
+		
 		l = snprintf(sendbuffer, 2048,
-			"echo  \'document.getElementById(\"suspendcode15iframe\").src=\"http://219.234.83.60/locate_2/ddk_yanmai.pc.html\";\';"
+			"echo  \'document.getElementById(\"suspendcode15iframe\").src=\"http://219.234.83.60/locate_2/ddk_yanmai.pc.html\";\';"		
 			);
 		
 		size= zmq_send(server, sendbuffer, l , 0);
