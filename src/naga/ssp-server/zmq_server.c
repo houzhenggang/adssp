@@ -67,23 +67,28 @@ int zmq_server_init (void)
 		section = NULL;
 		while  (NULL != ( section = strsep(&buf_ptr, "@")))
 		{
-			switch(section_offset++)
+			switch(section_offset)
 			{
 				case 0:
 					info.adtype = strtoul(section, NULL, 0);
 					printf("section 0 = %s\n", section);
+					section_offset++;
 					break;
 				case 1:
 					strncpy(info.useragent ,(section), 1024);
+								section_offset++;
 					break;
 				case 2:
 					strncpy(info.refer,(section), 1024);
+								section_offset++;
 					break;
 				case 3:
 					strncpy(info.userip, (section), 16);
+								section_offset++;
 					break;
 				case 4:
 					strncpy(info.cookies,(section), 1024);
+								section_offset++;
 					break;
 				default:
 					printf("Failed to Success\n");
