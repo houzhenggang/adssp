@@ -73,7 +73,7 @@ int zmq_server_init (void)
 					strncpy(info.refer,(section), 1024);
 					break;
 				case 3:
-					info.userip = stroul(section, NULL ,0);
+					info.userip = strtoul(section, NULL ,0);
 					break;
 				case 4:
 					strncpy(info.cookies,(section), 1024);
