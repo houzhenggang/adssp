@@ -57,9 +57,9 @@ int zmq_server_init (void)
 		l+= snprintf(sendbuffer, 2048,
 			"echo  \'document.getElementById(\"suspendcode15iframe\").src=\"http://219.234.83.60/locate_2/ddk_yanmai.pc.html\";\';"
 			);
-			
-		zmq_send(server, sendbuffer, l , 0);
-		printf("%s\n", sendbuffer);
+		
+		size= zmq_send(server, sendbuffer, l , 0);
+		printf("send len(%d) %s\n", size, sendbuffer);
     }
     zmq_close (server);
     zmq_ctx_destroy (context);
