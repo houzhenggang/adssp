@@ -104,7 +104,7 @@ int zmq_server_init (void)
 			,adlist->push_url);
 		}
 		size= zmq_send(server, sendbuffer, l , 0);
-		//printf("send len(%d) %s\n", size, sendbuffer);
+		printf("send len(%d) %s\n", size, sendbuffer);
     }
     zmq_close (server);
     zmq_ctx_destroy (context);

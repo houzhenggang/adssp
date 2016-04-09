@@ -112,6 +112,7 @@ int main(int argc, char *argv[])
 				MYSQL_RES *result = mysql_store_result(&mysql);
 				if(result == NULL)
 				{
+					
 					continue;
 				}
 				ad_lists[k][i].prio = i;
