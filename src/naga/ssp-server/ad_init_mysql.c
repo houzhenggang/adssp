@@ -119,14 +119,14 @@ int main(int argc, char *argv[])
 			if(row[16] != NULL)
 			{
 				struct_ptr->domain_white_file = strdup(row[16]);
-				struct_ptr->domain_white_hashtb = 
-							init_domain_from_file(struct_ptr->domain_white_file);
+				struct_ptr->domain_white_hashtb
+					= init_domain_from_file(struct_ptr->domain_white_file);
 			}
 			if(row[17] != NULL)
 			{
 				struct_ptr->domain_black_file = strdup(row[17]);
-				struct_ptr->domain_black_hashtb = 
-							init_domain_from_file(struct_ptr->domain_black_file);				
+				struct_ptr->domain_black_hashtb
+					= init_domain_from_file(struct_ptr->domain_black_file);				
 			}
 			
 			ad_list_node_t * lnode = (ad_list_node_t *)malloc(sizeof(ad_list_node_t));
