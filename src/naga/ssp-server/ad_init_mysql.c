@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
 ad_list_node_t* apply_valid_ad()
 {
 	int i;
-	ad_list_node_t * pos = NULL, *next = NULL, *ret;
+	ad_list_node_t * pos = NULL, *next = NULL, *ret = NULL;
 
 	for(i=0; i<MAX_PRIO; i++)
 	{
@@ -185,7 +185,9 @@ ad_list_node_t* apply_valid_ad()
 		}
 		pthread_mutex_unlock(&ad_lists[i].mutex);		
 		if(ret != NULL)
+		{
 			return ret;
+		}	
 	}	
 	return NULL;	
 }
