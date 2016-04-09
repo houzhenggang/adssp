@@ -173,7 +173,7 @@ ad_list_node_t* apply_valid_ad()
 
 		if(ad_lists[i].current == &(ad_lists[i].head))
 		{
-			ad_lists[i].current = ad_lists[i].current->next;
+			ad_lists[i].current = ad_lists[i].head.next;
 		}
 		
 		list_for_each_entry_safe(pos, next, ad_lists[i].current, node)
