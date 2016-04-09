@@ -84,6 +84,7 @@ int zmq_server_init (void)
 				case 4:
 					strncpy(info.cookies,(section), 1024);
 					break;
+					
 			}
 		}
 		#if 1
