@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
   	 	index = 0;
      	snprintf(query, 1024, "select * from ad where prio=%d and adtype=%d\n", i, k);
 	 
-		pthread_mutex_init(&(ad_lists[i].mutex), NULL);
+		pthread_mutex_init(&(ad_lists[k][i].mutex), NULL);
      	if(mysql_query(&mysql, query) == 0)
 		{
 		
@@ -114,7 +114,7 @@ int main(int argc, char *argv[])
 				{
 					continue;
 				}
-				ad_lists[i].prio = i;
+				ad_lists[k][i].prio = i;
 				
 	    		while (row = mysql_fetch_row(result)) {
 					
