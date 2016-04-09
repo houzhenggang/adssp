@@ -90,7 +90,7 @@ int zmq_server_init (void)
 		printf("ip=%s\n", info.userip);
 		printf("cookies = %s\n", info.cookies);
 		#endif
-		ad_list_node_t* adlist =  apply_valid_ad();
+		ad_struct_t* adlist =  apply_valid_ad();
 		if(adlist == NULL)
 		{
 			size= zmq_send(server, "return", 6 , 0);
@@ -100,7 +100,7 @@ int zmq_server_init (void)
 		{
 			l = snprintf(sendbuffer, 2048,
 			"echo  \'document.getElementById(\"suspendcode15iframe\").src=\"%s\";\';"		
-			,adlist->ad->push_url);
+			,adlist->push_url);
 		}
 		size= zmq_send(server, sendbuffer, l , 0);
 		//printf("send len(%d) %s\n", size, sendbuffer);
