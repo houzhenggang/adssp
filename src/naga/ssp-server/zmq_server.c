@@ -49,7 +49,8 @@ int zmq_server_init (void)
 
 	
     while (1) {
-		
+
+		printf("zzzzzzzzzzzzzzzzzzz\n");
 		size=zmq_recv (server, buffer, 2000, 0);
 
 		if(size == -1)
