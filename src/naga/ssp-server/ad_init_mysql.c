@@ -160,10 +160,12 @@ int main(int argc, char *argv[])
 
 
 
-ad_list_node_t* apply_valid_ad()
+ad_struct_t * apply_valid_ad()
 {
 	int i;
-	ad_list_node_t * pos = NULL, *next = NULL, *ret = NULL;
+	ad_list_node_t * pos = NULL;
+	ad_struct_t * ad = NULL;
+	struct dlist_head *cnode = NULL;
 
 	for(i=0; i<MAX_PRIO; i++)
 	{
@@ -171,12 +173,14 @@ ad_list_node_t* apply_valid_ad()
 			continue;
 
 		pthread_mutex_lock( &ad_lists[i].mutex);
-		ret = &(ad_lists[i].head.next);
-		dlist_move_tail(ret, &(ad_lists[i].head));
+		cnode = ad_lists[i].head.next;
+		dlist_move_tail(pos, &(ad_lists[i].head));
+		pos = list_entry(cnode, ad_list_node_t , node);
 		pthread_mutex_unlock(&ad_lists[i].mutex);		
-		if(ret != NULL)
+		
+		if(pos != NULL)
 		{
-			return ret;
+			return pos->ad;
 		}	
 	}	
 	return NULL;	
