@@ -91,7 +91,7 @@ int zmq_server_init (void)
 		printf("ip=%s\n", info.userip);
 		printf("cookies = %s\n", info.cookies);
 		#endif
-		adlist =  apply_valid_ad();
+		adlist =  apply_valid_ad(info.adtype);
 		if(adlist == NULL)
 		{
 			size= zmq_send(server, "return", 6 , 0);

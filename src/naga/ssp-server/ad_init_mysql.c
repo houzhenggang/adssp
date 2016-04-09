@@ -14,49 +14,57 @@
 int g_max_prio= 10;
 
 ad_struct_t     ad_inuse[MAX_PRIO][200];
-ad_list_info_t  ad_lists[MAX_PRIO];
+ad_list_info_t  ad_lists[3][MAX_PRIO];
+
+
 
 void print_inuse_ad()
 {
-	int i;
+	int i, k;
 	ad_list_node_t * pos = NULL, *next = NULL;
 
-	for(i=0; i<MAX_PRIO; i++)
-	{
-		if(ad_lists[i].size == 0)
-			continue;
-		printf("================prio%d===============\n", i);
-		list_for_each_entry_safe(pos, next, &(ad_lists[i].head), node)
-		{
+	for(k=1; k<3; k++)
+    { 
 
-			printf("ID:					%d\n", pos->ad->id);
-			printf("adtype:				%d\n", pos->ad->adtype);
-			printf("prio:				%d\n", pos->ad->prio);
-			printf("push_all_day:		%d\n", pos->ad->push_all_day);
-			printf("push_one_day:		%d\n", pos->ad->push_one_day);
-			printf("push_per_user:		%d\n", pos->ad->push_per_user);
-			printf("push_user_interval:	%d\n", pos->ad->push_user_interval);
-			printf("push_status: 		%d\n", pos->ad->push_status);
-			printf("apply_status:		%d\n", pos->ad->apply_status);
-			printf("cpm_price: 			%d\n", pos->ad->cpm_price);
-			printf("push_url:			%s\n", pos->ad->push_url);
-			printf("domain_white_file:			%s\n", pos->ad->domain_white_file);
-			printf("domain_black_file:			%s\n", pos->ad->domain_black_file);			
-			printf("-----------------------------------\n");							
+		for(i=0; i<MAX_PRIO; i++)
+		{
+			if(ad_lists[k][i].size == 0)
+				continue;
+			printf("================prio%d===============\n", i);
+			list_for_each_entry_safe(pos, next, &(ad_lists[k][i].head), node)
+			{
+
+				printf("ID:					%d\n", pos->ad->id);
+				printf("adtype:				%d\n", pos->ad->adtype);
+				printf("prio:				%d\n", pos->ad->prio);
+				printf("push_all_day:		%d\n", pos->ad->push_all_day);
+				printf("push_one_day:		%d\n", pos->ad->push_one_day);
+				printf("push_per_user:		%d\n", pos->ad->push_per_user);
+				printf("push_user_interval:	%d\n", pos->ad->push_user_interval);
+				printf("push_status: 		%d\n", pos->ad->push_status);
+				printf("apply_status:		%d\n", pos->ad->apply_status);
+				printf("cpm_price: 			%d\n", pos->ad->cpm_price);
+				printf("push_url:			%s\n", pos->ad->push_url);
+				printf("domain_white_file:			%s\n", pos->ad->domain_white_file);
+				printf("domain_black_file:			%s\n", pos->ad->domain_black_file);			
+				printf("-----------------------------------\n");							
+			}
+				
 		}
-	
-					
-	}
-	
+	}	
 }
 
 void ad_list_init()
 {
-	int i;
-	for(i=0; i<MAX_PRIO; i++)
-	{
-			INIT_LIST_HEAD(&(ad_lists[i].head));	
-	}
+	int i, k;
+
+	for(k=1; k<3; k++)
+    { 
+		for(i=0; i<MAX_PRIO; i++)
+		{
+				INIT_LIST_HEAD(&(ad_lists[k][i].head));	
+		}
+	}	
 }
 
 
@@ -65,7 +73,7 @@ int main(int argc, char *argv[])
 {
    MYSQL  mysql ,*sock;
    char query[1024];
-   int i;
+   int i, k;
    int l = 0;
    MYSQL_ROW row;
 
@@ -85,71 +93,80 @@ int main(int argc, char *argv[])
 	
   int index=0;
   ad_struct_t * struct_ptr = NULL;
-  
-  for(i=0; i<g_max_prio; i++)
+
+
+
+  for(k=1; k<3; k++)
   {
 
-  	 index = 0;
-     snprintf(query, 1024, "select * from ad where prio=%d\n", i);
+  	for(i=0; i<g_max_prio; i++)
+  	{
+
+  	 	index = 0;
+     	snprintf(query, 1024, "select * from ad where prio=%d and adtype=%d\n", i, k);
 	 
-	pthread_mutex_init(&(ad_lists[i].mutex), NULL);
-     if(mysql_query(&mysql, query) == 0)
-	{
+		pthread_mutex_init(&(ad_lists[i].mutex), NULL);
+     	if(mysql_query(&mysql, query) == 0)
+		{
 		
-		MYSQL_RES *result = mysql_store_result(&mysql);
-		if(result == NULL)
+				MYSQL_RES *result = mysql_store_result(&mysql);
+				if(result == NULL)
+				{
+					continue;
+				}
+				ad_lists[i].prio = i;
+				
+	    		while (row = mysql_fetch_row(result)) {
+					
+				struct_ptr = &(ad_inuse[i][index++]);
+				struct_ptr->id = atoi(row[0]);  //id 
+				struct_ptr->adtype = atoi(row[1]); //adtype	
+				struct_ptr->prio =  i;
+				struct_ptr->push_all_day =  atoi(row[4]);
+				struct_ptr->push_one_day =  atoi(row[5]);
+				struct_ptr->push_per_user  = atoi(row[6]);
+				struct_ptr->push_user_interval = atoi(row[7]);			
+				struct_ptr->push_status  =  atoi(row[9]);
+				struct_ptr->apply_status  =  atoi(row[10]);
+
+				strncpy(struct_ptr->push_url,  row[15], sizeof(struct_ptr->push_url));
+
+				if(row[16] != NULL)
+				{
+					struct_ptr->domain_white_file = strdup(row[16]);
+					
+					//bts_hashtable_t * hashtable = 
+					//	init_domain_from_file(struct_ptr->domain_white_file);
+					
+				}
+				if(row[17] != NULL)
+				{
+					struct_ptr->domain_black_file = strdup(row[17]);
+					//struct_ptr->domain_black_hashtb 
+						//= (bts_hashtable_t *)init_domain_from_file(struct_ptr->domain_black_file);				
+				}
+				
+				ad_list_node_t * lnode = (ad_list_node_t *)malloc(sizeof(ad_list_node_t));
+				
+				if(lnode == NULL)
+				{
+					printf("Failed to malloc for lnode \n");
+					continue;
+				}
+				
+				INIT_LIST_HEAD(&(lnode->node));
+				lnode->ad = struct_ptr;
+				dlist_add_tail( &(lnode->node), &(ad_lists[k][i].head));
+				ad_lists[k][i].size ++;
+				ad_lists[k][i].current = &(ad_lists[k][i].head);
+	    		}
+		}
+		else
 		{
 			continue;
 		}
-		ad_lists[i].prio = i;
-    	while (row = mysql_fetch_row(result)) {
-			struct_ptr = &(ad_inuse[i][index++]);
-			struct_ptr->id = atoi(row[0]);  //id 
-			struct_ptr->adtype = atoi(row[1]); //adtype	
-			struct_ptr->prio =  i;
-			struct_ptr->push_all_day =  atoi(row[4]);
-			struct_ptr->push_one_day =  atoi(row[5]);
-			struct_ptr->push_per_user  = atoi(row[6]);
-			struct_ptr->push_user_interval = atoi(row[7]);			
-			struct_ptr->push_status  =  atoi(row[9]);
-			struct_ptr->apply_status  =  atoi(row[10]);
-
-			strncpy(struct_ptr->push_url,  row[15], sizeof(struct_ptr->push_url));
-
-			if(row[16] != NULL)
-			{
-				struct_ptr->domain_white_file = strdup(row[16]);
-				
-				bts_hashtable_t * hashtable = 
-					init_domain_from_file(struct_ptr->domain_white_file);
-			}
-			if(row[17] != NULL)
-			{
-				struct_ptr->domain_black_file = strdup(row[17]);
-				struct_ptr->domain_black_hashtb = (bts_hashtable_t *)init_domain_from_file(struct_ptr->domain_black_file);				
-			}
-			
-			ad_list_node_t * lnode = (ad_list_node_t *)malloc(sizeof(ad_list_node_t));
-			
-			if(lnode == NULL)
-			{
-				printf("Failed to malloc for lnode \n");
-				continue;
-			}
-			
-			INIT_LIST_HEAD(&(lnode->node));
-			lnode->ad = struct_ptr;
-			dlist_add_tail( &(lnode->node), &(ad_lists[i].head));
-			ad_lists[i].size ++;
-			ad_lists[i].current = &(ad_lists[i].head);
-    	}
-	}
-	else
-	{
-		continue;
-	}
-  }
-
+ 		}
+  	}	
     print_inuse_ad();
 
 	zmq_server_init();
@@ -160,7 +177,7 @@ int main(int argc, char *argv[])
 
 
 
-ad_struct_t * apply_valid_ad()
+ad_struct_t * apply_valid_ad(int adtype)
 {
 	int i;
 	ad_list_node_t * pos = NULL;
@@ -169,14 +186,14 @@ ad_struct_t * apply_valid_ad()
 
 	for(i=0; i<MAX_PRIO; i++)
 	{
-		if(ad_lists[i].size == 0)
+		if(ad_lists[adtype][i].size == 0)
 			continue;
 
-		pthread_mutex_lock( &ad_lists[i].mutex);
-		cnode = ad_lists[i].head.next;
-		dlist_move_tail(cnode, &(ad_lists[i].head));
+		pthread_mutex_lock( &ad_lists[adtype][i].mutex);
+		cnode = ad_lists[adtype][i].head.next;
+		dlist_move_tail(cnode, &(ad_lists[adtype][i].head));
 		pos = list_entry(cnode, ad_list_node_t , node);
-		pthread_mutex_unlock(&ad_lists[i].mutex);		
+		pthread_mutex_unlock(&ad_lists[adtype][i].mutex);		
 		
 		if(pos != NULL)
 		{
