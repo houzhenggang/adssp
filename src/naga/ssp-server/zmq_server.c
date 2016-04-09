@@ -52,9 +52,11 @@ int zmq_server_init (void)
 	
     while (1) {
 
-
+		
 		size=zmq_recv (server, buffer, 2000, 0);
+		buf_ptr = buffer;
 
+		
 		if(size == -1)
 		{
 			printf("zmq_recv Failed\n");
