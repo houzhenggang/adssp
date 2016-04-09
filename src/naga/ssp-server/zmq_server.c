@@ -20,9 +20,10 @@ typedef enum
 typedef struct
 {
 	int adtype;
-	char *useragent;
-	char *refer;
-	char *cookies;
+	char useragent[1024];
+	char refer[1024];
+	char cookies[1024];
+	uint32_t userip;
 }apply_info_t;
 
 
@@ -66,19 +67,23 @@ int zmq_server_init (void)
 					info.adtype = atoi(section);
 					break;
 				case 1:
-					info.useragent = strdup(section);
+					strncpy(info.useragent ,(section), 1024);
 					break;
 				case 2:
-					info.refer = strdup(section);
+					strncpy(info.refer,(section), 1024);
 					break;
 				case 3:
-					info.cookies = strdup(section);
+					info.userip = stroul(section, NULL ,0);
+					break;
+				case 4:
+					strncpy(info.cookies,(section), 1024);
 					break;
 			}
 		}
 		printf("adtype = %d\n", info.adtype);
 		printf("useragent = %s\n", info.useragent);
 		printf("refer = %s\n", 		info.refer);
+		printf("ip=%d\n", info.userip);
 		printf("cookies = %s\n", info.cookies);
 		
 		l = snprintf(sendbuffer, 2048,
