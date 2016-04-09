@@ -88,6 +88,7 @@ int zmq_server_init (void)
 					printf("Failed to Success\n");
 
 					break;
+
 			}
 		}
 		#if 1
