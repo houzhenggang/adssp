@@ -171,19 +171,8 @@ ad_list_node_t* apply_valid_ad()
 			continue;
 
 		pthread_mutex_lock( &ad_lists[i].mutex);
-
-		if(ad_lists[i].current == &(ad_lists[i].head))
-		{
-			ad_lists[i].current = ad_lists[i].head.next;
-		}
-		
-		list_for_each_entry_safe(pos, next, ad_lists[i].current, node)
-		{
-	
-			ret = pos;
-			ad_lists[i].current = &(pos->node);
-			break;
-		}
+		ret = &(ad_lists[i].head.next);
+		dlist_move_tail(ret, &(ad_lists[i].head));
 		pthread_mutex_unlock(&ad_lists[i].mutex);		
 		if(ret != NULL)
 		{
