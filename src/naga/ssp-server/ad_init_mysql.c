@@ -150,9 +150,9 @@ int main(int argc, char *argv[])
 	}
   }
 
-    print_inuse_ad();
+
 	zmq_server_init();
-  
+    print_inuse_ad();
 }
 
 
