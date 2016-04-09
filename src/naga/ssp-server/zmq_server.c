@@ -69,7 +69,7 @@ int zmq_server_init (void)
 			switch(section_offset++)
 			{
 				case 0:
-					info.adtype = atoi(section);
+					info.adtype = strtoul(section, NULL, 0);
 					break;
 				case 1:
 					strncpy(info.useragent ,(section), 1024);
