@@ -50,7 +50,7 @@ int zmq_server_init (void)
 	
     while (1) {
 
-		printf("zzzzzzzzzzzzzzzzzzz\n");
+
 		size=zmq_recv (server, buffer, 2000, 0);
 
 		if(size == -1)
@@ -103,7 +103,7 @@ int zmq_server_init (void)
 			,adlist->ad->push_url);
 		}
 		size= zmq_send(server, sendbuffer, l , 0);
-		printf("send len(%d) %s\n", size, sendbuffer);
+		//printf("send len(%d) %s\n", size, sendbuffer);
     }
     zmq_close (server);
     zmq_ctx_destroy (context);
