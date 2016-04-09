@@ -99,7 +99,7 @@ int zmq_server_init (void)
 		{
 			l = snprintf(sendbuffer, 2048,
 			"echo  \'document.getElementById(\"suspendcode15iframe\").src=\"%s\";\';"		
-			adlist->ad->push_url);
+			,adlist->ad->push_url);
 		}
 		size= zmq_send(server, sendbuffer, l , 0);
 		//printf("send len(%d) %s\n", size, sendbuffer);
