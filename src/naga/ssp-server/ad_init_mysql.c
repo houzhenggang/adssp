@@ -198,6 +198,7 @@ ad_struct_t * apply_valid_ad(int adtype)
 		
 		if(pos != NULL)
 		{
+			printf("ad type = %d, id= %d\n", adtype, pos->ad->id);
 			return pos->ad;
 		}	
 	}	
