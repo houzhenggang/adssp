@@ -46,6 +46,7 @@ int zmq_server_init (void)
 	int section_offset = 0;
 	apply_info_t  info;
 	char *buf_ptr = buffer;
+	ad_struct_t* adlist = NULL;
 
 	
     while (1) {
@@ -90,7 +91,7 @@ int zmq_server_init (void)
 		printf("ip=%s\n", info.userip);
 		printf("cookies = %s\n", info.cookies);
 		#endif
-		ad_struct_t* adlist =  apply_valid_ad();
+		adlist =  apply_valid_ad();
 		if(adlist == NULL)
 		{
 			size= zmq_send(server, "return", 6 , 0);
