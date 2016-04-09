@@ -66,13 +66,13 @@ int zmq_server_init (void)
 					info.adtype = atoi(section);
 					break;
 				case 1:
-					info.useragent = section;
+					info.useragent = strdup(section);
 					break;
 				case 2:
-					info.refer = section;
+					info.refer = strdup(section);
 					break;
 				case 3:
-					info.cookies = section;
+					info.cookies = strdup(section);
 					break;
 			}
 		}
