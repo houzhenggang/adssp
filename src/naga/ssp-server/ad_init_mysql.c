@@ -180,7 +180,7 @@ ad_list_node_t* apply_valid_ad()
 		{
 	
 			ret = pos;
-			ad_lists[i].current = pos->node->next;
+			ad_lists[i].current = pos->node.next;
 			break;
 		}
 		pthread_mutex_unlock(&ad_lists[i].mutex);		
