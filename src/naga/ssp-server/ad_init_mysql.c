@@ -174,7 +174,7 @@ ad_struct_t * apply_valid_ad()
 
 		pthread_mutex_lock( &ad_lists[i].mutex);
 		cnode = ad_lists[i].head.next;
-		dlist_move_tail(pos, &(ad_lists[i].head));
+		dlist_move_tail(cnode, &(ad_lists[i].head));
 		pos = list_entry(cnode, ad_list_node_t , node);
 		pthread_mutex_unlock(&ad_lists[i].mutex);		
 		
