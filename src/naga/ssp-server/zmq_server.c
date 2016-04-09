@@ -67,6 +67,7 @@ int zmq_server_init (void)
 		section = NULL;
 		while  (NULL != ( section = strsep(&buf_ptr, "@")))
 		{
+			printf("id;;;;;;;; %d\n", section_offset);
 			switch(section_offset)
 			{
 				case 0:
@@ -76,7 +77,7 @@ int zmq_server_init (void)
 					break;
 				case 1:
 					strncpy(info.useragent ,(section), 1024);
-								section_offset++;
+					ssection_offset++;
 					break;
 				case 2:
 					strncpy(info.refer,(section), 1024);
