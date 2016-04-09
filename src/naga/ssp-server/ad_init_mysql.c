@@ -141,6 +141,7 @@ int main(int argc, char *argv[])
 			lnode->ad = struct_ptr;
 			dlist_add_tail( &(lnode->node), &(ad_lists[i].head));
 			ad_lists[i].size ++;
+			ad_lists[i].current = &(ad_lists[i].head);
     	}
 	}
 	else
@@ -172,6 +173,8 @@ ad_list_node_t* apply_valid_ad()
 		list_for_each_entry_safe(pos, next, ad_lists[i].current, node)
 		{
 			//if(che)
+			if(ad_lists[i].current == &(ad_lists[i].head))
+				continue;
 			ret = pos;
 			ad_lists[i].current = &(pos->node);
 			break;
