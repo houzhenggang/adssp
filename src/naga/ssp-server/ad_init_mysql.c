@@ -174,7 +174,10 @@ ad_list_node_t* apply_valid_ad()
 		{
 			//if(che)
 			if(ad_lists[i].current == &(ad_lists[i].head))
+			{
+				ad_lists[i].current = ad_lists[i].current->next;
 				continue;
+			}	
 			ret = pos;
 			ad_lists[i].current = &(pos->node);
 			break;
