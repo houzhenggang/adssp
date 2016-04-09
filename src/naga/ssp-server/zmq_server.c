@@ -107,6 +107,8 @@ int zmq_server_init (void)
 					,adlist->push_url);
 					break;
 				case 2:
+
+				l = snprintf(sendbuffer, 2048,
 				"echo  \'document.write(suspendcode16);\'"
 				";echo  \'document.getElementById(\"suspendcode15iframe\")"
 				".src=\"%s\";\';",adlist->push_url);
