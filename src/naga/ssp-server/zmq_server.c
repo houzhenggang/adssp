@@ -70,7 +70,7 @@ int zmq_server_init (void)
 			{
 				case 0:
 					info.adtype = strtoul(section, NULL, 0);
-					printf("section 0 = %s\n", section)
+					printf("section 0 = %s\n", section);
 					break;
 				case 1:
 					strncpy(info.useragent ,(section), 1024);
