@@ -7,7 +7,7 @@
 
 #include "zhelpers.h"
 #include <unistd.h>
-
+#include "ad.h"
 
 typedef enum
 {
