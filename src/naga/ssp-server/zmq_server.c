@@ -65,7 +65,6 @@ int zmq_server_init (void)
 			{
 				case 0:
 					info.adtype = strtoul(section, NULL, 0);
-		
 					section_offset++;
 					break;
 				case 1:
@@ -78,11 +77,12 @@ int zmq_server_init (void)
 					break;
 				case 3:
 					strncpy(info.userip, (section), 16);
-								section_offset++;
+					section_offset++;
 					break;
 				case 4:
-					info.cookies_len = strncpy(info.cookies,(section), 1024);
-								section_offset++;
+					strncpy(info.cookies,(section), 1024);
+					info.cookies_len = strlen(info.cookies);
+					section_offset++;
 					break;
 				default:
 					printf("Failed to Success\n");
