@@ -176,13 +176,13 @@ int main(int argc, char *argv[])
 
 
 
-ad_struct_t * apply_valid_ad(apply_info_t * info, int times)
+ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 {
 	int i;
 	ad_list_node_t * pos = NULL, *next = NULL;
 	ad_struct_t * ad = NULL;
 	struct dlist_head *cnode = NULL;
-	int adtype = info;
+	int adtype = info->adtype;
 	
 
 	for(i=0; i<MAX_PRIO; i++)
