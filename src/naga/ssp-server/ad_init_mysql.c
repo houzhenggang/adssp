@@ -176,7 +176,7 @@ int main(int argc, char *argv[])
 
 
 
-ad_struct_t * apply_valid_ad(int adtype)
+ad_struct_t * apply_valid_ad(int adtype, int times)
 {
 	int i;
 	ad_list_node_t * pos = NULL, *next = NULL;

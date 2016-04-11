@@ -20,16 +20,6 @@ typedef enum
 }enum_msg_t;
 
 
-typedef struct
-{
-	int adtype;
-	char useragent[1024];
-	char refer[1024];
-	char cookies[1024];
-	int cookies_len ; 
-	char userip[16];
-}apply_info_t;
-
 
 
 int zmq_server_init (void)
@@ -108,16 +98,19 @@ int zmq_server_init (void)
 		printf("ip=%s\n", info.userip);
 		printf("cookies = %s\n", info.cookies);
 		#endif
-
-
+		
+		int times = 0;
 		if(info.cookies_len == 0)
 		{
-				
+			times = 0;
+			usercookeis_assess_add(info.cookies, info.cookies_len);	
 		}
 		else
 		{
+			times = usercookeis_assess_check(info.cookies, info.cookies_len);				
 		}
-		adlist =  apply_valid_ad(info.adtype);
+		
+		adlist =  apply_valid_ad(&info, times);
 		if(adlist == NULL)
 		{
 			goto err_code;

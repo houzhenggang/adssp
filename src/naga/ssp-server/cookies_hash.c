@@ -107,6 +107,27 @@ berr usercookeis_assess_add(char *cookeis, int cookeislen)
 }
 
 
+int usercookeis_assess_check(char *cookeis, int cookeislen)
+{
+
+	usercookeis data = {};
+	int rv;
+	int access_times = 0;
+	memset(&data, 0x0, sizeof(usercookeis));
+	
+	strncpy((data.cookeis), (cookeis), cookeislen);
+	
+	
+	rv = bts_hashtable_check(&usercookeis_control_table, &data, &access_times);
+	if(rv)
+	{
+		return access_times;
+	}
+	return E_SUCCESS;								
+}
+
+
+
 void usercookeis_iter(void *data, void *param)
 {
 	char buffer[1024];
