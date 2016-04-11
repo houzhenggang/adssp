@@ -4,8 +4,7 @@
 #include "bts_linklist.h"
 #include "bts_util.h"
 #include "bts_debug.h"
-#include "naga_types.h"
-#include "user_control.h"
+
 
 #include "zebra.h"
 #include "zebra.h"
@@ -32,8 +31,8 @@ typedef struct
 
 void today_time_str_init()
 {
-	time_t time = time(NULL);
-	struct tm *tm = localtime(&time);
+	time_t times = time(NULL);
+	struct tm *tm = localtime(&times);
 	snprintf(today_time_s, 20, "%4d%02d%02d-", tm->year, tm->month, tm->day);
 	printf("today_time is %s", today_time_s);
 }
@@ -64,8 +63,8 @@ int usercookeis_cmp_func(void *d1, void *d2)
     e1 = (usercookeis *) d1;
     e2 = (usercookeis *) d2;
 
-	if(e1.cookeislen == e2.cookeislen)
-		return memcmp(e1->cookeis, e2->cookeis, e1.cookeislen);
+	if(e1->cookeislen == e2->cookeislen)
+		return memcmp(e1->cookeis, e2->cookeis, e1->cookeislen);
 	else
 		return 1;
 }
@@ -111,8 +110,8 @@ berr usercookeis_assess_add(char *cookeis, int cookeislen)
 	usercookeis *data = malloc(sizeof(usercookeis));
 	memset(data, 0x0, sizeof(usercookeis));
 
-	data.cookeislen
-		= snprintf(data.cookeis, 16, 
+	data->cookeislen
+		= snprintf(data->cookeis, 16, 
 			"%s-%d", today_time_s,usercookeis_control_table.total_cell +1);
 	
 	berr rv = bts_hashtable_add(&usercookeis_control_table, data);
