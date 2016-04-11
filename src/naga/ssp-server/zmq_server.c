@@ -26,6 +26,7 @@ typedef struct
 	char useragent[1024];
 	char refer[1024];
 	char cookies[1024];
+	int cookies_len ; 
 	char userip[16];
 }apply_info_t;
 
@@ -69,12 +70,12 @@ int zmq_server_init (void)
 		section = NULL;
 		while  (NULL != ( section = strsep(&buf_ptr, "@")))
 		{
-			printf("id;;;;;;;; %d\n", section_offset);
+	
 			switch(section_offset)
 			{
 				case 0:
 					info.adtype = strtoul(section, NULL, 0);
-					printf("section 0 = %s\n", section);
+		
 					section_offset++;
 					break;
 				case 1:
@@ -90,7 +91,7 @@ int zmq_server_init (void)
 								section_offset++;
 					break;
 				case 4:
-					strncpy(info.cookies,(section), 1024);
+					info.cookies_len = strncpy(info.cookies,(section), 1024);
 								section_offset++;
 					break;
 				default:
@@ -100,13 +101,22 @@ int zmq_server_init (void)
 
 			}
 		}
-		#if 1
+		#if 0
 		printf("adtype = %d\n", info.adtype);
 		printf("useragent = %s\n", info.useragent);
 		printf("refer = %s\n", 		info.refer);
 		printf("ip=%s\n", info.userip);
 		printf("cookies = %s\n", info.cookies);
 		#endif
+
+
+		if(info.cookies_len == 0)
+		{
+				
+		}
+		else
+		{
+		}
 		adlist =  apply_valid_ad(info.adtype);
 		if(adlist == NULL)
 		{

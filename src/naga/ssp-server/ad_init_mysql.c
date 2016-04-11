@@ -176,12 +176,10 @@ int main(int argc, char *argv[])
 
 
 
-
-
 ad_struct_t * apply_valid_ad(int adtype)
 {
 	int i;
-	ad_list_node_t * pos = NULL;
+	ad_list_node_t * pos = NULL, *next = NULL;
 	ad_struct_t * ad = NULL;
 	struct dlist_head *cnode = NULL;
 
@@ -191,15 +189,22 @@ ad_struct_t * apply_valid_ad(int adtype)
 			continue;
 
 		pthread_mutex_lock( &ad_lists[adtype][i].mutex);
-		cnode = ad_lists[adtype][i].head.next;
-		pos = list_entry(cnode, ad_list_node_t , node);
-		dlist_move_tail(cnode, &(ad_lists[adtype][i].head));
+		
+		list_for_each_entry_safe(pos, next,  &(ad_lists[adtype][i].head), node )
+		{
+			if(1)
+			{
+				dlist_move_tail( &(pos->node), &(ad_lists[adtype][i].head));
+				ad = pos->ad;
+				break;
+			}	
+		}	
 		pthread_mutex_unlock(&ad_lists[adtype][i].mutex);		
 		
-		if(pos != NULL)
+		if(ad != NULL)
 		{
-			printf("ad type = %d, id= %d\n", adtype, pos->ad->id);
-			return pos->ad;
+			printf("ad type = %d, id= %d\n", adtype, ad->id);
+			return ad;
 		}	
 	}	
 	return NULL;	
