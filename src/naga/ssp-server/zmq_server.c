@@ -100,10 +100,17 @@ int zmq_server_init (void)
 		#endif
 		
 		int times = 0;
+		uint32_t cell = 0;
+		
 		if(info.cookies_len == 0)
 		{
 			times = 0;
-			usercookeis_assess_add(info.cookies, info.cookies_len);	
+			if(usercookeis_assess_add(info.cookies, info.cookies_len) != E_SUCCESS)
+			{
+				goto err_code;
+			}	
+			
+			
 		}
 		else
 		{

@@ -79,6 +79,10 @@ int main(int argc, char *argv[])
 
 
    ad_list_init();
+   today_time_str_init();
+
+
+   
    if( (sock = mysql_init(&mysql)) == NULL)  
    {
 	printf("mysql init failed\n");

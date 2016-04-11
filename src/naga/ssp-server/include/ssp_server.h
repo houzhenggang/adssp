@@ -22,7 +22,7 @@ ad_struct_t * apply_valid_ad(apply_info_t *, int times);
 
 berr usercookes_init();
 
-berr usercookeis_assess_add(char *cookeis, int cookeislen);
+berr usercookeis_assess_add(char *cookeis, int cookeislen, uint32_t *);
 
 int usercookeis_assess_check(char *cookeis, int cookeislen);
 

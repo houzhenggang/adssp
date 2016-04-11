@@ -15,7 +15,7 @@
 
 
 bts_hashtable_t usercookeis_control_table;
-
+char today_time_s[20];
 
 typedef struct
 {
@@ -26,6 +26,18 @@ typedef struct
 	uint64_t push_drop;
 }usercookeis;
 //user name
+
+
+
+
+void today_time_str_init()
+{
+	time_t time = time(NULL);
+	struct tm *tm = localtime(&time);
+	snprintf(today_time_s, 20, "%4d%02d%02d-", tm->year, tm->month, tm->day);
+	printf("today_time is %s", today_time_s);
+}
+
 uint32_t usercookeis_hash_func(void *data)
 {
     usercookeis *entry = NULL;
@@ -93,17 +105,18 @@ berr usercookes_init()
 }
 
 
-berr usercookeis_assess_add(char *cookeis, int cookeislen)
+berr usercookeis_assess_add(char *cookeis, int cookeislen, uint32_t * current_cell)
 {
 
 	usercookeis *data = malloc(sizeof(usercookeis));
 	memset(data, 0x0, sizeof(usercookeis));
 	
-	strncpy((data->cookeis), (cookeis), cookeislen);
+	sprintf("")
 	
-	bts_hashtable_add(&usercookeis_control_table, data);
+	berr rv = bts_hashtable_add(&usercookeis_control_table, data);
+	*current_cell = usercookeis_control_table.total_cell;	
+	return rv;
 	
-	return E_SUCCESS;								
 }
 
 

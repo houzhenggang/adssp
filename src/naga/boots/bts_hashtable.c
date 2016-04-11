@@ -156,8 +156,9 @@ berr bts_hashtable_add(bts_hashtable_t *tab, void *data)
 
 	pthread_mutex_lock(&(bucket->mutex));
     bts_listnode_add(bucket, data, tab->find);
+	tab->total_cell ++;
 	pthread_mutex_unlock(&(bucket->mutex));    
-
+	
     BRET(E_SUCCESS);
 }
 
