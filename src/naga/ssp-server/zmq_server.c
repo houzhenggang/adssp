@@ -110,7 +110,7 @@ int zmq_server_init (void)
 			times = usercookeis_assess_check(info.cookies, info.cookies_len);				
 		}
 		
-		adlist =  apply_valid_ad(&info, times);
+		adlist =  apply_valid_ad (&info, times);
 		if(adlist == NULL)
 		{
 			goto err_code;
