@@ -10,7 +10,6 @@
 #include "zebra.h"
 #include "getopt.h"
 #include "command.h"
-#include "product.h"
 
 
 bts_hashtable_t usercookeis_control_table;
@@ -33,7 +32,7 @@ void today_time_str_init()
 {
 	time_t times = time(NULL);
 	struct tm *tm = localtime(&times);
-	snprintf(today_time_s, 20, "%4d%02d%02d-", tm->year, tm->month, tm->day);
+	snprintf(today_time_s, 20, "%4d%02d%02d-", tm->tm_year+1900, tm->tm_mon+1, tm->tm_mday);
 	printf("today_time is %s", today_time_s);
 }
 
