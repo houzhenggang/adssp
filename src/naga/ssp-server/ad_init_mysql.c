@@ -7,6 +7,7 @@
 #include <mysql/mysql.h>
 #include "bts_hashtable.h"
 #include "ad.h"
+#include "ssp_server.h"
 
 
 
