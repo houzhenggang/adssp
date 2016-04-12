@@ -183,7 +183,7 @@ int zmq_server_init (void)
 		continue;
 err_code:
 		size= zmq_send(server, "return;", 6 , 0);
-		
+		printf("select failed \n");
     }
     zmq_close (server);
     zmq_ctx_destroy (context);

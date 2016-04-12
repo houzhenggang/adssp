@@ -92,9 +92,22 @@ int user_hash_check_func(void *d1, void *d2, void *program)
 	}	
 }
 
+
+int g_small_test  =1;
+
 berr user_init()
 {	
-    bts_hashtable_init(&user_control_table, 10000000, 
+
+	int size_user = 0;
+	if(g_small_test)
+	{
+		size_user = 1000;
+	}
+	else
+	{
+		size_user = 10000000;
+	}	
+    bts_hashtable_init(&user_control_table,size_user , 
 			user_hash_func, user_cmp_func, NULL);
 	
 	user_control_table.find = user_hash_find_func;
