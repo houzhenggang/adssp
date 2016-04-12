@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "bts_hashtable.h"
 #include "ssp_server.h"
+#include "ad.h"
 
 int init_process()
 {
