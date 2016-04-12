@@ -129,6 +129,7 @@ int zmq_server_init (void)
 		adlist =  apply_valid_ad (&info, times);
 		if(adlist == NULL)
 		{
+			printf("failed select valid ad\n");
 			goto err_code;
 		}
 		else
