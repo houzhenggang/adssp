@@ -31,7 +31,5 @@ int usercookeis_assess_check(char *cookeis, int cookeislen);
 
 
 
-int init_process();
-
 
 #endif

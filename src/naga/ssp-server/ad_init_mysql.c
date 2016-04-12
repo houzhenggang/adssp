@@ -8,7 +8,7 @@
 #include "bts_hashtable.h"
 #include "ad.h"
 #include "ssp_server.h"
-
+#include "init.h"
 
 
 #define MAX_PRIO  10
