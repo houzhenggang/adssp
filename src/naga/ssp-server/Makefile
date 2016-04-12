@@ -42,7 +42,7 @@ include $(RTE_SDK)/mk/rte.vars.mk
 APP = sspserver 
 
 # all source are stored in SRCS-y
-SRCS-y := ad_init_mysql.c zmq_server.c domain_hash_table.c cookies_hash.c 
+SRCS-y := init.c ad_init_mysql.c zmq_server.c domain_hash_table.c cookies_hash.c 
 
 CFLAGS += -O3 $(USER_FLAGS)
 #CFLAGS += $(WERROR_FLAGS)
