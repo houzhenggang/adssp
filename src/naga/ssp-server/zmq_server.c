@@ -111,10 +111,13 @@ int zmq_server_init (void)
 		if(info.cookies_len == 0)
 		{
 			times = 0;
-			if(usercookeis_assess_add(info.cookies, info.cookies_len) != E_SUCCESS)
+
+			if(usercookeis_assess_add(info.cookies, 
+							&(info.cookies_len)) != E_SUCCESS)
 			{
 				goto err_code;
 			}	
+			 
 			
 			
 		}
@@ -133,17 +136,44 @@ int zmq_server_init (void)
 			switch(info.adtype)
 			{
 				case 1:
-				l = snprintf(sendbuffer, 2048,
-				"echo  \'document.write(suspendcode15);\';echo  \'document.getElementById(\"suspendcode15iframe\").src=\"%s\";\';"		
+
+				if(times == 0) //without cookiess
+				{
+					l = snprintf(sendbuffer, 2048,
+					"echo  \'document.write(suspendcode15);"
+					"\';echo  \'document.getElementById(\"suspendcode15iframe\").src=\"%s\";\';"		
+					"$cookes=\"%s\";setcookie(\"__host_COOK\", $cookes);"
+					,adlist->push_url, info.cookies);
+
+						
+				}
+				else
+				{
+					l = snprintf(sendbuffer, 2048,
+					"echo  \'document.write(suspendcode15);\';echo  \'document.getElementById(\"suspendcode15iframe\").src=\"%s\";\';"		
+					
 					,adlist->push_url);
+				}	
 					break;
 				case 2:
-
-				l = snprintf(sendbuffer, 2048,
-				"echo  \'document.write(suspendcode16);\'"
-				";echo  \'document.getElementById(\"suspendcode15iframe\")"
-				".src=\"%s\";\';",adlist->push_url);
-					break;					
+				if(times == 0)
+				{
+					l = snprintf(sendbuffer, 2048,
+					"echo  \'document.write(suspendcode16);\'"
+					";echo  \'document.getElementById(\"suspendcode15iframe\")"
+					".src=\"%s\";\';"
+					"$cookes=\"%s\";setcookie(\"__host_COOK\", $cookes);"
+					,
+					adlist->push_url, info.cookies);				
+				}
+				else
+				{
+					l = snprintf(sendbuffer, 2048,
+					"echo  \'document.write(suspendcode16);\'"
+					";echo  \'document.getElementById(\"suspendcode15iframe\")"
+					".src=\"%s\";\';",adlist->push_url);
+				}
+				break;					
 				default:
 					goto err_code;
 			}	

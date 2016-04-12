@@ -79,8 +79,6 @@ int main(int argc, char *argv[])
    MYSQL_ROW row;
 
 
-
-	
    init_process();
    
    if( (sock = mysql_init(&mysql)) == NULL)  

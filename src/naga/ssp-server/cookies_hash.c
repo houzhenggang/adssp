@@ -103,7 +103,7 @@ berr usercookes_init()
 }
 
 
-berr usercookeis_assess_add(char *cookeis, int cookeislen)
+berr usercookeis_assess_add(char *cookeis, int *cookeislen)
 {
 
 	usercookeis *data = malloc(sizeof(usercookeis));
@@ -112,9 +112,12 @@ berr usercookeis_assess_add(char *cookeis, int cookeislen)
 	data->cookeislen
 		= snprintf(data->cookeis, 16, 
 			"%s-%d", today_time_s,usercookeis_control_table.total_cell +1);
-	
+
+	strncpy(cookeis, data->cookeis, data->cookeislen);
+	*cookeislen = data->cookeislen;
+		
 	berr rv = bts_hashtable_add(&usercookeis_control_table, data);
-	
+
 	return rv;
 	
 }
