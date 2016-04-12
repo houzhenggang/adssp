@@ -186,9 +186,9 @@ ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 	struct dlist_head *cnode = NULL;
 	int adtype = info->adtype;
 	
-
 	for(i=0; i<MAX_PRIO; i++)
 	{
+		
 		if(ad_lists[adtype][i].size == 0)
 			continue;
 
@@ -200,7 +200,6 @@ ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 			{
 				ad = pos->ad;
 				dlist_move_tail( &(pos->node), &(ad_lists[adtype][i].head));
-				printf("find the failed\n");
 				break;
 			}	
 		}	
