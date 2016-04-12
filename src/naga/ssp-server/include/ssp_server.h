@@ -29,4 +29,9 @@ berr usercookeis_assess_add(char *cookeis, int cookeislen);
 
 int usercookeis_assess_check(char *cookeis, int cookeislen);
 
+
+
+int init_process();
+
+
 #endif

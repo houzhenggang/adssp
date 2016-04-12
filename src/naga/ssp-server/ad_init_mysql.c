@@ -79,10 +79,9 @@ int main(int argc, char *argv[])
    MYSQL_ROW row;
 
 
-   ad_list_init();
-   today_time_str_init();
 
-
+	
+   init_process();
    
    if( (sock = mysql_init(&mysql)) == NULL)  
    {
