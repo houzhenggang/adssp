@@ -58,6 +58,8 @@ int zmq_server_init (void)
 		printf("recv len(%d) %s\n", size, buffer);
 		section_offset = 0;
 		section = NULL;
+		memset(&info, 0x0 , sizeof(info));
+		
 		while  (NULL != ( section = strsep(&buf_ptr, "@")))
 		{
 	
@@ -80,9 +82,13 @@ int zmq_server_init (void)
 					section_offset++;
 					break;
 				case 4:
-					strncpy(info.cookies,(section), 1024);
-					info.cookies_len = strlen(info.cookies);
-					section_offset++;
+					if(section != NULL)
+					{
+						strncpy(info.cookies, (section), 1024);
+						info.cookies_len = strlen(info.cookies);
+						section_offset++;
+					}
+					
 					break;
 				default:
 					printf("Failed to Success\n");
