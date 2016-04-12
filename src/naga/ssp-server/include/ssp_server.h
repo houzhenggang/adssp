@@ -25,7 +25,7 @@ void today_time_str_init();
 
 berr usercookes_init();
 
-berr usercookeis_assess_add(char *cookeis, int cookeislen);
+berr usercookeis_assess_add(char *cookeis, int *cookeislen);
 
 int usercookeis_assess_check(char *cookeis, int cookeislen);
 
