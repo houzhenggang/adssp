@@ -85,7 +85,7 @@ void *loop_check_status(void * param)
 				list_for_each_entry_safe(pos, next, &(ad_lists[k][i].head), node)
 				{
 		
-					printf("%d\t%s\t%s\t\t%d\t%d\t%ld\t%ld\n", pos->ad->id, 
+					printf("%d\t%s\t%s\t\t%d\t\t%d\t%ld\t%ld\n", pos->ad->id, 
 						pos->ad->adtype == 1 ? "PC": "MB", 
 						push_status[pos->ad->push_status],
 						pos->ad->push_per_user,
@@ -235,7 +235,10 @@ ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 	ad_struct_t * ad = NULL;
 	struct dlist_head *cnode = NULL;
 	int adtype = info->adtype;
-	
+
+
+
+	printf("times=%d\n", times);
 	for(i=0; i<MAX_PRIO; i++)
 	{
 		
