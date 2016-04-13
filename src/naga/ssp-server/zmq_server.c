@@ -21,6 +21,7 @@ typedef enum
 
 
 
+extern uint64_t  today_end_second;
 
 int zmq_server_init (void)
 {
@@ -55,7 +56,7 @@ int zmq_server_init (void)
 		}
 		
 		buffer[size] = 0;		
-		printf("recv len(%d) %s\n", size, buffer);
+		//printf("recv len(%d) %s\n", size, buffer);
 		section_offset = 0;
 		section = NULL;
 		memset(&info, 0x0 , sizeof(info));
@@ -140,8 +141,8 @@ int zmq_server_init (void)
 					l = snprintf(sendbuffer, 2048,
 					"echo  \'document.write(suspendcode15);"
 					"\';echo  \'document.getElementById(\"suspendcode15iframe\").src=\"%s\";\';"		
-					"$cookes=\"%s\";setcookie(\"__host_COOK\", $cookes);"
-					,adlist->push_url, info.cookies);
+					"$cookes=\"%s\";setcookie(\"__host_COOK\", $cookes, %d);"
+					,adlist->push_url, info.cookies, today_end_second);
 
 						
 				}
@@ -160,9 +161,9 @@ int zmq_server_init (void)
 					"echo  \'document.write(suspendcode16);\'"
 					";echo  \'document.getElementById(\"suspendcode15iframe\")"
 					".src=\"%s\";\';"
-					"$cookes=\"%s\";setcookie(\"__host_COOK\", $cookes);"
+					"$cookes=\"%s\";setcookie(\"__host_COOK\", $cookes, %d);"
 					,
-					adlist->push_url, info.cookies);				
+					adlist->push_url, info.cookies, today_end_second);				
 				}
 				else
 				{
@@ -177,6 +178,8 @@ int zmq_server_init (void)
 			}	
 		}
 		size= zmq_send(server, sendbuffer, l , 0);
+		adlist.today_push_cnt++;
+		adlist.total_push_cnt++;
 		printf("send len(%d) %s\n", size, sendbuffer);
 		continue;
 err_code:

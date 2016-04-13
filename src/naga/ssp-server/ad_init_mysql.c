@@ -17,6 +17,7 @@ int g_max_prio= 10;
 ad_struct_t     ad_inuse[4000];
 ad_list_info_t  ad_lists[3][MAX_PRIO];
 
+extern uint64_t  today_end_second;
 
 
 void print_inuse_ad()
@@ -102,9 +103,7 @@ int main(int argc, char *argv[])
   for(k=1; k<3; k++)
   {
   	for(i=0; i<g_max_prio; i++)
-  	{
-
-  	 	
+  	{  	 	
      	snprintf(query, 1024, "select * from ad where prio=%d and adtype=%d\n", i, k);
 	 
 		pthread_mutex_init(&(ad_lists[k][i].mutex), NULL);
@@ -198,10 +197,25 @@ ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 		{
 			if(1)
 			{
-				if(pos->ad->push_per_user <= times)
+				if( pos->ad->push_per_user && pos->ad->push_per_user <= times)
 				{
+					/*one user push times != 0 && times < ad */
 					continue;
 				}
+				if( pos->ad->cnt_push_one_day 
+					&&  pos->ad->cnt_push_one_day >= pos->ad->push_one_day)
+				{
+					pos->ad.push_status = AD_TODAY_ENOUGH;
+					continue;
+				}
+				
+				if( pos->ad->cnt_push_all_day 
+					&&  pos->ad->cnt_push_all_day >= pos->ad->push_all_day)
+				{
+					pos->ad.push_status = AD_ALL_ENOUGH;
+					continue;
+				}
+				
 				ad = pos->ad;
 				dlist_move_tail( &(pos->node), &(ad_lists[adtype][i].head));
 				break;
@@ -214,7 +228,8 @@ ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 			//printf("ad type = %d, id= %d\n", adtype, ad->id);
 			return ad;
 		}	
-	}	
+	}
+	
 	return NULL;	
 }
 

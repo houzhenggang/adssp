@@ -14,7 +14,7 @@
 
 bts_hashtable_t usercookeis_control_table;
 char today_time_s[20];
-
+uint64_t  today_end_second;
 typedef struct
 {
 	char cookeis[16];//20160304-no;
@@ -32,8 +32,14 @@ void today_time_str_init()
 {
 	time_t times = time(NULL);
 	struct tm *tm = localtime(&times);
-	snprintf(today_time_s, 20, "%4d%02d%02d-", tm->tm_year+1900, tm->tm_mon+1, tm->tm_mday);
+	snprintf(today_time_s, 20, "%4d%02d%02d", tm->tm_year+1900, tm->tm_mon+1, tm->tm_mday);
 	printf("today_time is %s", today_time_s);
+
+	tm->tm_hour =23;
+	tm->tm_min = 59;
+	tm->tm_sec = 59;
+
+	today_end_second = mktime(tm);
 }
 
 uint32_t usercookeis_hash_func(void *data)

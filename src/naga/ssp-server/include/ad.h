@@ -1,7 +1,14 @@
 #ifndef __AD_H_H
 #define __AD_H_H
 
-
+enum
+{
+	AD_HOLD  = 0,
+	AD_RUNNING,
+	AD_OUTOFDATE,
+	AD_TODAY_ENOUGH,
+	AD_ALL_ENOUGH,
+};
 
 typedef struct
 {
@@ -17,8 +24,8 @@ typedef struct
 	uint64_t push_per_user;
 	uint64_t push_user_interval;
 
-	int push_status; //0;挂起  1,投放中， 2,过期
-	int apply_status;//0;未审核, 1,已审核
+	int push_status;  //0;挂起  1,投放中， 2,过期, 3,today_enough, 4, all_enough
+	int apply_status; //0;未审核, 1,已审核
 
 	char * create_time;
 	char * update_time;	
@@ -36,7 +43,10 @@ typedef struct
 	uint64_t starttime;
 	uint64_t endtime;
 	uint32_t hourmask;
-	
+
+
+	uint64_t  cnt_push_all_day;
+	uint64_t  cnt_push_one_day;
 }ad_struct_t;
 
 
