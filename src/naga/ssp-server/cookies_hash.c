@@ -102,8 +102,10 @@ int usercookeis_hash_check_func(void *d1, void *d2, void *program)
 
     e1 = (usercookeis *) d1;
     e2 = (usercookeis *) d2;
+
+	int *pro =(int *) program
 	
-	*(int * program) =e2->push_success; 	
+	*pro = e2->push_success; 	
 	return 0;
 }
 
