@@ -67,7 +67,8 @@ int usercookeis_cmp_func(void *d1, void *d2)
 
     e1 = (usercookeis *) d1;
     e2 = (usercookeis *) d2;
-
+	printf("e1=%s(%d) e2=%s(%d)\n");
+	
 	if(e1->cookeislen == e2->cookeislen)
 		return memcmp(e1->cookeis, e2->cookeis, e1->cookeislen);
 	else
