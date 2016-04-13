@@ -56,7 +56,7 @@ int zmq_server_init (void)
 		}
 		
 		buffer[size] = 0;		
-		//printf("recv len(%d) %s\n", size, buffer);
+		printf("recv len(%d) %s\n", size, buffer);
 		section_offset = 0;
 		section = NULL;
 		memset(&info, 0x0 , sizeof(info));
