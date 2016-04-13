@@ -100,7 +100,7 @@ void *loop_check_status(void * param)
 			}
 		}
 		
-		sleep(60);
+		sleep(10);
 	}
 }
 int status_loop_printf()
@@ -242,7 +242,7 @@ ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 
 
 
-	printf("times=%d\n", times);
+	//printf("times=%d\n", times);
 	for(i=0; i<MAX_PRIO; i++)
 	{
 		

@@ -464,7 +464,6 @@ int bts_listnode_diyfunc(struct bts_list *bts_list, void *val,
 		 node  = list_entry(pos, bts_listnode_t, node);
 		 if(!bts_list->cmp(node->data, val))
 		 {
-		 	printf("find ll;;;\n");
 			find = 1;
 			break;
 		 }

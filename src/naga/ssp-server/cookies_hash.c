@@ -220,7 +220,7 @@ int usercookeis_update_success(char *cookeis, int cookeislen)
 	
 	if(!rv)
 	{
-		printf("zzzzzzzzzzz\n");		
+		//printf("zzzzzzzzzzz\n");		
 	}
 	else
 	{
