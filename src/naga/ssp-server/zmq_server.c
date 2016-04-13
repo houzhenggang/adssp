@@ -178,8 +178,8 @@ int zmq_server_init (void)
 			}	
 		}
 		size= zmq_send(server, sendbuffer, l , 0);
-		adlist.today_push_cnt++;
-		adlist.total_push_cnt++;
+		adlist->cnt_push_all_day++;
+		adlist->cnt_push_one_day++;
 		printf("send len(%d) %s\n", size, sendbuffer);
 		continue;
 err_code:
