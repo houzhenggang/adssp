@@ -479,7 +479,7 @@ bts_listnode_add (struct bts_list *bts_list, void *val,  bts_hash_find_func find
         node->data = val;
         dlist_add_tail(&(node->node), &(bts_list->bucket_head));
         bts_list->count++;
-        
+        printf("Success to new node\n");
     }
     return;
 }
