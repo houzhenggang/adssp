@@ -153,13 +153,13 @@ int usercookeis_assess_check(char *cookeis, int cookeislen)
 	strncpy((data.cookeis), (cookeis), cookeislen);
 		
 	rv = bts_hashtable_check(&usercookeis_control_table, &data, &access_times);
-	if(rv == E_SUCCESS)
+	if(rv /*find*/)
 	{
 		return access_times;
 	}
-	else
+	else 
 	{
-		return -1;
+		return 0;
 	}	
 }
 
