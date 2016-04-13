@@ -154,8 +154,8 @@ int usercookeis_assess_check(char *cookeis, int cookeislen)
 		
 	rv = bts_hashtable_check(&usercookeis_control_table, &data, &access_times);
 	if(rv /*find*/)
-	{
-		return access_times;
+	{	
+		int ret = (int)access_times;
 	}
 	else 
 	{
