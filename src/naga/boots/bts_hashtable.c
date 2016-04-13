@@ -194,7 +194,8 @@ int  bts_hashtable_check(bts_hashtable_t *tab, void *data, void *program0)
 
 
 
-int  bts_hashtable_check_and_create(bts_hashtable_t *tab, void *data, void *program0)
+int  bts_hashtable_check_and_create(bts_hashtable_t *tab,
+	void *data, int datasize, void *program0)
 {
     uint32_t hash, idx;
     bts_list_t *bucket = NULL;
@@ -218,7 +219,7 @@ int  bts_hashtable_check_and_create(bts_hashtable_t *tab, void *data, void *prog
     bucket = &tab->buckets[idx];
 	
 	pthread_mutex_lock(&(bucket->mutex));
-    rv = bts_listnode_check_and_create(bucket, data, tab->check, program0);
+    rv = bts_listnode_check_and_create(bucket, data, datasize, tab->check, program0);
 	pthread_mutex_unlock(&(bucket->mutex));    
    	return rv;
 }

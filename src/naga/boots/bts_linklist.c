@@ -398,7 +398,8 @@ int bts_listnode_check(struct bts_list *bts_list, void *val,
 
 
 
-int bts_listnode_check_and_create(struct bts_list *bts_list, void *val,  
+int bts_listnode_check_and_create(struct bts_list *bts_list, void *val,
+										int datasize,
 										bts_hash_check_func checkcall, void *program0)
 {
 
@@ -417,7 +418,7 @@ int bts_listnode_check_and_create(struct bts_list *bts_list, void *val,
 			break;
 		 }
 		
-	} 
+	}
 	if(find)
 	{
 		if(checkcall)
@@ -432,7 +433,9 @@ int bts_listnode_check_and_create(struct bts_list *bts_list, void *val,
         {
 			return;
 		}
-        node->data = val;
+		  
+        node->data = malloc(datasize);
+		memcpy(node->data, val, datasize);
         dlist_add_tail(&(node->node), &(bts_list->bucket_head));
         bts_list->count++;	
 

@@ -164,7 +164,6 @@ int usercookeis_assess_check(char *cookeis, int cookeislen)
 	}
 	else 
 	{
-		printf("not find times = %ld\n", access_times);
 		return 0;
 	}	
 }
