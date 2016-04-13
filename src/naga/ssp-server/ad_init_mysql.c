@@ -65,15 +65,14 @@ char *push_status[]={
 	"AD_ALL_ENOUGH"
 };
 
-void *loop_check_status(void *)
+void *loop_check_status(void * param)
 {
+	
+	int i, k;
+	ad_list_node_t * pos = NULL, *next = NULL;
+
 	while(1)
 	{
-
-		int i, k;
-		ad_list_node_t * pos = NULL, *next = NULL;
-
-
 
 		printf("ID\tadtype\tstatus\ttoday_cnt\tall_total\n")
 		for(k=1; k<3; k++)
@@ -103,7 +102,7 @@ int status_loop_printf()
 	pthread_t thread;
 	pthread_create(&thread, NULL, loop_check_status, NULL);
 	pthread_detach(thread);
-	return 0
+	return 0;
 }
 
 void ad_list_init()
