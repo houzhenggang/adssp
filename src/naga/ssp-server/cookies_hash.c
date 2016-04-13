@@ -103,7 +103,7 @@ int usercookeis_hash_check_func(void *d1, void *d2, void *program)
     e1 = (usercookeis *) d1;
     e2 = (usercookeis *) d2;
 
-	uint64_t * pro = (uint64_t *) program
+	uint64_t * pro = (uint64_t *) program;
 	
 	*pro = e2->push_success; 	
 	return 0;
