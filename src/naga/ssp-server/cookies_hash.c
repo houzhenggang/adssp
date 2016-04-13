@@ -214,11 +214,14 @@ int usercookeis_update_success(char *cookeis, int cookeislen)
 	
 	strncpy((data.cookeis), (cookeis), cookeislen);
 	data.cookeislen = cookeislen;
+	
 	rv = bts_hashtable_diyfunc(&usercookeis_control_table, &data,
 		incrss_push_success);
 
+	
 	if(!rv)
 	{
+		printf("zzzzzzzzzzz\n");		
 	}
 	else
 	{
