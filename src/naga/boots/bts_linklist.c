@@ -397,6 +397,45 @@ int bts_listnode_check(struct bts_list *bts_list, void *val,
 }
 
 
+
+
+int bts_listnode_diyfunc(struct bts_list *bts_list, void *val, 
+	bts_hash_dymic_func  func)
+{
+
+	struct bts_listnode *node = NULL;
+	struct dlist_head *pos = NULL, *next = NULL;
+	//assert(bts_list);
+	//assert(bts_list->cmp);
+	int find = 0;
+
+	list_for_each_safe(pos, next, &(bts_list->bucket_head))
+	{
+		 node  = list_entry(pos, bts_listnode_t, node);
+		 if(!bts_list->cmp(node->data, val))
+		 {
+			find = 1;
+			break;
+		 }
+		
+	} 
+	if(find)
+	{
+		if(func)
+			return func(node->data);
+		else
+			return 0;
+	}
+	else
+	{
+		return 0;
+	}
+	return 0;
+	
+}
+
+
+
 void
 bts_listnode_add (struct bts_list *bts_list, void *val,  bts_hash_find_func findcall)
 {

@@ -92,7 +92,18 @@ void  usercookeis_hash_find_func(void *d1, void *d2)
 }
 
 int usercookeis_hash_check_func(void *d1, void *d2, void *program)
-{
+{	
+    usercookeis *e1, *e2;
+
+    if ((NULL == d1) || (NULL == d2))
+    {
+        return ;
+    }
+
+    e1 = (usercookeis *) d1;
+    e2 = (usercookeis *) d2;
+	
+	*(int * program) =e2->push_success; 	
 	return 0;
 }
 
@@ -104,7 +115,7 @@ berr usercookes_init()
 			usercookeis_hash_func, usercookeis_cmp_func, NULL);	
 
 	usercookeis_control_table.find = usercookeis_hash_find_func;
-	
+	usercookeis_control_table.check = usercookeis_hash_check_func;	
 	return E_SUCCESS;
 }
 
@@ -138,8 +149,7 @@ int usercookeis_assess_check(char *cookeis, int cookeislen)
 	memset(&data, 0x0, sizeof(usercookeis));
 	
 	strncpy((data.cookeis), (cookeis), cookeislen);
-	
-	
+		
 	rv = bts_hashtable_check(&usercookeis_control_table, &data, &access_times);
 	if(rv == E_SUCCESS)
 	{
@@ -148,7 +158,74 @@ int usercookeis_assess_check(char *cookeis, int cookeislen)
 	else
 	{
 		return -1;
-	}								
+	}	
+}
+
+
+void incrss_push_success(void *ndata)
+{
+    usercookeis *e2;
+
+    if (NULL == ndata)
+    {
+        return ;
+    }
+
+    e2 = (usercookeis *) ndata;
+	e2->push_success++;
+	return ;		
+}
+
+
+void incrss_push_drop(void *ndata)
+{
+    usercookeis *e2;
+
+    if (NULL == ndata)
+    {
+        return ;
+    }
+
+    e2 = (usercookeis *) ndata;
+	e2->push_drop++;;
+	return ;		
+}
+
+
+
+int usercookeis_update_success(char *cookeis, int cookeislen)
+{
+
+	usercookeis data = {};
+	int rv;
+	int access_times = 0;
+
+	bts_hash_dymic_func func;
+		
+	memset(&data, 0x0, sizeof(usercookeis));
+	
+	strncpy((data.cookeis), (cookeis), cookeislen);
+		
+	rv = bts_hashtable_diyfunc(&usercookeis_control_table, &data,
+		incrss_push_success);
+	return 0 ;						
+}
+
+
+int usercookeis_update_drop(char *cookeis, int cookeislen)
+{
+
+	usercookeis data = {};
+	int rv;
+	int access_times = 0;
+		
+	memset(&data, 0x0, sizeof(usercookeis));
+	
+	strncpy((data.cookeis), (cookeis), cookeislen);
+		
+	rv = bts_hashtable_diyfunc(&usercookeis_control_table, &data,
+		incrss_push_drop);
+	return 0 ;						
 }
 
 
