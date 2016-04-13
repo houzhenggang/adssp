@@ -141,11 +141,14 @@ int usercookeis_assess_check(char *cookeis, int cookeislen)
 	
 	
 	rv = bts_hashtable_check(&usercookeis_control_table, &data, &access_times);
-	if(rv)
+	if(rv == E_SUCCESS)
 	{
 		return access_times;
 	}
-	return E_SUCCESS;								
+	else
+	{
+		return -1;
+	}								
 }
 
 

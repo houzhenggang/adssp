@@ -85,7 +85,7 @@ void *loop_check_status(void * param)
 				list_for_each_entry_safe(pos, next, &(ad_lists[k][i].head), node)
 				{
 		
-					printf("%d\t%s\t%s\t\t%d\t\t%d\t%ld\t%ld\n", pos->ad->id, 
+					printf("%d\t%s\t%s\t\t%d\t\t%d\t%ld\t\t%ld\n", pos->ad->id, 
 						pos->ad->adtype == 1 ? "PC": "MB", 
 						push_status[pos->ad->push_status],
 						pos->ad->push_per_user,

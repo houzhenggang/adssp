@@ -121,7 +121,13 @@ int zmq_server_init (void)
 		}
 		else
 		{
-			times = usercookeis_assess_check(info.cookies, info.cookies_len);				
+			times = usercookeis_assess_check(info.cookies, info.cookies_len);
+
+			if(times < 0 )
+			{
+				goto err_code;
+			}	
+
 		}
 
 		
