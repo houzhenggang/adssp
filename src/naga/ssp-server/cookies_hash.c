@@ -164,7 +164,7 @@ int usercookeis_assess_check(char *cookeis, int cookeislen)
 }
 
 
-void incrss_push_success(void *ndata)
+int  incrss_push_success(void *ndata)
 {
     usercookeis *e2;
 
@@ -176,11 +176,11 @@ void incrss_push_success(void *ndata)
     e2 = (usercookeis *) ndata;
 	e2->push_success++;
 	printf("incr push success %d\n", e2->push_success);
-	return ;		
+	return 1;		
 }
 
 
-void incrss_push_drop(void *ndata)
+int incrss_push_drop(void *ndata)
 {
     usercookeis *e2;
 
@@ -191,7 +191,7 @@ void incrss_push_drop(void *ndata)
 
     e2 = (usercookeis *) ndata;
 	e2->push_drop++;;
-	return ;		
+	return 1;		
 }
 
 
@@ -203,14 +203,18 @@ int usercookeis_update_success(char *cookeis, int cookeislen)
 	int rv;
 	int access_times = 0;
 
-	bts_hash_dymic_func func;
-		
+
 	memset(&data, 0x0, sizeof(usercookeis));
 	
 	strncpy((data.cookeis), (cookeis), cookeislen);
 		
 	rv = bts_hashtable_diyfunc(&usercookeis_control_table, &data,
 		incrss_push_success);
+
+	if(!rv)
+	{
+		printf("not Filed\n");
+	}
 	return 0 ;						
 }
 
