@@ -171,12 +171,12 @@ int  incrss_push_success(void *ndata)
 
     if (NULL == ndata)
     {
-        return ;
+        return 0;
     }
 
     e2 = (usercookeis *) ndata;
 	e2->push_success++;
-
+	printf("zzzzzzzzzzzzzzz\n");
 	return 1;		
 }
 
@@ -187,7 +187,7 @@ int incrss_push_drop(void *ndata)
 
     if (NULL == ndata)
     {
-        return ;
+        return 0;
     }
 
     e2 = (usercookeis *) ndata;
