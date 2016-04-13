@@ -215,6 +215,10 @@ int usercookeis_update_success(char *cookeis, int cookeislen)
 	{
 		printf("not Filed\n");
 	}
+	else
+	{
+		printf("not Success\n");
+	}
 	return 0 ;						
 }
 
