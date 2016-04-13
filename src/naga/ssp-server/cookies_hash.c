@@ -155,7 +155,7 @@ int usercookeis_assess_check(char *cookeis, int cookeislen)
 	strncpy((data.cookeis), (cookeis), cookeislen);
 	data.cookeislen = cookeislen;	
 
-	rv = bts_hashtable_check_and_create(&usercookeis_control_table, &data, &access_times);
+	rv = bts_hashtable_check_and_create(&usercookeis_control_table, &data,sizeof(usercookeis), &access_times);
 	if(rv /*find*/)
 	{	
 		printf("find times = %ld\n", access_times);
