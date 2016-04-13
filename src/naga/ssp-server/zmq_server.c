@@ -116,15 +116,13 @@ int zmq_server_init (void)
 							&(info.cookies_len)) != E_SUCCESS)
 			{
 				goto err_code;
-			}	
-			 
-			
-			
+			}		
 		}
 		else
 		{
 			times = usercookeis_assess_check(info.cookies, info.cookies_len);				
 		}
+
 		
 		adlist =  apply_valid_ad (&info, times);
 		if(adlist == NULL)
