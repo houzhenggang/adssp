@@ -53,7 +53,57 @@ void print_inuse_ad()
 			}
 				
 		}
-	}	
+	}
+	
+}
+
+char *push_status[]={
+	"AD_HOLD",
+	"AD_RUNNING",
+	"AD_OUTOFDATE",
+	"AD_TODAY_ENOUGH",
+	"AD_ALL_ENOUGH"
+};
+
+void *loop_check_status(void *)
+{
+	while(1)
+	{
+
+		int i, k;
+		ad_list_node_t * pos = NULL, *next = NULL;
+
+
+
+		printf("ID\tadtype\tstatus\ttoday_cnt\tall_total\n")
+		for(k=1; k<3; k++)
+		{ 
+		
+			for(i=0; i<MAX_PRIO; i++)
+			{
+				if(ad_lists[k][i].size == 0)
+					continue;
+				list_for_each_entry_safe(pos, next, &(ad_lists[k][i].head), node)
+				{
+		
+					printf("%d\t%s\t%s\t%ld\t%ld\n", pos->ad->id, 
+						pos->ad->adtype == 1 ? "PC": "MB", 
+						push_status[pos->ad->push_status], 
+						pos->ad->cnt_push_one_day, pos->ad->cnt_push_all_day);
+				}
+					
+			}
+		}
+		
+		sleep(60);
+	}
+}
+int status_loop_printf()
+{
+	pthread_t thread;
+	pthread_create(&thread, NULL, loop_check_status, NULL);
+	pthread_detach(thread);
+	return 0
 }
 
 void ad_list_init()
@@ -170,7 +220,7 @@ int main(int argc, char *argv[])
  		}
   	}	
     print_inuse_ad();
-
+	status_loop_printf();
 	zmq_server_init();
 
 }
