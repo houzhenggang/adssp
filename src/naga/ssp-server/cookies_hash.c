@@ -175,6 +175,7 @@ void incrss_push_success(void *ndata)
 
     e2 = (usercookeis *) ndata;
 	e2->push_success++;
+	printf("incr push success %d\n", e2->push_success);
 	return ;		
 }
 
