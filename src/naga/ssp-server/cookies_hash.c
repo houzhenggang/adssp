@@ -106,7 +106,8 @@ int usercookeis_hash_check_func(void *d1, void *d2, void *program)
 
 	uint64_t * pro = (uint64_t *) program;
 	
-	*pro = e2->push_success; 	
+	*pro = e2->push_success; 
+	printf("check the success %ld\n", *pro);
 	return 0;
 }
 
@@ -163,6 +164,7 @@ int usercookeis_assess_check(char *cookeis, int cookeislen)
 	}
 	else 
 	{
+		printf("not find times = %ld\n", access_times);
 		return 0;
 	}	
 }
