@@ -205,14 +205,14 @@ ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 				if( pos->ad->cnt_push_one_day 
 					&&  pos->ad->cnt_push_one_day >= pos->ad->push_one_day)
 				{
-					pos->ad.push_status = AD_TODAY_ENOUGH;
+					pos->ad->push_status = AD_TODAY_ENOUGH;
 					continue;
 				}
 				
 				if( pos->ad->cnt_push_all_day 
 					&&  pos->ad->cnt_push_all_day >= pos->ad->push_all_day)
 				{
-					pos->ad.push_status = AD_ALL_ENOUGH;
+					pos->ad->push_status = AD_ALL_ENOUGH;
 					continue;
 				}
 				
