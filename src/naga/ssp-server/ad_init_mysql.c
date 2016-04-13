@@ -64,6 +64,8 @@ char *push_status[]={
 	"AD_TODAY_ENOUGH",
 	"AD_ALL_ENOUGH"
 };
+uint64_t  drop_push_cnt_total = 0;
+uint64_t  success_push_cnt_total = 0;
 
 void *loop_check_status(void * param)
 {
@@ -73,7 +75,9 @@ void *loop_check_status(void * param)
 
 	while(1)
 	{
-
+	
+		printf("Success : %lld\n", success_push_cnt_total);
+		printf("Drop  	: %lld\n", drop_push_cnt_total);
 		printf("ID\tadtype\tstatus\t\tuser_max\ttoday_max\today_cnt\tall_total\n");
 		for(k=1; k<3; k++)
 		{ 

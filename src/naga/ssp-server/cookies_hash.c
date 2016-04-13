@@ -67,7 +67,7 @@ int usercookeis_cmp_func(void *d1, void *d2)
 
     e1 = (usercookeis *) d1;
     e2 = (usercookeis *) d2;
-	printf("e1=%s(%d) e2=%s(%d)\n", e1->cookeis, e1->cookeislen, e2->cookeis, e2->cookeislen);
+	//printf("e1=%s(%d) e2=%s(%d)\n", e1->cookeis, e1->cookeislen, e2->cookeis, e2->cookeislen);
 	
 	if(e1->cookeislen == e2->cookeislen)
 		return memcmp(e1->cookeis, e2->cookeis, e1->cookeislen);
@@ -107,7 +107,7 @@ int usercookeis_hash_check_func(void *d1, void *d2, void *program)
 	uint64_t * pro = (uint64_t *) program;
 	
 	*pro = e2->push_success; 
-	printf("check the success %ld\n", *pro);
+
 	return 1; //mean find;
 }
 
@@ -158,7 +158,7 @@ int usercookeis_assess_check(char *cookeis, int cookeislen)
 	rv = bts_hashtable_check_and_create(&usercookeis_control_table, &data,sizeof(usercookeis), &access_times);
 	if(rv /*find*/)
 	{	
-		printf("find times = %ld\n", access_times);
+		
 		int ret = (int)access_times;
 		return ret;
 	}
@@ -180,7 +180,7 @@ int  incrss_push_success(void *ndata)
 
     e2 = (usercookeis *) ndata;
 	e2->push_success++;
-	printf("ttttttttt \n");
+
 	return 1;		
 }
 
