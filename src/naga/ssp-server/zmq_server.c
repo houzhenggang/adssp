@@ -20,8 +20,8 @@ typedef enum
 }enum_msg_t;
 
 
-extern uint64_t  drop_push_cnt_total = 0;
-extern uint64_t  success_push_cnt_total = 0;
+extern uint64_t  drop_push_cnt_total ;
+extern uint64_t  success_push_cnt_total ;
 
 extern uint64_t  today_end_second;
 
