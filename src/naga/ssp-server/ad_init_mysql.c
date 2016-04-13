@@ -74,7 +74,7 @@ void *loop_check_status(void * param)
 	while(1)
 	{
 
-		printf("ID\tadtype\tstatus\t\tpush_max\today_cnt\tall_total\n");
+		printf("ID\tadtype\tstatus\t\tuser_max\ttoday_max\today_cnt\tall_total\n");
 		for(k=1; k<3; k++)
 		{ 
 		
@@ -85,9 +85,10 @@ void *loop_check_status(void * param)
 				list_for_each_entry_safe(pos, next, &(ad_lists[k][i].head), node)
 				{
 		
-					printf("%d\t%s\t%s\t\t%d\t%ld\t%ld\n", pos->ad->id, 
+					printf("%d\t%s\t%s\t\t%d\t%d\t%ld\t%ld\n", pos->ad->id, 
 						pos->ad->adtype == 1 ? "PC": "MB", 
 						push_status[pos->ad->push_status],
+						pos->ad->push_per_user,
 						pos->ad->push_one_day,
 						pos->ad->cnt_push_one_day, pos->ad->cnt_push_all_day);
 				}
