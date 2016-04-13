@@ -158,6 +158,7 @@ int usercookeis_assess_check(char *cookeis, int cookeislen)
 	if(rv /*find*/)
 	{	
 		int ret = (int)access_times;
+		return ret;
 	}
 	else 
 	{
@@ -177,7 +178,6 @@ int  incrss_push_success(void *ndata)
 
     e2 = (usercookeis *) ndata;
 	e2->push_success++;
-	printf("zzzzzzzzzzzzzzz\n");
 	return 1;		
 }
 
@@ -215,11 +215,10 @@ int usercookeis_update_success(char *cookeis, int cookeislen)
 
 	if(!rv)
 	{
-		printf("not Filed\n");
 	}
 	else
 	{
-		printf("not Success\n");
+		
 	}
 	return 0 ;						
 }
