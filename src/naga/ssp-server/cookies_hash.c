@@ -108,7 +108,7 @@ int usercookeis_hash_check_func(void *d1, void *d2, void *program)
 	
 	*pro = e2->push_success; 
 	printf("check the success %ld\n", *pro);
-	return 0;
+	return 1; //mean find;
 }
 
 

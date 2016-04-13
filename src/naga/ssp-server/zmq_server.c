@@ -121,7 +121,7 @@ int zmq_server_init (void)
 		}
 		else
 		{
-			printf("zzzzzzzzzzz\n");
+			
 			times = usercookeis_assess_check(info.cookies, info.cookies_len);
 
 			
