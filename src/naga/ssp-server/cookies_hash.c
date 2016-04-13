@@ -103,7 +103,7 @@ int usercookeis_hash_check_func(void *d1, void *d2, void *program)
     e1 = (usercookeis *) d1;
     e2 = (usercookeis *) d2;
 
-	int *pro =(int *) program
+	uint64_t * pro = (uint64_t *) program
 	
 	*pro = e2->push_success; 	
 	return 0;
@@ -147,7 +147,7 @@ int usercookeis_assess_check(char *cookeis, int cookeislen)
 
 	usercookeis data = {};
 	int rv;
-	int access_times = 0;
+	uint64_t access_times = 0;
 	memset(&data, 0x0, sizeof(usercookeis));
 	
 	strncpy((data.cookeis), (cookeis), cookeislen);
