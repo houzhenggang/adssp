@@ -74,7 +74,7 @@ void *loop_check_status(void * param)
 	while(1)
 	{
 
-		printf("ID\tadtype\tstatus\ttoday_cnt\tall_total\n")
+		printf("ID\tadtype\tstatus\ttoday_cnt\tall_total\n");
 		for(k=1; k<3; k++)
 		{ 
 		
