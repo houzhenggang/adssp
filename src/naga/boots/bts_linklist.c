@@ -428,6 +428,7 @@ int bts_listnode_diyfunc(struct bts_list *bts_list, void *val,
 	}
 	else
 	{
+		printf("not find\n");
 		return 0;
 	}
 	return 0;
