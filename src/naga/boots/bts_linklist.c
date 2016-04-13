@@ -398,6 +398,53 @@ int bts_listnode_check(struct bts_list *bts_list, void *val,
 
 
 
+int bts_listnode_check_and_create(struct bts_list *bts_list, void *val,  
+										bts_hash_check_func checkcall, void *program0)
+{
+
+	struct bts_listnode *node = NULL;
+	struct dlist_head *pos = NULL, *next = NULL;
+	//assert(bts_list);
+	//assert(bts_list->cmp);
+	int find = 0;
+
+	list_for_each_safe(pos, next, &(bts_list->bucket_head))
+	{
+		 node  = list_entry(pos, bts_listnode_t, node);
+		 if(!bts_list->cmp(node->data, val))
+		 {
+			find = 1;
+			break;
+		 }
+		
+	} 
+	if(find)
+	{
+		if(checkcall)
+			return checkcall(val, node->data, program0);
+		else
+			return 1;
+	}
+	else
+	{
+	    node = bts_listnode_new();
+        if (NULL == node)
+        {
+			return;
+		}
+        node->data = val;
+        dlist_add_tail(&(node->node), &(bts_list->bucket_head));
+        bts_list->count++;	
+
+		if(checkcall)
+			return checkcall(val, node->data, program0);
+		
+	}
+	return 0;
+	
+}
+
+
 
 int bts_listnode_diyfunc(struct bts_list *bts_list, void *val, 
 	bts_hash_dymic_func  func)
@@ -428,7 +475,6 @@ int bts_listnode_diyfunc(struct bts_list *bts_list, void *val,
 	}
 	else
 	{
-		printf("not find\n");
 		return 0;
 	}
 	return 0;
@@ -438,7 +484,8 @@ int bts_listnode_diyfunc(struct bts_list *bts_list, void *val,
 
 
 void
-bts_listnode_add (struct bts_list *bts_list, void *val,  bts_hash_find_func findcall)
+bts_listnode_add (struct bts_list *bts_list, void *val, 
+bts_hash_find_func	 findcall)
 {
     struct bts_listnode *node = NULL;
     struct dlist_head *pos = NULL, *next = NULL;
@@ -479,7 +526,6 @@ bts_listnode_add (struct bts_list *bts_list, void *val,  bts_hash_find_func find
         node->data = val;
         dlist_add_tail(&(node->node), &(bts_list->bucket_head));
         bts_list->count++;
-        printf("Success to new node\n");
     }
     return;
 }
