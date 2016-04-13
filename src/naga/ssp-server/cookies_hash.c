@@ -111,7 +111,10 @@ int usercookeis_hash_check_func(void *d1, void *d2, void *program)
 	return 1; //mean find;
 }
 
-
+uint32_t usercookes_total_get()
+{
+	return usercookeis_control_table.total_cell;
+}
 
 berr usercookes_init()
 {	

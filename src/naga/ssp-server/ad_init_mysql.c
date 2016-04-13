@@ -75,7 +75,7 @@ void *loop_check_status(void * param)
 
 	while(1)
 	{
-	
+		printf("User	: %d\n", usercookes_total_get());
 		printf("Success : %lld\n", success_push_cnt_total);
 		printf("Drop  	: %lld\n", drop_push_cnt_total);
 		printf("ID\tadtype\tstatus\t\tuser_max\ttoday_max\today_cnt\tall_total\n");
