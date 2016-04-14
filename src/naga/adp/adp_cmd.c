@@ -39,11 +39,12 @@ DEFUN(adp_interval_get,
 
     boottime = adp_get_start_time();
 
+	extern int custom_userinterval;
     if(boottime !=  NULL)
     {
         vty_out(vty, "Boot Time             : %s%s", ctime(boottime), VTY_NEWLINE);
     }
-    vty_out(vty, "Interval              : %d%s", interval, VTY_NEWLINE);
+    vty_out(vty, "Interval              : (%d):(%d)%s", interval, custom_userinterval, VTY_NEWLINE);
 	
     vty_out(vty, "All can push          : %ld%s",  adp_can_push_count, VTY_NEWLINE);    
     vty_out(vty, "Pushed(tx success)    : %ld%s",  adp_push_tx_success, VTY_NEWLINE);

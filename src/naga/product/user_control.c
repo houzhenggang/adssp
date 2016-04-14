@@ -15,6 +15,7 @@
 
 
 bts_hashtable_t user_control_table;
+int   custom_userinterval = 5;
 
 //user name
 uint32_t user_hash_func(void *data)
@@ -151,7 +152,7 @@ int  user_push_check(hytag_t *tag)
 	}
 	else
 	{
-		intelval = 5;
+		intelval = custom_userinterval;
 	}
 
 	rawtime = time(NULL);	
@@ -235,10 +236,23 @@ DEFUN(show_user_all,
 }
 
 
+DEFUN(set_user_interval,
+      set_user_interval_cmd,
+      "user  interval  <1-100000>", "")
+{
+	custom_userinterval = strtoul(argv[0], NULL, 0);
+    return 0;
+}
+
+
+
 
 void cmdline_user_init(void)
 {
 	install_element(CMD_NODE, &show_user_all_cnt_cmd);
+	install_element(CMD_NODE, &set_user_interval_cmd);
+
+	
     return ;
 }
 
