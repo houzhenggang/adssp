@@ -17,6 +17,11 @@
 bts_hashtable_t user_control_table;
 int   custom_userinterval = 5;
 
+
+int get_user_interval()
+{
+	return custom_userinterval;
+}
 //user name
 uint32_t user_hash_func(void *data)
 {
