@@ -21,6 +21,8 @@ DEFUN(adp_interval,
     return adp_set_interval(interval);
 }
 
+extern int get_user_interval();
+
 DEFUN(adp_interval_get, 
       adp_interval_get_cmd,
       "show adp interval", "Adp module\ninterval\nget interval http-get packet <1-100000> url will\n")
@@ -38,6 +40,8 @@ DEFUN(adp_interval_get,
 	adp_push_ack_success = CNT_GET(ADP_PUSH_ACK_SUCCESS);
 
     boottime = adp_get_start_time();
+
+
 
     if(boottime !=  NULL)
     {
