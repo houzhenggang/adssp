@@ -27,5 +27,8 @@ berr naga_ssp_url_backlist(hytag_t *hytag);
 
 int  user_push_check(hytag_t *tag);
 
+
+int get_user_interval();
+
 #endif
 

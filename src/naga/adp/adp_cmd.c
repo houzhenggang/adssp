@@ -12,6 +12,7 @@
 #include "nag_adp.h"
 #include "adp_cmd.h"
 #include "bts_cnt.h"
+#include "user_control.h"
 
 DEFUN(adp_interval, 
       adp_interval_cmd,
@@ -21,7 +22,6 @@ DEFUN(adp_interval,
     return adp_set_interval(interval);
 }
 
-extern int get_user_interval();
 
 DEFUN(adp_interval_get, 
       adp_interval_get_cmd,
