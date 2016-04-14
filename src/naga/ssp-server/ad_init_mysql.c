@@ -159,7 +159,7 @@ int main(int argc, char *argv[])
   {
   	for(i=0; i<g_max_prio; i++)
   	{  	 	
-     	snprintf(query, 1024, "select * from ad where prio=%d and adtype=%d\n", i, k);
+     	snprintf(query, 1024, "select * from ad where prio=%d and adtype=%d and push_status=1\n", i, k);
 	 
 		pthread_mutex_init(&(ad_lists[k][i].mutex), NULL);
      	if(mysql_query(&mysql, query) == 0)
