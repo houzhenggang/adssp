@@ -13,9 +13,10 @@ enum
 typedef struct
 {
 	int id;
-	int  adtype; //1:pc 2:mb	
+	int  adtype; //1:pc 2:mb
 	int  prio;
-	
+
+	int  typejs; //0:normal 1,js
 	char name[256];
 	
 	uint64_t  push_all_day;
@@ -45,7 +46,8 @@ typedef struct
 	uint32_t hourmask;
 
 	uint32_t  showtime;
-	
+
+	char * jscode; //when adtype=3 js
 	uint64_t  cnt_push_all_day;
 	uint64_t  cnt_push_one_day;
 }ad_struct_t;

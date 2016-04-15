@@ -213,6 +213,16 @@ int main(int argc, char *argv[])
 					if(struct_ptr->showtime  == 0)
 						struct_ptr->showtime = DEFAULT_SHOW_TIME;
 				}
+
+				
+
+	
+				struct_ptr->jscode  = strdup(row[19]);
+			
+				if(row[20] != NULL)
+					struct_ptr->typejs	=  atoi(row[20]);
+
+				
 				ad_list_node_t * lnode = (ad_list_node_t *)malloc(sizeof(ad_list_node_t));
 				
 				if(lnode == NULL)

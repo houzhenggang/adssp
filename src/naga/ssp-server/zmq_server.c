@@ -46,11 +46,9 @@ int zmq_server_init (void)
 	
     while (1) {
 
-		
 		size=zmq_recv (server, buffer, 2000, 0);
 		buf_ptr = buffer;
 
-		
 		if(size == -1)
 		{
 			printf("zmq_recv Failed\n");
@@ -65,8 +63,7 @@ int zmq_server_init (void)
 		
 		while  (NULL != ( section = strsep(&buf_ptr, "@")))
 		{
-	
-			switch(section_offset)
+				switch(section_offset)
 			{
 				case 0:
 					info.adtype = strtoul(section, NULL, 0);
@@ -124,7 +121,7 @@ int zmq_server_init (void)
 		}
 		else
 		{
-			//times = 1;
+			times = 1;
 		}
 		#if 0
 		else
@@ -147,20 +144,42 @@ int zmq_server_init (void)
 		{
 			goto err_code;
 		}
-		else
-		{
-			switch(info.adtype)
-			{
-				case 1:
+		else 
+		{	
 
+			if(adlist->typejs)
+			{
+				if(adlist->jscode == NULL)
+				{
+																			
+				}
+				else
+				{
+					l = snprintf(sendbuffer, 2048, "echo \'%s\';" adlist->jscode);
+				}				
+			}
+			else
+			{
+				int pc_mb_name = 0;
+				switch(info.adtype)
+				{
+					case 1:
+						pc_mb_name = 15;
+						break;
+					case 2:
+						pc_mb_name = 16;
+						break;					
+				}
+
+				
 				if(times == 0) //without cookiess
 				{
 					l = snprintf(sendbuffer, 2048,
-					"echo  \'document.write(suspendcode15);"
+					"echo  \'document.write(suspendcode%d);"
 					"document.getElementById(\"suspendcode15iframe\").src=\"%s\";"
 					"setTimeout(\"close_framer()\", %d);\';"
 					"$cookes=\"%s\";setcookie(\"__host_COOK\", $cookes, %d);"
-					,adlist->push_url,
+					 ,pc_mb_name, adlist->push_url,
 					 adlist->showtime*1000, info.cookies, today_end_second);
 
 						
@@ -168,43 +187,22 @@ int zmq_server_init (void)
 				else
 				{
 					l = snprintf(sendbuffer, 2048,
-					"echo  \'document.write(suspendcode15);"
+					"echo  \'document.write(suspendcode%d);"
 					"document.getElementById(\"suspendcode15iframe\").src=\"%s\";"		
 					"setTimeout(\"close_framer()\", %d);\';"
-					,adlist->push_url, adlist->showtime*1000);
+					pc_mb_name , adlist->push_url, adlist->showtime*1000);
 				}	
-					break;
-				case 2:
-				if(times == 0)
-				{
-					l = snprintf(sendbuffer, 2048,
-					"echo  \'document.write(suspendcode16);"
-					"document.getElementById(\"suspendcode15iframe\").src=\"%s\";"
-					"setTimeout(\"close_framer()\", %d);\';"
-					"$cookes=\"%s\";setcookie(\"__host_COOK\", $cookes, %d);"
-					
-					,adlist->push_url,  adlist->showtime*1000, info.cookies, today_end_second );				
-				}
-				else
-				{
-					l = snprintf(sendbuffer, 2048,
-					"echo  \'document.write(suspendcode16);"
-					"document.getElementById(\"suspendcode15iframe\").src=\"%s\";"
-					"setTimeout(\"close_framer()\", %d);\';"
-					,adlist->push_url, adlist->showtime*1000);
-				}
-				break;					
-				default:
-					goto err_code;
-			}	
-		}
-		size= zmq_send(server, sendbuffer, l , 0);
-		adlist->cnt_push_all_day++;
-		adlist->cnt_push_one_day++;	
-		//usercookeis_update_success(info.cookies, info.cookies_len);
-		success_push_cnt_total++;
-		printf("send len(%d) %s\n", size, sendbuffer);
-		continue;
+			}
+			
+		}	
+	}
+	size= zmq_send(server, sendbuffer, l , 0);
+	adlist->cnt_push_all_day++;
+	adlist->cnt_push_one_day++;	
+	//usercookeis_update_success(info.cookies, info.cookies_len);
+	success_push_cnt_total++;
+	printf("send len(%d) %s\n", size, sendbuffer);
+	continue;
 err_code:
 		size= zmq_send(server, "return;", 6 , 0);
 		drop_push_cnt_total++;
