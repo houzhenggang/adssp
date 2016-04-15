@@ -57,7 +57,8 @@ int usercookeis_assess_check(char *cookeis, int cookeislen);
 
 usercookeis* usercookeis_get_user_ptr(char *cookeis, int cookeislen);
 
-berr usercookeis_assess_new(char *cookeis, int cookeislen);
+
+usercookeis  * usercookeis_assess_new(char *cookeis, int cookeislen);
 
 
 push_info_t * get_user_times_by_id(usercookeis *cookied, int id);

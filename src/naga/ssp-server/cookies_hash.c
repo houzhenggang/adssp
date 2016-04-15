@@ -161,7 +161,7 @@ berr usercookeis_assess_add(char *cookeis, int *cookeislen)
 
 
 
-berr usercookeis_assess_new(char *cookeis, int cookeislen)
+usercookeis  * usercookeis_assess_new(char *cookeis, int cookeislen)
 {
 
 	usercookeis *data = malloc(sizeof(usercookeis));
@@ -172,7 +172,15 @@ berr usercookeis_assess_new(char *cookeis, int cookeislen)
 	strncpy(data->cookeis, cookeis, cookeislen);
 	data->cookeislen = cookeislen;
 	
-	return  bts_hashtable_add(&usercookeis_control_table, data);
+  	 if(bts_hashtable_add(&usercookeis_control_table, data) != E_SUCCESS)
+  	 {
+  	 	free(data);
+		return NULL;
+  	 }
+	 else
+	 {
+	 	return data;
+	 }
 
 }
 

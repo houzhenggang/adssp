@@ -248,7 +248,10 @@ ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 	
 	if(user == NULL)
 	{
-		if(E_SUCCESS != usercookeis_assess_new(info->cookies, info->cookies_len))
+		//new it;
+		user = usercookeis_assess_new(info->cookies, info->cookies_len);
+
+		if(user == NULL)
 		{	
 			return NULL;
 		}
@@ -299,8 +302,10 @@ ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 				}
 
 
-				if(info->ntime - adinpush->last_push_time
-					< pos->ad->push_user_interval )
+				if( pos->ad->push_user_interval   
+					&&( 
+					(info->ntime - adinpush->last_push_time)
+					< pos->ad->push_user_interval ))
 				{
 					continue;
 				}
