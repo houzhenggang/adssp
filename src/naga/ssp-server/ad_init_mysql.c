@@ -297,6 +297,14 @@ ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 				{
 					continue;
 				}
+
+
+				if(info->ntime - adinpush->last_push_time
+					< pos->ad->push_user_interval )
+				{
+					continue;
+				}
+				
 				
 				ad = pos->ad;
 				dlist_move_tail( &(pos->node), &(ad_lists[adtype][i].head));
