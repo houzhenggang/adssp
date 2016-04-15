@@ -10,7 +10,7 @@
 #include "zebra.h"
 #include "getopt.h"
 #include "command.h"
-
+#include "ssp_server.h"
 
 bts_hashtable_t usercookeis_control_table;
 char today_time_s[20];
