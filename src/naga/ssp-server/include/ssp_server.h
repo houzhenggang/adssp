@@ -1,7 +1,7 @@
 #ifndef __SSP_SERVER__
 #define __SSP_SERVER__
 
-
+#include "ad.h"
 
 
 typedef struct
