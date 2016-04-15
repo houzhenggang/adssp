@@ -438,7 +438,7 @@ int bts_listnode_check_and_create(struct bts_list *bts_list, void *val,
 		memcpy(node->data, val, datasize);
         dlist_add_tail(&(node->node), &(bts_list->bucket_head));
         bts_list->count++;	
-
+		
 		if(checkcall)
 			return checkcall(val, node->data, program0);
 		
@@ -450,7 +450,7 @@ int bts_listnode_check_and_create(struct bts_list *bts_list, void *val,
 
 
 int bts_listnode_diyfunc(struct bts_list *bts_list, void *val, 
-	bts_hash_dymic_func  func)
+	bts_hash_dymic_func  func, void * prom)
 {
 
 	struct bts_listnode *node = NULL;
@@ -472,7 +472,7 @@ int bts_listnode_diyfunc(struct bts_list *bts_list, void *val,
 	if(find)
 	{
 		if(func)
-			return func(node->data);
+			return func(node->data, prom);
 		else
 			return 0;
 	}

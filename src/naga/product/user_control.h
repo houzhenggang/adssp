@@ -30,5 +30,6 @@ int  user_push_check(hytag_t *tag);
 
 int get_user_interval(void);
 
+
 #endif
 

@@ -15,18 +15,30 @@
 bts_hashtable_t usercookeis_control_table;
 char today_time_s[20];
 uint64_t  today_end_second;
-typedef struct
-{
-	char cookeis[16];//20160304-no;
-	int  cookeislen;
-	uint64_t access_success;
-	uint64_t push_success;
-	uint64_t push_drop;
-}usercookeis;
+
+
+
 //user name
+push_info_t * get_user_times_by_id(usercookeis *cookied, int id)
+{	
+	push_info_t *pos= NULL, *next = NULL;
 
+	list_for_each_entry_safe(pos, next,  &(cookied->head), node)
+	{
+		if(pos->ad_id == id)
+			return pos;
+	}
 
+	push_info_t * push_ad = (push_info_t *)malloc(sizeof(push_info_t));
+	if(push_ad == NULL)
+		return NULL;
+	
+	memset(push_ad, 0x0 , sizeof(push_info_t));
+	push_ad->ad_id = id;
 
+	dlist_add_tail( &(push_ad->node), &(cookied->head))
+	return push_ad;	
+}
 
 void today_time_str_init()
 {
@@ -101,13 +113,13 @@ int usercookeis_hash_check_func(void *d1, void *d2, void *program)
         return ;
     }
 
+
     e1 = (usercookeis *) d1;
     e2 = (usercookeis *) d2;
 
 	uint64_t * pro = (uint64_t *) program;
 	
-	*pro = e2->push_success; 
-
+	*pro = e2->push_success; 		
 	return 1; //mean find;
 }
 
@@ -133,6 +145,8 @@ berr usercookeis_assess_add(char *cookeis, int *cookeislen)
 	usercookeis *data = malloc(sizeof(usercookeis));
 	memset(data, 0x0, sizeof(usercookeis));
 
+	INIT_LIST_HEAD(&(data->head));
+	
 	data->cookeislen
 		= snprintf(data->cookeis, 16, 
 			"%s-%d", today_time_s,usercookeis_control_table.total_cell +1);
@@ -143,8 +157,28 @@ berr usercookeis_assess_add(char *cookeis, int *cookeislen)
 	berr rv = bts_hashtable_add(&usercookeis_control_table, data);
 
 	return rv;
-	
 }
+
+
+
+berr usercookeis_assess_new(char *cookeis, int *cookeislen)
+{
+
+	usercookeis *data = malloc(sizeof(usercookeis));
+	memset(data, 0x0, sizeof(usercookeis));
+
+	INIT_LIST_HEAD(&(data->head));
+
+	strncpy(cookeis, data->cookeis, data->cookeislen);
+	*cookeislen = data->cookeislen;
+		
+	berr rv = bts_hashtable_add(&usercookeis_control_table, data);
+
+	return rv;
+}
+
+
+
 
 
 int usercookeis_assess_check(char *cookeis, int cookeislen)
@@ -168,11 +202,11 @@ int usercookeis_assess_check(char *cookeis, int cookeislen)
 	else 
 	{
 		return 0;
-	}	
+	}
 }
 
 
-int  incrss_push_success(void *ndata)
+int  incrss_push_success(void *ndata, void *prom)
 {
     usercookeis *e2;
 
@@ -183,12 +217,11 @@ int  incrss_push_success(void *ndata)
 
     e2 = (usercookeis *) ndata;
 	e2->push_success++;
-
 	return 1;		
 }
 
 
-int incrss_push_drop(void *ndata)
+int incrss_push_drop(void *ndata, void *prom)
 {
     usercookeis *e2;
 
@@ -211,7 +244,6 @@ int usercookeis_update_success(char *cookeis, int cookeislen)
 	int rv;
 	int access_times = 0;
 
-
 	memset(&data, 0x0, sizeof(usercookeis));
 	
 	strncpy((data.cookeis), (cookeis), cookeislen);
@@ -220,7 +252,6 @@ int usercookeis_update_success(char *cookeis, int cookeislen)
 	rv = bts_hashtable_diyfunc(&usercookeis_control_table, &data,
 		incrss_push_success);
 
-	
 	if(!rv)
 	{
 		//printf("zzzzzzzzzzz\n");		
@@ -251,6 +282,43 @@ int usercookeis_update_drop(char *cookeis, int cookeislen)
 
 
 
+
+int  incrss_push_success(void *ndata, void *prom)
+{
+    usercookeis *e2;
+
+    if (NULL == ndata)
+    {
+        return 0;
+    }
+
+    e2 = (usercookeis *) ndata;
+	e2->push_success++;
+	return 1;		
+}
+
+
+
+usercookeis* usercookeis_get_user_ptr(char *cookeis, int cookeislen)
+{
+
+	usercookeis data = {};
+	
+	memset(&data, 0x0, sizeof(usercookeis));
+	
+	strncpy((data.cookeis), (cookeis), cookeislen);
+	
+	data.cookeislen = cookeislen;
+	
+	return bts_hashtable_lookup(&usercookeis_control_table, &data);
+						
+}
+
+
+
+
+
+
 void usercookeis_iter(void *data, void *param)
 {
 	char buffer[1024];
@@ -263,6 +331,7 @@ void usercookeis_iter(void *data, void *param)
 	fputs(buffer, fp);
 	return;
 }
+
 
 berr usercookeis_assess_save_file(char * filename)
 {

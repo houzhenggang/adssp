@@ -100,6 +100,7 @@ int zmq_server_init (void)
 
 			}
 		}
+		info.ntime = time(NULL);
 		#if 0
 		printf("adtype = %d\n", info.adtype);
 		printf("useragent = %s\n", info.useragent);
@@ -121,6 +122,7 @@ int zmq_server_init (void)
 				goto err_code;
 			}		
 		}
+		#if 0
 		else
 		{
 
@@ -134,7 +136,7 @@ int zmq_server_init (void)
 			}	
 
 		}
-
+		#endif
 		
 		adlist =  apply_valid_ad (&info, times);
 		if(adlist == NULL)

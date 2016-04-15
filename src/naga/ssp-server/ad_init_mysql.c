@@ -239,10 +239,21 @@ ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 	ad_struct_t * ad = NULL;
 	struct dlist_head *cnode = NULL;
 	int adtype = info->adtype;
+	push_info_t *adinpush = NULL;
 
 
-
-	//printf("times=%d\n", times);
+	usercookeis* user = 
+		usercookeis_get_user_ptr(info.cookies, info.cookies_len);
+	
+	
+	if(user == NULL)
+	{
+		if(E_SUCCESS != usercookeis_assess_new(info.cookies, info.cookies_len))
+		{	
+			return NULL;
+		}
+	}
+	
 	for(i=0; i<MAX_PRIO; i++)
 	{
 		
@@ -255,12 +266,8 @@ ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 		{
 			if(1)
 			{
-				if( pos->ad->push_per_user && pos->ad->push_per_user <= times)
-				{
-					/*one user push times != 0 && times < ad */
-					continue;
-				}
-				
+
+
 				if( pos->ad->push_one_day
 					&&  pos->ad->cnt_push_one_day >= pos->ad->push_one_day)
 				{
@@ -274,6 +281,22 @@ ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 					pos->ad->push_status = AD_ALL_ENOUGH;
 					continue;
 				}
+
+
+				adinpush = get_user_times_by_id(user, pos->ad->id);
+				if(adinpush != NULL)
+				{
+					if( pos->ad->push_per_user && pos->ad->push_per_user 
+						<= adinpush->push_times)
+					{
+						/*one user push times != 0 && times < ad */
+						continue;
+					}
+				}
+				else
+				{
+					continue;
+				}
 				
 				ad = pos->ad;
 				dlist_move_tail( &(pos->node), &(ad_lists[adtype][i].head));
@@ -284,7 +307,8 @@ ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 		
 		if(ad != NULL)
 		{
-			//printf("ad type = %d, id= %d\n", adtype, ad->id);
+			adinpush->last_push_time = info->ntime;
+			adinpush->push_times ++;
 			return ad;
 		}	
 	}

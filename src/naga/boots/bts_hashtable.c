@@ -68,8 +68,7 @@ bts_hashtable_lookup(bts_hashtable_t *tab, void *key)
     bucket = &tab->buckets[idx];
 
     node = bts_listnode_lookup_by_key(bucket, key);
-
-    
+	
     if (node)
     {
         return node->data;
@@ -228,7 +227,8 @@ int  bts_hashtable_check_and_create(bts_hashtable_t *tab,
 
 
 
-int  bts_hashtable_diyfunc(bts_hashtable_t *tab, void *data, bts_hash_dymic_func func)
+int  bts_hashtable_diyfunc(bts_hashtable_t *tab, void *data,
+		bts_hash_dymic_func func, void *prom)
 {
     uint32_t hash, idx;
     bts_list_t *bucket = NULL;
@@ -252,7 +252,7 @@ int  bts_hashtable_diyfunc(bts_hashtable_t *tab, void *data, bts_hash_dymic_func
     bucket = &tab->buckets[idx];
 	
 	pthread_mutex_lock(&(bucket->mutex));
-    rv = bts_listnode_diyfunc(bucket, data, func);
+    rv = bts_listnode_diyfunc(bucket, data, func, prom);
 	pthread_mutex_unlock(&(bucket->mutex));    
    	return rv;
 }

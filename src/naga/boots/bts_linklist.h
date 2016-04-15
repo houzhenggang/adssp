@@ -25,7 +25,7 @@ typedef void (*bts_list_del_func)(void *val);
 typedef void (*bts_hash_find_func)(void *ndata, void *odata);
 typedef int (*bts_hash_check_func)(void *ndata, void *odata, void *);
 
-typedef int (*bts_hash_dymic_func)(void *ndata);
+typedef int (*bts_hash_dymic_func)(void *ndata, void *pram);
 
 
 typedef struct bts_list
