@@ -155,7 +155,7 @@ int zmq_server_init (void)
 				}
 				else
 				{
-					l = snprintf(sendbuffer, 2048, "echo \'%s\';" adlist->jscode);
+					l = snprintf(sendbuffer, 2048, "echo \'%s\';", adlist->jscode);
 				}				
 			}
 			else
@@ -190,12 +190,12 @@ int zmq_server_init (void)
 					"echo  \'document.write(suspendcode%d);"
 					"document.getElementById(\"suspendcode15iframe\").src=\"%s\";"		
 					"setTimeout(\"close_framer()\", %d);\';"
-					pc_mb_name , adlist->push_url, adlist->showtime*1000);
+					,pc_mb_name , adlist->push_url, adlist->showtime*1000);
 				}	
 			}
 			
 		}	
-	}
+
 	size= zmq_send(server, sendbuffer, l , 0);
 	adlist->cnt_push_all_day++;
 	adlist->cnt_push_one_day++;	
@@ -209,6 +209,7 @@ err_code:
 		//usercookeis_update_drop(info.cookies, info.cookies_len);
 		
     }
+	
     zmq_close (server);
     zmq_ctx_destroy (context);
     return 0;
