@@ -49,7 +49,6 @@ DIRS-y += url
 DIRS-y += urlr
 DIRS-y += hijack
 DIRS-y += debug
-DIRS-y += domain
 DIRS-y += product 
 DIRS-y += main
 DIRS-y += ssp-server 
