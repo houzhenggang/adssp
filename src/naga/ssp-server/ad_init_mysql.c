@@ -140,7 +140,7 @@ char *  jsfile_string_format(char *src)
 		{
 			case '\'':
 				buffer[offset++] = '\\';
-				buffer[offset++] =  '\'';
+				buffer[offset++] =  '\"';
 				break;
 			case '\"':
 				buffer[offset++] = '\\';
