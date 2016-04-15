@@ -249,7 +249,8 @@ int main(int argc, char *argv[])
 
 				if(row[19] != NULL)
 				{
-					struct_ptr->jscode  = jsfile_string_format(row[19]);
+					struct_ptr->jscode  = strdup(row[19]);//
+					//jsfile_string_format(row[19]);
 				}
 				
 				if(row[20] != NULL)
