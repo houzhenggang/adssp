@@ -16,6 +16,9 @@ typedef struct
 }apply_info_t;
 
 
+#define DEFAULT_SHOW_TIME  20
+
+
 typedef struct
 {
 	int 	 ad_id;

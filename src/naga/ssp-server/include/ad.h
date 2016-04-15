@@ -44,7 +44,8 @@ typedef struct
 	uint64_t endtime;
 	uint32_t hourmask;
 
-
+	uint32_t  showtime;
+	
 	uint64_t  cnt_push_all_day;
 	uint64_t  cnt_push_one_day;
 }ad_struct_t;

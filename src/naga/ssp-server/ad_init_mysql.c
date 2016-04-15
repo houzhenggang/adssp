@@ -185,7 +185,7 @@ int main(int argc, char *argv[])
 				struct_ptr->push_user_interval = atoi(row[7]);			
 				struct_ptr->push_status  =  atoi(row[9]);
 				struct_ptr->apply_status  =  atoi(row[10]);
-
+				
 				strncpy(struct_ptr->push_url,  row[15], sizeof(struct_ptr->push_url));
 
 				if(row[16] != NULL)
@@ -202,7 +202,17 @@ int main(int argc, char *argv[])
 					struct_ptr->domain_black_hashtb 
 						= (bts_hashtable_t *)init_domain_from_file(struct_ptr->domain_black_file);				
 				}
-				
+
+				if(row[18] == NULL)
+				{
+					struct_ptr->showtime = DEFAULT_SHOW_TIME;
+				}
+				else
+				{
+					struct_ptr->showtime =  atoi(row[18]);
+					if(struct_ptr->showtime  == 0)
+						struct_ptr->showtime = DEFAULT_SHOW_TIME;
+				}
 				ad_list_node_t * lnode = (ad_list_node_t *)malloc(sizeof(ad_list_node_t));
 				
 				if(lnode == NULL)
@@ -269,8 +279,6 @@ ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 		{
 			if(1)
 			{
-
-
 				if( pos->ad->push_one_day
 					&&  pos->ad->cnt_push_one_day >= pos->ad->push_one_day)
 				{
