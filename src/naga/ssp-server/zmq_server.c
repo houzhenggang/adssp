@@ -155,7 +155,7 @@ int zmq_server_init (void)
 					"echo  \'document.write(suspendcode15);"
 					"\';echo  \'document.getElementById(\"suspendcode15iframe\").src=\"%s\";\';"		
 					"$cookes=\"%s\";setcookie(\"__host_COOK\", $cookes, %d);"
-					"echo \'setTimeout(\"close_framer()\", %d);\'"
+					"echo \'setTimeout(\"close_framer()\", %d);\';"
 					,adlist->push_url, info.cookies,
 					today_end_second, adlist->showtime*1000);
 
@@ -165,7 +165,7 @@ int zmq_server_init (void)
 				{
 					l = snprintf(sendbuffer, 2048,
 					"echo  \'document.write(suspendcode15);\';echo  \'document.getElementById(\"suspendcode15iframe\").src=\"%s\";\';"		
-					"echo \'setTimeout(\"close_framer()\", %d);\'"
+					"echo \'setTimeout(\"close_framer()\", %d);\';"
 					,adlist->push_url, adlist->showtime*1000);
 				}	
 					break;
@@ -177,7 +177,7 @@ int zmq_server_init (void)
 					";echo  \'document.getElementById(\"suspendcode15iframe\")"
 					".src=\"%s\";\';"
 					"$cookes=\"%s\";setcookie(\"__host_COOK\", $cookes, %d);"
-					"echo \'setTimeout(\"close_framer()\", %d);\'"
+					"echo \'setTimeout(\"close_framer()\", %d);\';"
 
 					,adlist->push_url, info.cookies, today_end_second, adlist->showtime*1000 );				
 				}
@@ -187,7 +187,7 @@ int zmq_server_init (void)
 					"echo  \'document.write(suspendcode16);\'"
 					";echo  \'document.getElementById(\"suspendcode15iframe\")"
 					".src=\"%s\";\';"
-					"echo \'setTimeout(\"close_framer()\", %d);\'"
+					"echo \'setTimeout(\"close_framer()\", %d);\';"
 					,adlist->push_url, adlist->showtime*1000);
 				}
 				break;					
