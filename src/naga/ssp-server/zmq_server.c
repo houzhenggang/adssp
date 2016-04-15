@@ -156,7 +156,7 @@ int zmq_server_init (void)
 				}
 				else
 				{
-					l = snprintf(sendbuffer, 2048, "echo \"%s\";", adlist->jscode);
+					l = snprintf(sendbuffer, 2048, "%s", adlist->jscode);
 				}				
 			}
 			else
