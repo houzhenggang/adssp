@@ -125,6 +125,37 @@ void ad_list_init()
 }
 
 
+char *  jsfile_string_format(char *src)
+{
+	char buffer[2048];
+	int l = strlen(src);
+	int i;
+	int offset = 0;
+	char *new = NULL;
+
+	
+	for(i=0; i<l ; i++)
+	{
+		switch(src[i])
+		{
+			case '\'':
+				buffer[offset++] = '\\';
+				buffer[offset++] =  '\'';
+				break;
+			case '\"':
+				buffer[offset++] = '\\';
+				buffer[offset++] =  '\"';				
+				break;
+			default:
+				buffer[offset++] = src[i];
+					break;
+		}
+	}
+	buffer[offset] = '\0';
+	new = strndup(buffer, offset);
+	return new;
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -217,8 +248,10 @@ int main(int argc, char *argv[])
 				
 
 				if(row[19] != NULL)
-					struct_ptr->jscode  = strdup(row[19]);
-			
+				{
+					struct_ptr->jscode  = jsfile_string_format(strdup(row[19]));
+				}
+				
 				if(row[20] != NULL)
 					struct_ptr->typejs	=  atoi(row[20]);
 

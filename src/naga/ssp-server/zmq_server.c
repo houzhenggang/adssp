@@ -207,7 +207,7 @@ int zmq_server_init (void)
 err_code:
 		size= zmq_send(server, "return;", 6 , 0);
 		drop_push_cnt_total++;
-		
+		continue;
     }
 	
     zmq_close (server);
