@@ -124,7 +124,7 @@ int zmq_server_init (void)
 		}
 		else
 		{
-			times = 1;
+			//times = 1;
 		}
 		#if 0
 		else
@@ -183,7 +183,7 @@ int zmq_server_init (void)
 					"setTimeout(\"close_framer()\", %d);\';"
 					"$cookes=\"%s\";setcookie(\"__host_COOK\", $cookes, %d);"
 					
-					,adlist->push_url,  adlist->showtime*1000, info.cookies,today_end_second );				
+					,adlist->push_url,  adlist->showtime*1000, info.cookies, today_end_second );				
 				}
 				else
 				{
