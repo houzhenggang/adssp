@@ -36,7 +36,7 @@ push_info_t * get_user_times_by_id(usercookeis *cookied, int id)
 	memset(push_ad, 0x0 , sizeof(push_info_t));
 	push_ad->ad_id = id;
 
-	dlist_add_tail( &(push_ad->node), &(cookied->head))
+	dlist_add_tail( &(push_ad->node), &(cookied->head));
 	return push_ad;	
 }
 
@@ -161,7 +161,7 @@ berr usercookeis_assess_add(char *cookeis, int *cookeislen)
 
 
 
-berr usercookeis_assess_new(char *cookeis, int *cookeislen)
+berr usercookeis_assess_new(char *cookeis, int cookeislen)
 {
 
 	usercookeis *data = malloc(sizeof(usercookeis));
@@ -169,12 +169,11 @@ berr usercookeis_assess_new(char *cookeis, int *cookeislen)
 
 	INIT_LIST_HEAD(&(data->head));
 
-	strncpy(cookeis, data->cookeis, data->cookeislen);
-	*cookeislen = data->cookeislen;
-		
-	berr rv = bts_hashtable_add(&usercookeis_control_table, data);
+	strncpy(data->cookeis, cookeis, cookeislen);
+	data->cookeislen = cookeislen;
+	
+	return  bts_hashtable_add(&usercookeis_control_table, data);
 
-	return rv;
 }
 
 
