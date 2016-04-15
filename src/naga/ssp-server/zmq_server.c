@@ -149,6 +149,7 @@ int zmq_server_init (void)
 
 			if(adlist->typejs)
 			{
+				printf("adlist typejs = %d\n");
 				if(adlist->jscode == NULL)
 				{
 																			
