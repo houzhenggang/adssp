@@ -201,7 +201,7 @@ int zmq_server_init (void)
 	adlist->cnt_push_one_day++;	
 	//usercookeis_update_success(info.cookies, info.cookies_len);
 	success_push_cnt_total++;
-	printf("send len(%d) %s\n", size, sendbuffer);
+	//printf("send len(%d) %s\n", size, sendbuffer);
 	continue;
 err_code:
 		size= zmq_send(server, "return;", 6 , 0);

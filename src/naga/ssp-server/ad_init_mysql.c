@@ -216,8 +216,8 @@ int main(int argc, char *argv[])
 
 				
 
-	
-				struct_ptr->jscode  = strdup(row[19]);
+				if(row[19] != NULL)
+					struct_ptr->jscode  = strdup(row[19]);
 			
 				if(row[20] != NULL)
 					struct_ptr->typejs	=  atoi(row[20]);
