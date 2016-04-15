@@ -177,9 +177,6 @@ berr usercookeis_assess_new(char *cookeis, int cookeislen)
 }
 
 
-
-
-
 int usercookeis_assess_check(char *cookeis, int cookeislen)
 {
 
@@ -279,22 +276,6 @@ int usercookeis_update_drop(char *cookeis, int cookeislen)
 	return 0 ;						
 }
 
-
-
-
-int  incrss_push_success(void *ndata, void *prom)
-{
-    usercookeis *e2;
-
-    if (NULL == ndata)
-    {
-        return 0;
-    }
-
-    e2 = (usercookeis *) ndata;
-	e2->push_success++;
-	return 1;		
-}
 
 
 
