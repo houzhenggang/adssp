@@ -28,13 +28,26 @@ extern uint64_t  success_push_cnt_total ;
 
 extern uint64_t  today_end_second;
 
+
+
 int zmq_server_init (void)
 {
-    srandom ((unsigned) time (NULL));
+	pthread_t thread;
 
-    void *context = zmq_ctx_new ();
-    void *server = zmq_socket (context, ZMQ_REP);
-    zmq_bind (server, "tcp://*:5555");
+	char * con1 = "tcp://*:5555";
+	char * con2 = "tcp://*:5556";
+	
+	pthread_create(&thread, NULL, zmq_server_init_by, con1);
+	pthread_detach(thread);
+
+	pthread_create(&thread, NULL, zmq_server_init_by, con2);
+	pthread_detach(thread);	
+	return 0;
+}
+
+void*  zmq_server_init_by (void * prog)
+{
+
 	char buffer[2048];
 	int size;
 	char sendbuffer[2048];
@@ -46,7 +59,12 @@ int zmq_server_init (void)
 	char *buf_ptr = buffer;
 	ad_struct_t* adlist = NULL;
 
-	
+    void *context = zmq_ctx_new ();
+    void *server = zmq_socket (context, ZMQ_REP);
+    zmq_bind (server, (char *)prog);
+
+	printf("init server %s\n", (char *)prog);
+		
     while (1) {
 
 		size=zmq_recv (server, buffer, 2000, 0);
@@ -252,6 +270,6 @@ err_code:
 	
     zmq_close (server);
     zmq_ctx_destroy (context);
-    return 0;
+    return NULL;
 }
 

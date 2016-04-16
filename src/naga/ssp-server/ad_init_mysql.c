@@ -105,10 +105,13 @@ void *loop_check_status(void * param)
 		sleep(10);
 	}
 }
+
+
 int status_loop_printf()
 {
 	pthread_t thread;
 	pthread_create(&thread, NULL, loop_check_status, NULL);
+	
 	pthread_detach(thread);
 	return 0;
 }
@@ -166,8 +169,7 @@ int main(int argc, char *argv[])
    int i, k;
    int l = 0;
    MYSQL_ROW row;
-
-
+   
    init_process();
    
    if( (sock = mysql_init(&mysql)) == NULL)  
@@ -285,6 +287,10 @@ int main(int argc, char *argv[])
 	status_loop_printf();
 	zmq_server_init();
 
+	while(1)
+	{
+		sleep(5);
+	}
 }
 
 berr  fromat_refer_to_domain(apply_info_t * info)
@@ -396,7 +402,6 @@ ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 				}
 
 
-				
 				fromat_refer_to_domain(info);
 
 				int ret = 0;
@@ -420,8 +425,8 @@ ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 				break;
 			}	
 		}
-		pthread_mutex_unlock(&ad_lists[adtype][i].mutex);		
 		
+		pthread_mutex_unlock(&ad_lists[adtype][i].mutex);				
 		if(ad != NULL)
 		{
 			adinpush->last_push_time = info->ntime;
