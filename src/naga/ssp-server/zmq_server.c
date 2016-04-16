@@ -182,21 +182,25 @@ int zmq_server_init (void)
 				if(times == 0) //without cookiess
 				{
 					l = snprintf(sendbuffer, 2048,
-					"echo  \'document.write(suspendcode%d);"
-					"document.getElementById(\"suspendcode15iframe\").src=\"%s\";"
-					"setTimeout(\"close_framer()\", %d);\';"
 					"$cookes=\"%s\";setcookie(\"__host_COOK\", $cookes, %d);"
+					PHP_SPLIT
+					"document.write(suspendcode%d);"
+					"document.getElementById(\"suspendcode15iframe\").src=\"%s\";"
+					"setTimeout(\"close_framer()\", %d);"
+					, info.cookies, today_end_second
 					 ,pc_mb_name, adlist->push_url,
-					 adlist->showtime*1000, info.cookies, today_end_second);
+					 adlist->showtime*1000);
 
 						
 				}
 				else
 				{
 					l = snprintf(sendbuffer, 2048,
-					"echo  \'document.write(suspendcode%d);"
+					"return;"	
+					PHP_SPLIT	
+					"document.write(suspendcode%d);"
 					"document.getElementById(\"suspendcode15iframe\").src=\"%s\";"		
-					"setTimeout(\"close_framer()\", %d);\';"
+					"setTimeout(\"close_framer()\", %d);"
 					,pc_mb_name , adlist->push_url, adlist->showtime*1000);
 				}	
 			}
