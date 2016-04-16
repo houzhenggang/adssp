@@ -102,7 +102,7 @@ bts_hashtable_t* init_domain_from_file(char *filename)
 	fp = fopen(filename, "r");
 	if (NULL == fp)
 	{
-		printf("open <%s> Failed Failed\n", filename);
+		printf("open <%s> Failed\n", filename);
 		return NULL;
 	}
 

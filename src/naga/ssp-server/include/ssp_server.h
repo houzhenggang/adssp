@@ -9,8 +9,9 @@ typedef struct
 	int adtype;
 	char useragent[1024];
 	char refer[1024];
+	char domain[1024];
 	char cookies[1024];
-	int cookies_len ; 
+	int  cookies_len ; 
 	char userip[16];
 	time_t ntime;
 }apply_info_t;

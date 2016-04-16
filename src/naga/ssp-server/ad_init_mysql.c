@@ -287,7 +287,37 @@ int main(int argc, char *argv[])
 
 }
 
+berr  fromat_refer_to_domain(apply_info_t * info)
+{
+	if(NULL == info)
+		return E_FAIL;
+	int j  =0;
 
+	
+	// skip "http://"
+	char * ptr = info->refer + 7;
+	char * domain = info->domain;
+	int end = 0;
+	
+	while(1)
+	{
+		switch(  ptr[j] )
+		{
+			case '\/':
+				domain[j] = '\0';
+				end = 1;	
+				break;
+			default:
+				domain[j] = ptr[j];
+				break;
+		}
+		if(end)
+			break;
+		else
+			j++;
+	}
+	return E_SUCCESS;
+}
 
 ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 {
@@ -356,7 +386,7 @@ ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 					continue;
 				}
 
-
+				
 				if( pos->ad->push_user_interval   
 					&&( 
 					(info->ntime - adinpush->last_push_time)
@@ -365,11 +395,24 @@ ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 					continue;
 				}
 
-				/*
-				printf("last push time = <%ld,%ld,%ld>\n",
-				//info->ntime , adinpush->last_push_time, 
-				//pos->ad->push_user_interval
-				);*/
+
+				
+				fromat_refer_to_domain(info);
+
+				int ret = 0;
+
+				if(ssp_domain_size(pos->ad->domain_black_hashtb))
+				{
+					ret = ssp_domain_push_lookup(info.domain, pos->ad->domain_black_hashtb);
+					if(ret)
+						continue;
+				}
+				if(ssp_domain_size(pos->ad->domain_white_hashtb))
+				{
+					ret = ssp_domain_push_lookup(info.domain, pos->ad->domain_white_hashtb);
+					if(!ret)
+						continue;
+				}	
 				
 				ad = pos->ad;
 				dlist_move_tail( &(pos->node), &(ad_lists[adtype][i].head));
