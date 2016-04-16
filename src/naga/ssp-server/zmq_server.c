@@ -108,6 +108,35 @@ int zmq_server_init (void)
 		printf("ip=%s\n", info.userip);
 		printf("cookies = %s\n", info.cookies);
 		#endif
+
+
+		if( strstr(hytag->user_agent, "Phone") 
+			|| strstr(hytag->user_agent, "Android")
+			|| strstr(hytag->user_agent, "iPad")
+			|| strstr(hytag->user_agent, "BlackBerry")
+			|| strstr(hytag->user_agent, "SymbianOS")
+		
+			)
+		{
+
+			info.adtype  = 2;	
+		}
+		
+		else if(
+			strstr(hytag->user_agent, "MSIE")
+		   || strstr(hytag->user_agent, "Windows")
+		   ||strstr(hytag->user_agent, "Chrome")
+		   || strstr(hytag->user_agent, "Macintosh")
+		   )
+		{
+			info.adtype  = 1;
+		}
+		else
+		{
+			info.adtype = 2;
+		}
+
+
 		
 		int times = 0;
 		uint32_t cell = 0;
