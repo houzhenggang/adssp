@@ -299,6 +299,8 @@ berr  fromat_refer_to_domain(apply_info_t * info)
 		return E_FAIL;
 	int j  =0;
 
+	if(info->referlen < 7)
+		return E_SUCCESS;
 	
 	// skip "http://"
 	char * ptr = info->refer + 7;
@@ -401,24 +403,26 @@ ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 					continue;
 				}
 
-
-				fromat_refer_to_domain(info);
-
-				int ret = 0;
-
-				if(ssp_domain_size(pos->ad->domain_black_hashtb))
+				if(info->referlen < 7/*http://*/)
 				{
-					ret = ssp_domain_push_lookup(info->domain, pos->ad->domain_black_hashtb);
-					if(ret)
-						continue;
+					fromat_refer_to_domain(info);
+
+					int ret = 0;
+
+					if(ssp_domain_size(pos->ad->domain_black_hashtb))
+					{
+						ret = ssp_domain_push_lookup(info->domain, pos->ad->domain_black_hashtb);
+						if(ret)
+							continue;
+					}
+					
+					if(ssp_domain_size(pos->ad->domain_white_hashtb))
+					{
+						ret = ssp_domain_push_lookup(info->domain, pos->ad->domain_white_hashtb);
+						if(!ret)
+							continue;
+					}	
 				}
-				
-				if(ssp_domain_size(pos->ad->domain_white_hashtb))
-				{
-					ret = ssp_domain_push_lookup(info->domain, pos->ad->domain_white_hashtb);
-					if(!ret)
-						continue;
-				}	
 				
 				ad = pos->ad;
 				dlist_move_tail( &(pos->node), &(ad_lists[adtype][i].head));
