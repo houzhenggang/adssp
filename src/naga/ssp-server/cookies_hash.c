@@ -338,7 +338,7 @@ berr usercookeis_assess_save_file(char * filename)
 	return E_SUCCESS;
 }
 
-#if 0
+#if 1
 
 DEFUN(show_user_all,
       show_user_all_cnt_cmd,
