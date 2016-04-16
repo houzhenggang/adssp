@@ -29,6 +29,7 @@ extern uint64_t  success_push_cnt_total ;
 extern uint64_t  today_end_second;
 
 
+void*  zmq_server_init_by (void * prog);
 
 int zmq_server_init (void)
 {
