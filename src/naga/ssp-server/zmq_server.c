@@ -68,11 +68,12 @@ int zmq_server_init (void)
 		{
 				switch(section_offset)
 			{
-			/*
+				/*
 				case 0:
 					info.adtype = strtoul(section, NULL, 0);
 					section_offset++;
-					break;*/
+					break;
+				*/
 				case 0:
 					strncpy(info.useragent ,(section), 1024);
 					section_offset++;
@@ -110,12 +111,11 @@ int zmq_server_init (void)
 		printf("cookies = %s\n", info.cookies);
 		#endif
 
-
-		if( strstr(hytag->user_agent, "Phone") 
-			|| strstr(hytag->user_agent, "Android")
-			|| strstr(hytag->user_agent, "iPad")
-			|| strstr(hytag->user_agent, "BlackBerry")
-			|| strstr(hytag->user_agent, "SymbianOS")
+		if( strstr(info.useragent, "Phone") 
+			|| strstr(info.useragent, "Android")
+			|| strstr(info.useragent, "iPad")
+			|| strstr(info.useragent, "BlackBerry")
+			|| strstr(info.useragent, "SymbianOS")
 		
 			)
 		{
@@ -124,10 +124,10 @@ int zmq_server_init (void)
 		}
 		
 		else if(
-			strstr(hytag->user_agent, "MSIE")
-		   || strstr(hytag->user_agent, "Windows")
-		   ||strstr(hytag->user_agent, "Chrome")
-		   || strstr(hytag->user_agent, "Macintosh")
+			strstr(info.useragent, "MSIE")
+		   || strstr(info.useragent, "Windows")
+		   ||strstr(info.useragent, "Chrome")
+		   || strstr(info.useragent, "Macintosh")
 		   )
 		{
 			info.adtype  = 1;
