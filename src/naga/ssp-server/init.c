@@ -5,6 +5,11 @@
 #include "ssp_server.h"
 
 
+void * user_cmd_init(void *pp)
+{
+	cmdline (0, NULL);   
+	return NULL;
+}
 int init_process()
 {
 
@@ -14,6 +19,8 @@ int init_process()
 	today_time_str_init();
 
 
-	cmdline (0, NULL);    
+	pthread_t thread;
+	pthread_create(&thread, NULL, user_cmd_init, NULL);
+	pthread_detach(thread);
 	
 }
