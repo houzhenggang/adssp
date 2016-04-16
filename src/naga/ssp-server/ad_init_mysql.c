@@ -303,7 +303,7 @@ berr  fromat_refer_to_domain(apply_info_t * info)
 	{
 		switch(  ptr[j] )
 		{
-			case '\/':
+			case '/':
 				domain[j] = '\0';
 				end = 1;	
 				break;
@@ -403,13 +403,13 @@ ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 
 				if(ssp_domain_size(pos->ad->domain_black_hashtb))
 				{
-					ret = ssp_domain_push_lookup(info.domain, pos->ad->domain_black_hashtb);
+					ret = ssp_domain_push_lookup(info->domain, pos->ad->domain_black_hashtb);
 					if(ret)
 						continue;
 				}
 				if(ssp_domain_size(pos->ad->domain_white_hashtb))
 				{
-					ret = ssp_domain_push_lookup(info.domain, pos->ad->domain_white_hashtb);
+					ret = ssp_domain_push_lookup(info->domain, pos->ad->domain_white_hashtb);
 					if(!ret)
 						continue;
 				}	
