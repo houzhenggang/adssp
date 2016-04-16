@@ -68,23 +68,24 @@ int zmq_server_init (void)
 		{
 				switch(section_offset)
 			{
+			/*
 				case 0:
 					info.adtype = strtoul(section, NULL, 0);
 					section_offset++;
-					break;
-				case 1:
+					break;*/
+				case 0:
 					strncpy(info.useragent ,(section), 1024);
 					section_offset++;
 					break;
-				case 2:
+				case 1:
 					strncpy(info.refer,(section), 1024);
 								section_offset++;
 					break;
-				case 3:
+				case 2:
 					strncpy(info.userip, (section), 16);
 					section_offset++;
 					break;
-				case 4:
+				case 3:
 					if(section != NULL)
 					{
 						strncpy(info.cookies, (section), 1024);
