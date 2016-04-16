@@ -10,8 +10,7 @@
 
 void vty_cmd_init()
 {
-	cmdline_vsr_init();
-
+	cmdline_usercookeis_init();
 }
 
 void vty_cmd_config_write(struct vty  *vty)
