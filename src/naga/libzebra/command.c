@@ -732,16 +732,9 @@ config_write_host (struct vty *vty)
   else if (! host.motd)
     vty_out (vty, "no banner motd%s", VTY_NEWLINE);
 
-  vsr_cmd_config_write(vty);
-  itf_cmd_config_write(vty);
-  adt_cmd_config_write(vty);
-  dmr_cmd_config_write(vty);
-  acr_cmd_config_write(vty);
-  netseg_cmd_config_write(vty);
-  adp_cmd_config_write(vty);
-  url_cmd_config_write(vty);
-  urlr_cmd_config_write(vty);
-  hijack_cmd_config_write(vty);
+
+  vty_cmd_config_write(vty);
+
   return 1;
 }
 
