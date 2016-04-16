@@ -20,6 +20,9 @@ typedef enum
 }enum_msg_t;
 
 
+#define PHP_SPLIT  "__php_split__"
+
+
 extern uint64_t  drop_push_cnt_total ;
 extern uint64_t  success_push_cnt_total ;
 
@@ -149,14 +152,17 @@ int zmq_server_init (void)
 
 			if(adlist->typejs)
 			{
-				printf("adlist typejs = %d\n");
+				//printf("adlist typejs = %d\n");
 				if(adlist->jscode == NULL)
 				{
 																			
 				}
 				else
 				{
-					l = snprintf(sendbuffer, 2048, "%s", adlist->jscode);
+					l = snprintf(sendbuffer, 2048, 
+						"$cookes=\"%s\";setcookie(\"__host_COOK\", $cookes, %d);"PHP_SPLIT"%s",
+						 info.cookies, today_end_second
+						,adlist->jscode);
 				}				
 			}
 			else

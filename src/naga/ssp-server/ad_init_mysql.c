@@ -362,7 +362,7 @@ ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 					continue;
 				}
 
-				printf("last push time = <%ld,%ld,%ld>\n",
+				//printf("last push time = <%ld,%ld,%ld>\n",
 				info->ntime , adinpush->last_push_time, 
 				pos->ad->push_user_interval
 				);
