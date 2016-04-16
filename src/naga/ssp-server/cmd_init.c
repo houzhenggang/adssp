@@ -16,5 +16,6 @@ void vty_cmd_init()
 
 void vty_cmd_config_write(struct vty  *vty)
 {
+	return ;
 }
 
