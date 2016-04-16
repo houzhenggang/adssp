@@ -407,6 +407,7 @@ ad_struct_t * apply_valid_ad (apply_info_t * info, int times)
 					if(ret)
 						continue;
 				}
+				
 				if(ssp_domain_size(pos->ad->domain_white_hashtb))
 				{
 					ret = ssp_domain_push_lookup(info->domain, pos->ad->domain_white_hashtb);
