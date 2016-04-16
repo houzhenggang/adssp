@@ -47,8 +47,10 @@ void print_inuse_ad()
 				printf("apply_status:		%d\n", pos->ad->apply_status);
 				printf("cpm_price: 			%d\n", pos->ad->cpm_price);
 				printf("push_url:			%s\n", pos->ad->push_url);
-				printf("domain_white_file:			%s\n", pos->ad->domain_white_file);
-				printf("domain_black_file:			%s\n", pos->ad->domain_black_file);			
+				printf("domain_white_file:			%s(%d)\n", pos->ad->domain_white_file
+					,ssp_domain_size(pos->ad->domain_white_hashtb));
+				printf("domain_black_file:			%s(%d)\n", pos->ad->domain_black_file
+					,ssp_domain_size(pos->ad->domain_black_hashtb));
 				printf("-----------------------------------\n");							
 			}
 				
@@ -249,7 +251,8 @@ int main(int argc, char *argv[])
 
 				if(row[19] != NULL)
 				{
-					struct_ptr->jscode  = strdup(row[19]);//
+					struct_ptr->jscode  = strdup(row[19]);
+					//
 					//jsfile_string_format(row[19]);
 				}
 				

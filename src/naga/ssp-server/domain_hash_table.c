@@ -77,6 +77,12 @@ berr ssp_domain_push_add(char *host, bts_hashtable_t* hashtable)
 }
 
 
+uint32_t ssp_domain_size(bts_hashtable_t* hashtable)
+{	
+	return hashtable->total_cell;
+}
+
+
 
 
 bts_hashtable_t* init_domain_from_file(char *filename)

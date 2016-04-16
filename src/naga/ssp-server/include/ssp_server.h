@@ -67,4 +67,7 @@ usercookeis  * usercookeis_assess_new(char *cookeis, int cookeislen);
 push_info_t * get_user_times_by_id(usercookeis *cookied, int id);
 
 
+uint32_t ssp_domain_size(bts_hashtable_t* hashtable);
+
+
 #endif
