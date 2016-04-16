@@ -141,6 +141,6 @@ int ssp_domain_push_lookup(char *host, bts_hashtable_t* hashtable)
 	strncpy(data.keys.host, host, MAX_HOST_LEN);
 	data.host_len = strlen(host);
 	
-	return bts_hashtable_check(hashtable, data, NULL);
+	return bts_hashtable_lookup(hashtable, &data);
 }
 
