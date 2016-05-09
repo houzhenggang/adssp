@@ -359,7 +359,7 @@ l2fwd_launch_one_lcore(__attribute__((unused)) void *dummy)
         }
         
         itf_raw_socket_init(interface_str);
-		#if 1
+		#if 0
 			dsp_product_init(NULL);
 		#endif
         cmdline (0, NULL);
