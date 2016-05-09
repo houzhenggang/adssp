@@ -608,7 +608,7 @@ main(int argc, char **argv)
 		//dsp_product_init(NULL);
 		//redis_init();
 		//user_init();
-		naga_init();
+	//	naga_init();
         cmdline (0, NULL);        
     }
     
