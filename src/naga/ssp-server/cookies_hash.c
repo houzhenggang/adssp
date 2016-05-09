@@ -312,10 +312,11 @@ void usercookeis_iter(void *data, void *param)
 	char buffer[1024];
 	usercookeis * user = (usercookeis *) data;
 	FILE * fp = param;
+	int l =0 ;
 
 	
-	snprintf(buffer, 1024, "%s, %ld, %ld, %ld\n", 
-		user->cookeis, user->access_success, user->push_success, user->push_drop);
+	l += snprintf(buffer+l, 1024-l, "%s", user->cookeis);
+	
 	fputs(buffer, fp);
 	return;
 }
