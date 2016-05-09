@@ -609,6 +609,7 @@ main(int argc, char **argv)
 		//redis_init();
 		//user_init();
 	//	naga_init();
+	printf("cmd_ line  = 0\n");
         cmdline (0, NULL);        
     }
     
