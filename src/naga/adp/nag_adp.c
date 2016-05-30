@@ -378,7 +378,7 @@ function(w)
 
 
 	char * buffer_l5 = (char *)(buffer+ hytag->l5_offset);
-	int contlen = sizeof(body1) + sizeof(body2) + hytag->url_len + strlen("http://") - 1;
+	int contlen = sizeof(body1) - 1 + sizeof(body2) - 1 + hytag->url_len + strlen("http://");
 	l = snprintf(buffer_l5, 2048, "%s%d%s%shttp://%s%s",
 		head, contlen, tail, body1, hytag->url,  body2);
 

@@ -25,8 +25,8 @@ typedef struct
 	uint64_t push_per_user;
 	uint64_t push_user_interval;
 
-	int push_status;  //0;¹ÒÆğ  1,Í¶·ÅÖĞ£¬ 2,¹ıÆÚ, 3,today_enough, 4, all_enough
-	int apply_status; //0;Î´ÉóºË, 1,ÒÑÉóºË
+	int push_status;  //0;æŒ‚èµ·  1,æŠ•æ”¾ä¸­ï¼Œ 2,è¿‡æœŸ, 3,today_enough, 4, all_enough
+	int apply_status; //0;æœªå®¡æ ¸, 1,å·²å®¡æ ¸
 
 	char * create_time;
 	char * update_time;	
