@@ -12,8 +12,15 @@ typedef struct
 	int  referlen;
 	char domain[1024];
 	char cookies[1024];
-	int  cookies_len ; 
+	int  cookies_len;
 	char userip[16];
+
+    int  user_tag_method;           /*  0, 普通没有标签；  1:有斗鱼标签*/
+    char user_tag_uid[256];         /*  从斗鱼标签而来的用户id   "765ec90db3b59cd752c43a4183c0703f6037b238,20160527"  */
+    int  user_tag_uid_len;
+    char user_tag_content[1024];    /* "临时标签|斗鱼分类|英雄联盟"  （｜为英文） */
+    int  user_tag_content_len;
+
 	time_t ntime;
 }apply_info_t;
 

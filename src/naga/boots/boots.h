@@ -11,6 +11,8 @@ typedef unsigned int   int32_t;
 typedef unsigned long long int64_t;
 #endif
 
+#define bts_array_size(x)  sizeof(x)/sizeof(x[0])
+
 typedef unsigned char  uint8_t;
 typedef unsigned short uint16_t;
 typedef unsigned int   uint32_t;

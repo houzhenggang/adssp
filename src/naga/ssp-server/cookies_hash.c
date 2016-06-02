@@ -148,7 +148,7 @@ berr usercookeis_assess_add(char *cookeis, int *cookeislen)
 	INIT_LIST_HEAD(&(data->head));
 	
 	data->cookeislen
-		= snprintf(data->cookeis, 16, 
+        = snprintf(data->cookeis, sizeof(data->cookeis), 
 			"%s-%d", today_time_s,usercookeis_control_table.total_cell +1);
 
 	strncpy(cookeis, data->cookeis, data->cookeislen);

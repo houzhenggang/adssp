@@ -460,6 +460,9 @@ function(w)
           return rv;
      }	
 	 CNT_INC(ADP_PUSH_TX_SUCCESS);
+
+     printf("push url:  http://%s\n \n", hytag->url);
+
 	 return E_SUCCESS;		
 }
 
