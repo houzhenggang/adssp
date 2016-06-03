@@ -110,7 +110,7 @@ void * zmq_server_init_by(void * prog)
                     break ;
 
                 case 4:
-                    if(strcmp(section, "tv_douyu"))
+                    if(!strcmp(section, "tv_douyu"))
                     {
                         info.user_tag_method = TAG_METHOD_DOUYU ;
                     }
