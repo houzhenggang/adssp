@@ -89,8 +89,6 @@ void * zmq_server_init_by(void * prog)
         {
             printf("section_offset:%d, section:<%s>\n", section_offset, section) ;
 
-            section_offset++ ;
-
             switch (section_offset)
             {
                 case 0:
@@ -132,6 +130,9 @@ void * zmq_server_init_by(void * prog)
                     printf("Failed to Success, unknown section_offset:%d, section:<%s> \n", section_offset, section) ;
                     break ;
             }
+
+            section_offset++ ;
+
         }
 
         info.ntime = time(NULL) ;
